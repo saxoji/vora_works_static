@@ -9,6 +9,10 @@ const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, dev
 await page.goto(origin);
 await mkdir(new URL('../public/brand/', import.meta.url), { recursive: true });
 try {
+  await page.setContent(`<html><head><style>html,body{margin:0;background:transparent}img{display:block;width:32px;height:32px}</style></head><body><img src="${origin}/brand/vora-works.svg" alt=""></body></html>`);
+  await page.locator('img').evaluate(image => image.decode());
+  await page.locator('img').screenshot({ path: new URL('../public/brand/favicon-diamond.png', import.meta.url).pathname, omitBackground: true });
+  console.log('Generated diamond WORKS favicon · 32 × 32');
   for (const lang of ['ko', 'ja', 'en']) {
     const text = copy[lang];
     await page.setContent(`<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><style>
