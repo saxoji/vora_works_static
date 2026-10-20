@@ -62,7 +62,7 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 - `robots.txt`, 4개 주소의 `sitemap.xml`은 빌드 시 생성한다.
 - 도메인 매핑 후 `PUBLIC_SITE_URL`을 실제 도메인으로 변경하고 재배포하면 canonical·공유 이미지·sitemap 주소가 함께 갱신된다.
 - 작은 공유 카드의 정사각형 크롭을 고려해 4색 심볼과 VORA AI WORKS를 중앙에 배치했다. 80×80·107×107·160×160·240×126px로 확인했고, 이미지 URL 버전을 갱신했다.
-- OG 카드는 `public/brand/social-{ko,ja,en}-v3.png`. 재생성하려면 개발 의존성을 설치하고 로컬 서버를 켠 뒤 `npm run social`을 실행한다. 같은 명령으로 WORKS 파비콘도 생성한다. Render에서는 커밋된 PNG를 사용하므로 브라우저 설치가 필요 없다.
+- OG 카드는 `public/brand/social-{ko,ja,en}-v4.png`. 재생성하려면 개발 의존성을 설치하고 로컬 서버를 켠 뒤 `npm run social`을 실행한다. 파비콘과 터치 아이콘은 공식 PNG를 그대로 사용한다. Render에서는 커밋된 PNG를 사용하므로 브라우저 설치가 필요 없다.
 - 다국어 연결은 [Google Search 가이드](https://developers.google.com/search/docs/specialty/international/localized-versions), 공유 메타데이터는 [Open Graph 규격](https://ogp.me/)을 따른다.
 
 ## 빌드 및 Render 배포
@@ -87,7 +87,7 @@ npm run preview
 ## 자산 출처
 
 - WORKS·WORD·SLIDE·CELL: `/Users/yunsungji/Documents/vora_works`의 각 `docs/brand/` 공식 SVG.
-- WORKS 심볼은 노랑이 위, 파랑이 오른쪽, 민트가 아래, 코랄이 왼쪽인 마름모 방향이다. 원본 도형을 135도 회전한 동일 자산을 헤더·히어로·파비콘·OG에 사용한다.
+- WORKS 심볼은 노랑이 위, 파랑이 오른쪽, 민트가 아래, 코랄이 왼쪽인 마름모 방향이다. `vora_word/docs/brand/vora-works.svg`와 `vora-works-{32,180}.png` 공식 원본을 그대로 사용한다. 방향과 여백이 자산에 반영되어 있으므로 CSS에서 추가 회전하지 않는다. 헤더·히어로·OG는 같은 SVG, 파비콘·터치 아이콘은 공식 PNG를 참조한다.
 - Apple OS 아이콘: [Simple Icons의 Apple SVG](https://github.com/simple-icons/simple-icons/blob/develop/icons/apple.svg), CC0. 본문과 설치 안내에서 같은 크기 보정을 적용한다.
 - HWP: `vora_hwp/docs/brand/vora-hwp.svg`, 2026-10-20 선정 C안.
 - VORA 가로 로고: WORD 공통 자산 `vora-service-wide.png`, 공식 VORA 서비스 원본.
