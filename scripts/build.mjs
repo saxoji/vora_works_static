@@ -1,17 +1,24 @@
 import { cp, mkdir, rm, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { generateConfig } from './config.mjs';
+import { renderDocument, routes } from './document.mjs';
 const config = await generateConfig();
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = new URL('../dist/', import.meta.url);
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
-const escapeAttribute = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-const siteUrl = config.siteUrl;
-const meta = siteUrl ? `<link rel="canonical" href="${escapeAttribute(siteUrl)}" />\n    <meta property="og:url" content="${escapeAttribute(siteUrl)}" />\n    <meta property="og:image" content="${escapeAttribute(new URL('/brand/social-card.png', siteUrl).href)}" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />` : '';
-await writeFile(new URL('index.html', dist), (await readFile(`${root}index.html`, 'utf8')).replace('<!-- site-meta -->', meta));
+const template = await readFile(`${root}index.html`, 'utf8');
+for (const route of routes) {
+  const directory = new URL(`.${route.path}`, dist);
+  await mkdir(directory, { recursive: true });
+  await writeFile(new URL('index.html', directory), renderDocument(template, config, route));
+}
 await cp(`${root}src`, new URL('src/', dist), { recursive: true });
 await cp(`${root}public`, dist, { recursive: true });
+const siteUrl = config.siteUrl;
 await writeFile(new URL('robots.txt', dist), `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${new URL('/sitemap.xml', siteUrl).href}\n` : ''}`);
-if (siteUrl) await writeFile(new URL('sitemap.xml', dist), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${escapeAttribute(siteUrl)}</loc></url></urlset>`);
-console.log('Built static site → dist/ (no runtime dependencies)');
+if (siteUrl) {
+  const urls = routes.map(route => `<url><loc>${new URL(route.path, siteUrl).href.replaceAll('&', '&amp;')}</loc></url>`).join('\n  ');
+  await writeFile(new URL('sitemap.xml', dist), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  ${urls}\n</urlset>\n`);
+}
+console.log('Built static site → dist/ (4 prerendered pages, 3 languages, no runtime dependencies)');

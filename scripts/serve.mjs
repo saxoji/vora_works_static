@@ -2,15 +2,22 @@ import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { generateConfig } from './config.mjs';
+import { renderDocument, routes } from './document.mjs';
 const built = process.argv.includes('dist');
-if (!built) await generateConfig();
+const config = !built ? await generateConfig() : null;
 const root = path.resolve(built ? 'dist' : '.');
 const port = Number(process.env.PORT || 4173);
-const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2', '.jpg': 'image/jpeg', '.txt': 'text/plain' };
+const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2', '.jpg': 'image/jpeg', '.txt': 'text/plain', '.xml': 'application/xml' };
 http.createServer(async (req, res) => {
   try {
     const requested = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    const resource = requested === '/' ? '/index.html' : requested;
+    const route = routes.find(route => route.path === requested || route.path.slice(0, -1) === requested);
+    if (!built && route) {
+      res.writeHead(200, { 'Content-Type': mime['.html'], 'Cache-Control': 'no-cache' });
+      res.end(renderDocument(await readFile(path.join(root, 'index.html'), 'utf8'), config, route));
+      return;
+    }
+    const resource = route ? `${route.path}index.html` : requested;
     const asset = !built && !resource.startsWith('/src/') && resource !== '/index.html' ? `/public${resource}` : resource;
     const file = path.resolve(root, `.${asset}`);
     if (!file.startsWith(`${root}${path.sep}`) || !(await stat(file)).isFile()) throw new Error('Not found');

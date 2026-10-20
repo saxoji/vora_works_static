@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "preview": "node scripts/serve.mjs dist"
+    "preview": "node scripts/serve.mjs dist",
+    "social": "node scripts/social-cards.mjs"
   },
   "engines": {
     "node": ">=22"

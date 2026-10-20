@@ -329,3 +329,5 @@ html{scroll-behavior:auto}
 .hand-underline:after{content:'';position:absolute;left:-2px;right:-2px;bottom:0;height:7px;background:url('/brand/hand-underline.svg') center/100% 100% no-repeat;z-index:-1;opacity:.85}
 @media(prefers-color-scheme:light){:root:not([data-theme]){--bg:#f6f5f1;--surface:#fffefa;--surface-2:#ecebe6;--ink:#202329;--muted:#676971;--line:#d7d8d5;--accent:#315c9f;--accent-ink:#fff;color-scheme:light}}
 @media(max-width:600px){.theme-picker{width:31px;min-height:40px;padding-left:9px}.theme-picker>.icon{width:17px;height:17px}.maker img{width:210px}.os-button{min-height:44px}.os-buttons{justify-content:space-between}.header{gap:8px}.controls{gap:7px}}
+.footer-languages { display: flex; align-items: center; gap: 18px; }
+.footer-languages a[aria-current="page"] { color: var(--ink); }

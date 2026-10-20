@@ -1,11 +1,9 @@
-import config from '/config.js';
-
 export const products = [
-  { id: 'word', name: 'WORD', category: 'DOCUMENT', color: '#79a0e4', url: 'https://vword.vora.im', format: 'DOCX · DOC · ODT', repo: 'vora_works_word' },
-  { id: 'slide', name: 'SLIDE', category: 'PRESENTATION', color: '#ef977e', url: 'https://vslide.vora.im', format: 'PPTX', repo: 'vora_works_slide' },
-  { id: 'cell', name: 'CELL', category: 'SPREADSHEET', color: '#80cab5', url: 'https://vcell.vora.im', format: 'XLSX · CSV', repo: 'vora_works_cell' },
-  { id: 'hwp', name: 'HWP', category: 'HANGUL DOCUMENT', color: '#e6c86d', url: 'https://vhwp.vora.im', format: 'HWP · HWPX', repo: 'vora_works_hwp' },
-].map(product => ({ ...product, url: config.products[product.id].web, downloads: config.products[product.id].downloads }));
+  { id: 'word', name: 'WORD', category: 'DOCUMENT', color: '#79a0e4', format: 'DOCX · DOC · ODT' },
+  { id: 'slide', name: 'SLIDE', category: 'PRESENTATION', color: '#ef977e', format: 'PPTX' },
+  { id: 'cell', name: 'CELL', category: 'SPREADSHEET', color: '#80cab5', format: 'XLSX · CSV' },
+  { id: 'hwp', name: 'HWP', category: 'HANGUL DOCUMENT', color: '#e6c86d', format: 'HWP · HWPX' },
+];
 
 export const copy = {
   "ko": {
