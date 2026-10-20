@@ -60,7 +60,9 @@ button:focus-visible,a:focus-visible,select:focus-visible,[tabindex]:focus-visib
 .editorial-intro h2 span{color:var(--muted)}
 .editorial-intro>div{max-width:450px}
 .editorial-intro p{font-size:15px;line-height:1.9;color:var(--muted);word-break:keep-all}
-.editorial-intro .text-cta{margin-top:5px}
+.editorial-intro .enterprise-contact{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:12px;font-size:13px}
+.enterprise-contact a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.enterprise-contact a:hover{color:var(--accent)}
 .mini-collection{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid var(--line)}
 .mini-collection a{display:flex;align-items:center;gap:12px;padding:16px 18px;font-size:12px;font-weight:600;border-right:1px solid var(--line)}
 .mini-collection a:first-child{padding-left:0}
@@ -246,7 +248,7 @@ dialog::backdrop{background:#090d17ac;backdrop-filter:blur(7px)}
 .editorial-intro h2 br{display:none}
 .editorial-intro h2 span{display:block}
 .editorial-intro p{font-size:12px;line-height:1.9}
-.editorial-intro .text-cta{margin-top:6px;font-size:11px}
+.editorial-intro .enterprise-contact{font-size:12px}
 .mini-collection{grid-template-columns:repeat(2,1fr)}
 .mini-collection a{padding:11px 10px;font-size:10px;gap:8px}
 .mini-collection a:nth-child(2){border-right:0}
