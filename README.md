@@ -61,7 +61,8 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 - 모든 페이지에 상호 `hreflang`과 `x-default`, WebSite·Organization·CollectionPage JSON-LD를 포함한다.
 - `robots.txt`, 4개 주소의 `sitemap.xml`은 빌드 시 생성한다.
 - 도메인 매핑 후 `PUBLIC_SITE_URL`을 실제 도메인으로 변경하고 재배포하면 canonical·공유 이미지·sitemap 주소가 함께 갱신된다.
-- OG 카드는 `public/brand/social-{ko,ja,en}.png`. 재생성하려면 개발 의존성을 설치하고 로컬 서버를 켠 뒤 `npm run social`을 실행한다. Render에서는 커밋된 PNG를 사용하므로 브라우저 설치가 필요 없다.
+- 작은 공유 카드의 정사각형 크롭을 고려해 4색 심볼과 VORA AI WORKS를 중앙에 배치했다. 80×80·107×107·160×160·240×126px로 확인했고, 이미지 URL 버전을 갱신했다.
+- OG 카드는 `public/brand/social-{ko,ja,en}-v2.png`. 재생성하려면 개발 의존성을 설치하고 로컬 서버를 켠 뒤 `npm run social`을 실행한다. Render에서는 커밋된 PNG를 사용하므로 브라우저 설치가 필요 없다.
 - 다국어 연결은 [Google Search 가이드](https://developers.google.com/search/docs/specialty/international/localized-versions), 공유 메타데이터는 [Open Graph 규격](https://ogp.me/)을 따른다.
 
 ## 빌드 및 Render 배포
@@ -77,7 +78,8 @@ npm run preview
 - 빌드: `npm ci --omit=dev && npm run build`
 - Publish directory: `dist`
 - Node 22 이상, 서버 런타임·데이터베이스·비밀키 불필요
-- 사용자 요청에 따라 기본 Render 도메인 사용, 커스텀 도메인은 사용자가 직접 매핑
+- 운영 주소: https://works.vora.im — 사용자가 매핑한 도메인의 Render verified 상태를 확인했으며 `PUBLIC_SITE_URL`에 반영했다.
+- 기본 Render 주소도 사용 가능: https://horizonai-vora-works.onrender.com
 - 시안 전환 메뉴와 다른 시안 소스는 운영 사이트에서 제거했다. 로컬 시안 기록은 `output/design-archive/`에 보관한다.
 - `render.yaml`에 동일한 공개 환경변수와 빌드 설정이 기록되어 있다.
 - 환경변수 변경 후 Render에서 재배포하면 웹·다운로드 링크가 갱신된다.

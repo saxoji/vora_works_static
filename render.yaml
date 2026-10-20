@@ -13,7 +13,7 @@ services:
       - key: SKIP_INSTALL_DEPS
         value: "true"
       - key: PUBLIC_SITE_URL
-        value: https://horizonai-vora-works.onrender.com
+        value: https://works.vora.im
       - key: PUBLIC_WORD_WEB_URL
         value: https://vword.vora.im
       - key: PUBLIC_SLIDE_WEB_URL
