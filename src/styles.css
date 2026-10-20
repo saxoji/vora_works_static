@@ -320,10 +320,10 @@ html{scroll-behavior:auto}
 .os-buttons{flex-wrap:wrap;column-gap:6px;row-gap:0}
 .os-button{min-height:42px;font-size:10px}
 .dialog-platforms a{margin-left:auto;font-size:11px;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
-.icon.os-icon{width:20px;height:20px;flex:0 0 20px}
-.anywhere-options>div{display:grid;grid-template-columns:82px minmax(0,1fr) auto;gap:18px}
+.icon.os-icon{width:26px;height:26px;flex:0 0 26px}
+.anywhere-options>div{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:18px}
 .anywhere-options>div>.icon:first-child{justify-self:center}
-.anywhere-os{width:82px;display:flex;flex-wrap:nowrap;justify-content:center;gap:8px}
+.anywhere-os{width:100px;display:flex;flex-wrap:nowrap;justify-content:center;gap:8px}
 .connection-cloud small{letter-spacing:1.1px;font-size:9px;line-height:1.4}
 .hand-underline{position:relative;display:inline-block;color:var(--ink);font-weight:650;padding-bottom:9px;isolation:isolate;max-width:100%}
 .hand-underline:after{content:'';position:absolute;left:-4px;right:-4px;bottom:-2px;height:18px;background:var(--hand-ink,#65cbb3);-webkit-mask:url('/brand/hand-underline-ink.svg') center/100% 100% no-repeat;mask:url('/brand/hand-underline-ink.svg') center/100% 100% no-repeat;z-index:-1;pointer-events:none}

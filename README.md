@@ -19,7 +19,7 @@ http://127.0.0.1:4173/ 에서 실행한다.
 - `?lang=ko|ja|en|auto`, `?theme=light|dark|system`으로 직접 지정할 수 있다.
 - 언어별 주소 `/ko/`, `/ja/`, `/en/`은 브라우저 언어보다 우선한다. 자동 모드로 바꾸면 기본 주소 `/`로 돌아간다.
 - 모바일·태블릿·데스크톱에 맞게 제품 카드가 1·2·4열로 배치된다.
-- OS 아이콘은 20px로 통일하고, 무료 개인 이용 문구와 HYPER RAG 연결을 강조한다.
+- OS 아이콘은 26px로 통일한다. 애플 실루엣과 Linux 아이콘의 그림 여백을 보정해 실제 보이는 크기를 맞추며, 무료 개인 이용 문구와 HYPER RAG 연결을 강조한다.
 
 ## 주소와 환경변수
 
@@ -88,6 +88,7 @@ npm run preview
 
 - WORKS·WORD·SLIDE·CELL: `/Users/yunsungji/Documents/vora_works`의 각 `docs/brand/` 공식 SVG.
 - WORKS 심볼은 노랑이 위, 파랑이 오른쪽, 민트가 아래, 코랄이 왼쪽인 마름모 방향이다. 원본 도형을 135도 회전한 동일 자산을 헤더·히어로·파비콘·OG에 사용한다.
+- Apple OS 아이콘: [Simple Icons의 Apple SVG](https://github.com/simple-icons/simple-icons/blob/develop/icons/apple.svg), CC0. 본문과 설치 안내에서 같은 크기 보정을 적용한다.
 - HWP: `vora_hwp/docs/brand/vora-hwp.svg`, 2026-10-20 선정 C안.
 - VORA 가로 로고: WORD 공통 자산 `vora-service-wide.png`, 공식 VORA 서비스 원본.
 - 제작사: `https://www.horizonai.ai/brand/logo-h-onlight-640.webp` 및 `logo-h-ondark-640.webp`.
@@ -101,7 +102,7 @@ npm run preview
 - 브라우저 언어 선택·수동 선택 보존·자동 모드 복귀·실시간 시스템 테마 변경.
 - 다운로드 안내를 열어 둔 상태에서 시스템 테마 변경, Esc 닫기.
 - 320·390·768·1024·1280·1440px × 3언어 × 2테마, 36가지 화면 조합.
-- 모든 OS 아이콘 20×20px 및 가로 넘침 없음.
+- 모든 OS 아이콘 26×26px 및 가로 넘침 없음. 아이콘마다 실제 그림 크기도 별도로 확인한다.
 - 정적 렌더링 전환 후 3언어 × 2테마 × 320·390·768·1440px 24개 조합 재검증.
 - JavaScript를 끈 브라우저에서 3개 언어 페이지의 본문·메타데이터·canonical·hreflang·JSON-LD 검증.
 - 언어 변경 시 URL·공유 이미지 동기화, 새로고침 유지, 자동 모드 복귀 및 다운로드 안내 동작 확인.

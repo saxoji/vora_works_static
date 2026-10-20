@@ -13,9 +13,10 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
     sun: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>'),
     system: svg('<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>'),
     moon: svg('<path d="M20 15.5A9 9 0 0 1 8.5 4 9 9 0 1 0 20 15.5Z"/>'),
-    windows: svg('<path d="M3 3h8v8H3Zm10 0h8v8h-8ZM3 13h8v8H3Zm10 0h8v8h-8Z" fill="currentColor" stroke="none"/>', 'os-icon'),
-    mac: svg('<path d="M16.5 4c-.4 1.6-1.5 2.7-3 2.8-.2-1.5.9-2.9 3-3.8v1Zm2.7 13.3c-.5 1.3-1.7 3.8-3.4 3.7-1 0-1.4-.7-2.8-.7s-1.9.8-2.8.7c-1.8-.1-4.2-4-4.2-7.4 0-2.8 1.6-4.6 3.7-4.6 1.3 0 2.2.8 3.1.8 1 0 2-.9 3.6-.8 1.2 0 2.2.5 3 1.4-2.8 1.7-2.4 5.2-.2 6.9Z" fill="currentColor" stroke="none"/>', 'os-icon'),
-    linux: svg('<path d="M8 10c0-4 1-7 4-7s4 3 4 7l3 8-4 3-3-2-3 2-4-3Z"/><path d="m9 11 3 2 3-2m-6 7h6M10 8h.01M14 8h.01"/>', 'os-icon'),
+    windows: svg('<path d="M3 3h8v8H3Zm10 0h8v8h-8ZM3 13h8v8H3Zm10 0h8v8h-8Z" fill="currentColor" stroke="none"/>', 'os-icon os-icon-windows'),
+    // Apple silhouette from Simple Icons (CC0); normalized for optical balance.
+    mac: svg('<g transform="translate(1.2 1.2) scale(.9)"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701" fill="currentColor" stroke="none"/></g>', 'os-icon os-icon-mac'),
+    linux: svg('<g transform="translate(-.96 -.96) scale(1.08)"><path d="M8 10c0-4 1-7 4-7s4 3 4 7l3 8-4 3-3-2-3 2-4-3Z"/><path d="m9 11 3 2 3-2m-6 7h6M10 8h.01M14 8h.01"/></g>', 'os-icon os-icon-linux'),
     cloud: svg('<path d="M6 18a5 5 0 0 1-1-9.9 7 7 0 0 1 13.5.9A4.5 4.5 0 0 1 18 18Z"/>'),
     check: svg('<path d="m5 12 4 4L19 6"/>'),
     close: svg('<path d="m6 6 12 12M6 18 18 6"/>'),
