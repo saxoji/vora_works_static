@@ -3,7 +3,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { generateConfig } from './config.mjs';
 import { renderDocument, routes } from './document.mjs';
-import { renderHwpPage, hwpRoutes } from './hwp-page.mjs';
+import { renderDesktopPage, desktopRoutes } from './desktop-pages.mjs';
 const built = process.argv.includes('dist');
 const config = !built ? await generateConfig() : null;
 const root = path.resolve(built ? 'dist' : '.');
@@ -12,12 +12,13 @@ const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
 http.createServer(async (req, res) => {
   try {
     const requested = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-    if (!built && hwpRoutes.some(route => route === requested || route.slice(0, -1) === requested)) {
+    if (!built && desktopRoutes.some(route => route === requested || route.slice(0, -1) === requested)) {
+      const product = requested.split('/')[2];
       let manifest = null;
-      try { const catalog = JSON.parse(await readFile(path.join(root, 'releases/hwp/catalog.json'), 'utf8')); manifest = catalog.releases.find(release => release.manifest.version === catalog.stableVersion)?.manifest || null; } catch {}
+      try { const catalog = JSON.parse(await readFile(path.join(root, `releases/${product}/catalog.json`), 'utf8')); manifest = catalog.releases.find(release => release.manifest.version === catalog.stableVersion)?.manifest || null; } catch {}
       const lang = requested.match(/\/(ko|en|ja)\/?$/)?.[1] || 'ko';
       res.writeHead(200, {'Content-Type':mime['.html'], 'Cache-Control':'no-cache'});
-      res.end(renderHwpPage(config, lang, manifest, requested.endsWith('/') ? requested : requested + '/'));
+      res.end(renderDesktopPage(config, product, lang, manifest, requested.endsWith('/') ? requested : requested + '/'));
       return;
     }
     const route = routes.find(route => route.path === requested || route.path.slice(0, -1) === requested);

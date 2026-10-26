@@ -8,10 +8,10 @@ services:
     staticPublishPath: ./dist
     autoDeployTrigger: commit
     headers:
-      - path: /releases/hwp/stable.json
+      - path: /releases/*/stable.json
         name: Cache-Control
         value: no-cache, max-age=0, must-revalidate
-      - path: /releases/hwp/*/*
+      - path: /releases/*/*/*
         name: Cache-Control
         value: public, max-age=31536000, immutable
     envVars:
@@ -63,3 +63,17 @@ services:
         value: https://works.vora.im/releases/hwp/stable.json
       - key: DESKTOP_RELEASE_GITHUB_TOKEN
         sync: false
+      - key: PUBLIC_WORD_DOWNLOAD_PAGE_URL
+        value: https://works.vora.im/downloads/word/
+      - key: PUBLIC_WORD_RELEASE_MANIFEST_URL
+        value: https://works.vora.im/releases/word/stable.json
+      - key: PUBLIC_SLIDE_DOWNLOAD_PAGE_URL
+        value: https://works.vora.im/downloads/slide/
+      - key: PUBLIC_SLIDE_RELEASE_MANIFEST_URL
+        value: https://works.vora.im/releases/slide/stable.json
+      - key: PUBLIC_CELL_DOWNLOAD_PAGE_URL
+        value: https://works.vora.im/downloads/cell/
+      - key: PUBLIC_CELL_RELEASE_MANIFEST_URL
+        value: https://works.vora.im/releases/cell/stable.json
+      - key: PUBLIC_HWP_DOWNLOAD_PAGE_URL
+        value: https://works.vora.im/downloads/hwp/

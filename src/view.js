@@ -3,7 +3,7 @@ import { products as definitions, copy } from './content.js';
 // Shared by the static build and the browser: crawlers receive the full page.
 export function createView({ lang, theme = 'dark', languagePreference = lang, themePreference = 'system', config }) {
   const t = key => copy[lang][key];
-  const products = definitions.map(product => ({ ...product, url: config.products[product.id].web, downloads: config.products[product.id].downloads }));
+  const products = definitions.map(product => ({ ...product, url: config.products[product.id].web, downloads: config.products[product.id].downloads, downloadPageURL: config.products[product.id].downloadPageURL }));
   const svg = (body, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
   const icons = {
     arrow: svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
@@ -36,7 +36,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
 
   function platformButtons(product, full = false) {
     const pending = Object.values(product.downloads).every(value => !value);
-    return `<div class="platforms"><span class="platform-label">${t('download')} ${pending ? `<small>${t('coming')}</small>` : ''}</span><div class="os-buttons">${[['mac', 'macos', 'macOS'], ['windows', 'windows', 'Windows'], ['linux', 'linux', 'Linux']].map(([icon, os, name]) => {
+    return `<div class="platforms"><span class="platform-label">${product.downloadPageURL ? `<a href="${escapeAttribute(product.downloadPageURL)}">${t('download')}</a>` : t('download')} ${pending ? `<small>${t('coming')}</small>` : ''}</span><div class="os-buttons">${[['mac', 'macos', 'macOS'], ['windows', 'windows', 'Windows'], ['linux', 'linux', 'Linux']].map(([icon, os, name]) => {
       const content = `${icons[icon]}<span${full ? '' : ' class="os-name"'}>${name}</span>`;
       const url = product.downloads[os];
       return url ? `<a href="${escapeAttribute(url)}" class="os-button available-download" target="_blank" rel="noopener noreferrer" aria-label="VORA ${product.name} ${name} — ${t('download')}">${content}${icons.down}</a>` : `<button data-download="${product.id}" data-os="${name}" class="os-button" aria-label="VORA ${product.name} ${name} — ${t('coming')}" title="${name} · ${t('coming')}">${content}</button>`;

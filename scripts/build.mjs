@@ -1,8 +1,8 @@
 import { cp, mkdir, rm, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { generateConfig } from './config.mjs';
-import { publishHwpReleases } from './hwp-releases.mjs';
-import { buildHwpPages, hwpRoutes } from './hwp-page.mjs';
+import { publishDesktopReleases } from './desktop-releases.mjs';
+import { buildDesktopPages, desktopRoutes } from './desktop-pages.mjs';
 import { renderDocument, routes } from './document.mjs';
 const config = await generateConfig();
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -20,11 +20,12 @@ await cp(`${root}public`, dist, { recursive: true });
 const siteUrl = config.siteUrl;
 await writeFile(new URL('robots.txt', dist), `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${new URL('/sitemap.xml', siteUrl).href}\n` : ''}`);
 if (siteUrl) {
-  const urls = [...routes, ...hwpRoutes.map(path => ({path}))].map(route => `<url><loc>${new URL(route.path, siteUrl).href.replaceAll('&', '&amp;')}</loc></url>`).join('\n  ');
+  const urls = [...routes, ...desktopRoutes.map(path => ({path}))].map(route => `<url><loc>${new URL(route.path, siteUrl).href.replaceAll('&', '&amp;')}</loc></url>`).join('\n  ');
   await writeFile(new URL('sitemap.xml', dist), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  ${urls}\n</urlset>\n`);
 }
-console.log('Built static site → dist/ (8 prerendered pages, 3 languages, no runtime dependencies)');
 
-await publishHwpReleases({ root: new URL('../', import.meta.url), dist, siteUrl: config.siteUrl });
+await publishDesktopReleases({ root: new URL('../', import.meta.url), dist, siteUrl: config.siteUrl });
 
-await buildHwpPages(config, dist);
+await buildDesktopPages(config, dist);
+
+console.log('Built static site → dist/ (20 prerendered pages, 3 languages, no runtime dependencies)');

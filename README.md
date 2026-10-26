@@ -59,7 +59,7 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 - 기본 주소는 브라우저 언어를 따르며, 브라우저 정보가 없는 공유 로봇에는 한국어 카드를 제공한다. 특정 언어로 공유하려면 해당 언어 주소를 사용한다.
 - 각 언어에 고유한 제목·설명·canonical·OG locale·Twitter 카드와 1200×630 PNG를 제공한다.
 - 모든 페이지에 상호 `hreflang`과 `x-default`, WebSite·Organization·CollectionPage JSON-LD를 포함한다.
-- `robots.txt`, 4개 주소의 `sitemap.xml`은 빌드 시 생성한다.
+- `robots.txt`, 메인 4개와 제품별 다운로드 16개 주소를 포함하는 `sitemap.xml`은 빌드 시 생성한다.
 - 도메인 매핑 후 `PUBLIC_SITE_URL`을 실제 도메인으로 변경하고 재배포하면 canonical·공유 이미지·sitemap 주소가 함께 갱신된다.
 - 작은 공유 카드의 정사각형 크롭을 고려해 4색 심볼과 VORA AI WORKS를 중앙에 배치했다. 80×80·107×107·160×160·240×126px로 확인했고, 이미지 URL 버전을 갱신했다.
 - OG 카드는 `public/brand/social-{ko,ja,en}-v4.png`. 재생성하려면 개발 의존성을 설치하고 로컬 서버를 켠 뒤 `npm run social`을 실행한다. 파비콘과 터치 아이콘은 공식 PNG를 그대로 사용한다. Render에서는 커밋된 PNG를 사용하므로 브라우저 설치가 필요 없다.
@@ -108,22 +108,57 @@ npm run preview
 - 언어 변경 시 URL·공유 이미지 동기화, 새로고침 유지, 자동 모드 복귀 및 다운로드 안내 동작 확인.
 - 설정 기본값·로컬 덮어쓰기·빈 다운로드 상태·공개 변수 허용목록·잘못된 URL 거부.
 - 네 제품의 실제 웹 루트 HTTP 200 및 Render 커스텀 도메인 verified 상태 확인.
-- 실제 설치 파일은 아직 제공되지 않았으며 OS별 변수는 빈 값으로 배포한다.
+- 당시 설치 파일이 없는 OS는 준비 중으로 표시했다. 현재 공개 여부는 제품별 릴리스 카탈로그와 다운로드 페이지를 기준으로 한다.
 - 로컬 검토 화면과 상세 결과는 `output/playwright/`에 기록한다.
 
-### HWP desktop releases
+## 데스크톱 다운로드와 자동 업데이트
 
-`/downloads/hwp/` provides the HWP installer page (Korean, English, Japanese and system/light/dark themes). `PUBLIC_HWP_RELEASE_MANIFEST_URL` selects the public version feed. Existing `PUBLIC_HWP_{MACOS,WINDOWS,LINUX}_DOWNLOAD_URL` variables may point to this page or a verified versioned installer.
+WORD·SLIDE·CELL·HWP는 `/downloads/{product}/` 및 `/downloads/{product}/{ko,en,ja}/`에서 동일한 다운로드 UI를 사용한다. 각 제품의 로고·설명·지원 형식·실제 릴리스는 따로 관리한다. 테마 기본값은 시스템이며 라이트·다크 수동 선택은 WORKS 메인과 공유한다.
 
-`releases/hwp/catalog.json` pins private build archives by GitHub release asset ID, expected byte size and SHA-256. At build time `scripts/hwp-releases.mjs` downloads these archives with the build-only `DESKTOP_RELEASE_GITHUB_TOKEN`, validates every artifact, and places the actual installers and manifests under `dist/releases/hwp/`. The token never enters `public/config.js` or the client bundle. Retain old release entries to preserve immutable version URLs; switch only `stableVersion` when advertising a new release or rolling back. An invalid or missing artifact fails the deployment build, keeping the previous published site.
+- 모든 제품의 최초 데스크톱 버전 표기는 `1.0.0`이다. 설치 파일이 준비되지 않은 제품은 준비 중인 버전으로 표시한다.
+- macOS는 Apple Silicon arm64, Windows·Linux는 x64이다. 빌드와 해당 OS 검증을 통과한 설치 파일만 다운로드 버튼으로 제공한다.
+- 배포 서명·macOS 공증이 없다는 설치 안내, 새 버전 알림·문서 저장 후 업데이트 안내를 제공한다.
+- AI·스마트 모드·서버 백그라운드 생성·VORA 내보내기는 독립 실행형에서 제공하지 않는다. 외부 LLM/MCP 연결도 제공하지 않는다. 로컬 문서 편집·저장·내보내기는 각 제품 엔진의 지원 범위를 유지한다.
+- 하단의 보라 바로가기·가입·제작사 링크는 `PUBLIC_VORA_URL`, `PUBLIC_VORA_SIGNUP_URL`, `PUBLIC_COMPANY_URL`로 관리한다. OS·제품·제작사 공식 로고를 사용한다.
 
-Only verified targets have download buttons. macOS targets Apple Silicon only. Windows/Linux remain pending until their respective native build and smoke checks pass. The desktop app does not provide AI, Smart mode, background generation or Export to VORA; those belong to the web service.
+제품마다 다음 공개 환경변수를 지원한다. `WORD`를 `SLIDE`, `CELL`, `HWP`로 바꾸면 동일한 정책이다.
 
-Local release-pipeline regression: `node --test tests/hwp-releases.test.mjs`.
+```dotenv
+PUBLIC_WORD_DOWNLOAD_PAGE_URL=https://works.vora.im/downloads/word/
+PUBLIC_WORD_RELEASE_MANIFEST_URL=https://works.vora.im/releases/word/stable.json
+PUBLIC_WORD_MACOS_DOWNLOAD_URL=
+PUBLIC_WORD_WINDOWS_DOWNLOAD_URL=
+PUBLIC_WORD_LINUX_DOWNLOAD_URL=
+```
 
-### HWP 다운로드 페이지
+메인 페이지의 앱 다운로드 링크는 제품별 다운로드 페이지를 가리킨다. OS별 주소는 설치 파일이 검증된 뒤에만 설정한다. 실제 설치 파일과 자동 업데이트 버전 정보는 STATIC 서버가 제공한다. GitHub의 비공개 Release는 빌드 보관소로만 사용한다.
 
-- `/downloads/hwp/` 및 `/downloads/hwp/ko/`, `/en/`, `/ja/`는 언어별 정적 HTML, canonical, 상호 hreflang, SoftwareApplication JSON-LD, sitemap, OG/Twitter 정보를 제공한다. 실제 공개된 설치 파일만 링크와 메타데이터에 포함한다.
-- 테마 기본값은 시스템 설정이다. OS 테마 변화는 즉시 반영하며, 수동 선택은 WORKS 메인과 같은 저장 키를 사용한다. 제작사 로고도 같은 테마를 따른다.
-- 서비스·가입·제작사 링크는 `PUBLIC_VORA_URL`, `PUBLIC_VORA_SIGNUP_URL`, `PUBLIC_COMPANY_URL`로 관리한다.
-- 공유 카드: `public/brand/hwp-desktop-{ko,en,ja}-v1.png`, 1200×630. 로컬 서버 실행 후 `PREVIEW_URL=http://127.0.0.1:4190 node scripts/hwp-social-cards.mjs`로 재생성한다. 배포 빌드는 커밋된 PNG를 사용한다.
+### 릴리스 발행 계약
+
+`releases/{product}/catalog.json`은 GitHub Release asset ID, 공개 경로, 바이트 크기, SHA-256을 고정한다. 빌드 시 `scripts/desktop-releases.mjs`가 빌드 전용 `DESKTOP_RELEASE_GITHUB_TOKEN`으로 파일을 가져와 검증한 뒤 `dist/releases/{product}/`에 저장한다. 토큰은 공개 설정이나 클라이언트 번들에 포함하지 않는다.
+
+파일명은 `VORA-{WORD|SLIDE|CELL|HWP}-{version}-{mac|win|linux}-{arm64|x64}.{format}`이다. 공개 URL은 `/releases/{product}/{version}/{filename}`이고 자동 업데이트 피드는 `/releases/{product}/stable.json`이다. macOS는 DMG/ZIP, Linux는 AppImage, Windows는 EXE/ZIP과 native 제품의 MSI를 지원한다. HWP는 기존 EXE/ZIP 계약을 유지한다.
+
+제품·버전·아키텍처·출처 저장소가 다르거나 크기·체크섬이 일치하지 않으면 빌드가 실패하여 기존 배포를 유지한다. 빈 카탈로그는 `status: pending`, `artifacts: []`인 1.0.0 피드를 생성하고 다운로드 링크나 설치 가능 OS를 메타데이터에 표시하지 않는다. 이전 릴리스를 카탈로그에 유지해 버전별 URL이 사라지지 않게 하며, 새로운 릴리스 또는 롤백은 `stableVersion`으로 선택한다. 이미 공개한 버전의 설치 파일을 다른 파일로 교체하지 않는다.
+
+### 다운로드 페이지 SEO·OG
+
+- 16개 다운로드 경로의 본문을 정적 HTML로 생성하여 JavaScript 없이도 읽고 다운로드할 수 있다.
+- 제품·언어별 제목·설명·canonical·상호 hreflang·x-default·OG locale·Twitter 카드·SoftwareApplication JSON-LD와 sitemap을 제공한다.
+- 설치 파일이 없는 제품은 구조화 데이터에 다운로드 URL·설치 가능 OS·출시 버전을 주장하지 않는다.
+- 공유 카드 12장: `public/brand/{word,slide,cell,hwp}-desktop-{ko,en,ja}-v1.png`, 각 1200×630. 정사각형 크롭에도 제품명·심볼이 남도록 중앙 배치했다.
+- 로컬 서버 실행 후 `PREVIEW_URL=http://127.0.0.1:4190 npm run social:desktop`으로 재생성한다. Render는 커밋된 PNG를 사용한다.
+
+### 로컬 검증 — 2026-10-26
+
+```sh
+npm run test:releases
+PREVIEW_URL=http://127.0.0.1:4190 npm run test:downloads
+npm run build
+```
+
+- 4제품 × 3언어 × 2테마 × 4화면 폭(320·390·768·1440px), 96개 조합의 오버플로·폰트·로고·공식 링크·제품 내비게이션.
+- 실시간 시스템 테마와 수동 설정 저장, 언어 전환, 실제 다운로드 파일 검증 정보.
+- JavaScript를 끈 상태의 정적 본문·다운로드·canonical·hreflang·JSON-LD·12개 OG 이미지 규격.
+- 4제품 설치 파일 발행, 준비 중 피드, 다른 제품/호스트/버전/아키텍처 및 변조된 파일 거부.
+- 검토 스크린샷은 `output/desktop-downloads/`에 보관한다. 배포 후 기능 검증은 사용자가 직접 진행한다.

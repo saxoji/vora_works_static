@@ -36,7 +36,8 @@ export async function generateConfig() {
     companyUrl: url('PUBLIC_COMPANY_URL', true),
     products: Object.fromEntries(ids.map(id => [id, {
       web: url(`PUBLIC_${id.toUpperCase()}_WEB_URL`, true),
-      ...(id === 'hwp' ? { releaseManifestURL: url('PUBLIC_HWP_RELEASE_MANIFEST_URL') } : {}),
+      releaseManifestURL: url(`PUBLIC_${id.toUpperCase()}_RELEASE_MANIFEST_URL`),
+      downloadPageURL: url(`PUBLIC_${id.toUpperCase()}_DOWNLOAD_PAGE_URL`),
       downloads: Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, url(`PUBLIC_${id.toUpperCase()}_${os.toUpperCase()}_DOWNLOAD_URL`)])),
     }])),
   };
