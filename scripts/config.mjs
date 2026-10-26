@@ -32,9 +32,11 @@ export async function generateConfig() {
   const config = {
     siteUrl: url('PUBLIC_SITE_URL'),
     voraUrl: url('PUBLIC_VORA_URL', true),
+    voraSignupUrl: url('PUBLIC_VORA_SIGNUP_URL', true),
     companyUrl: url('PUBLIC_COMPANY_URL', true),
     products: Object.fromEntries(ids.map(id => [id, {
       web: url(`PUBLIC_${id.toUpperCase()}_WEB_URL`, true),
+      ...(id === 'hwp' ? { releaseManifestURL: url('PUBLIC_HWP_RELEASE_MANIFEST_URL') } : {}),
       downloads: Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, url(`PUBLIC_${id.toUpperCase()}_${os.toUpperCase()}_DOWNLOAD_URL`)])),
     }])),
   };

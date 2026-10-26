@@ -43,10 +43,10 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 ```
 
 `WORD`를 `SLIDE`, `CELL`, `HWP`로 바꾼 변수도 같은 방식으로 사용한다.
-값이 없으면 준비 중 안내를 표시한다. 현재 공개 설치 파일을 확인하지 못했으므로
-12개 다운로드 변수는 모두 비워 두었다. 공개 HTTPS URL만 허용한다.
+값이 없으면 준비 중 안내를 표시한다. 설치 파일이 준비된 OS만 다운로드 링크를 설정한다. 공개 HTTPS URL만 허용한다.
 
 - VORA 링크: `PUBLIC_VORA_URL`
+- VORA 가입 링크: `PUBLIC_VORA_SIGNUP_URL` (현재 공식 로그인·가입 공용 화면)
 - 제작사 링크: `PUBLIC_COMPANY_URL`
 - 운영 사이트 주소 및 공유·검색 메타데이터: `PUBLIC_SITE_URL`
 
@@ -110,3 +110,20 @@ npm run preview
 - 네 제품의 실제 웹 루트 HTTP 200 및 Render 커스텀 도메인 verified 상태 확인.
 - 실제 설치 파일은 아직 제공되지 않았으며 OS별 변수는 빈 값으로 배포한다.
 - 로컬 검토 화면과 상세 결과는 `output/playwright/`에 기록한다.
+
+### HWP desktop releases
+
+`/downloads/hwp/` provides the HWP installer page (Korean, English, Japanese and system/light/dark themes). `PUBLIC_HWP_RELEASE_MANIFEST_URL` selects the public version feed. Existing `PUBLIC_HWP_{MACOS,WINDOWS,LINUX}_DOWNLOAD_URL` variables may point to this page or a verified versioned installer.
+
+`releases/hwp/catalog.json` pins private build archives by GitHub release asset ID, expected byte size and SHA-256. At build time `scripts/hwp-releases.mjs` downloads these archives with the build-only `DESKTOP_RELEASE_GITHUB_TOKEN`, validates every artifact, and places the actual installers and manifests under `dist/releases/hwp/`. The token never enters `public/config.js` or the client bundle. Retain old release entries to preserve immutable version URLs; switch only `stableVersion` when advertising a new release or rolling back. An invalid or missing artifact fails the deployment build, keeping the previous published site.
+
+Only verified targets have download buttons. macOS targets Apple Silicon only. Windows/Linux remain pending until their respective native build and smoke checks pass. The desktop app does not provide AI, Smart mode, background generation or Export to VORA; those belong to the web service.
+
+Local release-pipeline regression: `node --test tests/hwp-releases.test.mjs`.
+
+### HWP 다운로드 페이지
+
+- `/downloads/hwp/` 및 `/downloads/hwp/ko/`, `/en/`, `/ja/`는 언어별 정적 HTML, canonical, 상호 hreflang, SoftwareApplication JSON-LD, sitemap, OG/Twitter 정보를 제공한다. 실제 공개된 설치 파일만 링크와 메타데이터에 포함한다.
+- 테마 기본값은 시스템 설정이다. OS 테마 변화는 즉시 반영하며, 수동 선택은 WORKS 메인과 같은 저장 키를 사용한다. 제작사 로고도 같은 테마를 따른다.
+- 서비스·가입·제작사 링크는 `PUBLIC_VORA_URL`, `PUBLIC_VORA_SIGNUP_URL`, `PUBLIC_COMPANY_URL`로 관리한다.
+- 공유 카드: `public/brand/hwp-desktop-{ko,en,ja}-v1.png`, 1200×630. 로컬 서버 실행 후 `PREVIEW_URL=http://127.0.0.1:4190 node scripts/hwp-social-cards.mjs`로 재생성한다. 배포 빌드는 커밋된 PNG를 사용한다.

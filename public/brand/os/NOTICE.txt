@@ -1,0 +1,4 @@
+Apple silhouette: existing VORA WORKS Simple Icons (CC0) artwork from src/view.js.
+Linux silhouette: Simple Icons, CC0-1.0, https://github.com/simple-icons/simple-icons/blob/develop/icons/linux.svg
+Windows mark: the four-pane Windows mark, consistent with the existing VORA WORKS platform buttons.
+Product names and logos identify supported operating systems. Trademarks belong to their respective owners.

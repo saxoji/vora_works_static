@@ -3,6 +3,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { generateConfig } from './config.mjs';
 import { renderDocument, routes } from './document.mjs';
+import { renderHwpPage, hwpRoutes } from './hwp-page.mjs';
 const built = process.argv.includes('dist');
 const config = !built ? await generateConfig() : null;
 const root = path.resolve(built ? 'dist' : '.');
@@ -11,6 +12,14 @@ const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; cha
 http.createServer(async (req, res) => {
   try {
     const requested = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if (!built && hwpRoutes.some(route => route === requested || route.slice(0, -1) === requested)) {
+      let manifest = null;
+      try { const catalog = JSON.parse(await readFile(path.join(root, 'releases/hwp/catalog.json'), 'utf8')); manifest = catalog.releases.find(release => release.manifest.version === catalog.stableVersion)?.manifest || null; } catch {}
+      const lang = requested.match(/\/(ko|en|ja)\/?$/)?.[1] || 'ko';
+      res.writeHead(200, {'Content-Type':mime['.html'], 'Cache-Control':'no-cache'});
+      res.end(renderHwpPage(config, lang, manifest, requested.endsWith('/') ? requested : requested + '/'));
+      return;
+    }
     const route = routes.find(route => route.path === requested || route.path.slice(0, -1) === requested);
     if (!built && route) {
       res.writeHead(200, { 'Content-Type': mime['.html'], 'Cache-Control': 'no-cache' });
@@ -19,8 +28,10 @@ http.createServer(async (req, res) => {
     }
     const resource = route ? `${route.path}index.html` : requested;
     const asset = !built && !resource.startsWith('/src/') && resource !== '/index.html' ? `/public${resource}` : resource;
-    const file = path.resolve(root, `.${asset}`);
-    if (!file.startsWith(`${root}${path.sep}`) || !(await stat(file)).isFile()) throw new Error('Not found');
+    let file = path.resolve(root, `.${asset}`);
+    if (!file.startsWith(`${root}${path.sep}`)) throw new Error('Not found');
+    if ((await stat(file)).isDirectory()) file = path.join(file, 'index.html');
+    if (!(await stat(file)).isFile()) throw new Error('Not found');
     res.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
     res.end(await readFile(file));
   } catch {

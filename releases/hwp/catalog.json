@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "stableVersion": "1.0.0",
+  "releases": [
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.0",
+        "publishedAt": "2026-10-26T05:25:33.836Z",
+        "notes": {
+          "ko": "VORA HWP 독립 실행판. 로컬 문서 편집과 저장, PDF·DOCX 내보내기를 지원합니다.",
+          "en": "Standalone VORA HWP with local editing, saving and PDF/DOCX export.",
+          "ja": "ローカル文書の編集・保存、PDF・DOCX出力に対応したVORA HWPです。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.0/VORA-HWP-1.0.0-mac-arm64.dmg",
+            "size": 329163572,
+            "sha256": "18d9edc02873a8a4ec7bf679d9a22b4b8a074d0f667ded4b604c3617e080d9c6"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.0/VORA-HWP-1.0.0-mac-arm64.zip",
+            "size": 326434175,
+            "sha256": "548cebc1b2b9eae0027c73481f3ee98a0ea41a37c31747bcbcbcfd34c9578a54"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.0-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677123926",
+        "VORA-HWP-1.0.0-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677123930"
+      }
+    }
+  ]
+}
