@@ -39,8 +39,8 @@ try {
       .bottom span { color: #939a91; font-size: 11px; letter-spacing: 2px; }
       .bottom img { width: 155px; height: auto; max-height: 36px; object-fit: contain; }
       </style></head><body>
-        <div class="edition"><span>THE WORKS COLLECTION</span><span>01 — 04 &nbsp; / &nbsp; ${lang.toUpperCase()}</span></div><div class="rule"></div>
-        <main><img class="symbol" src="${origin}/brand/vora-works.svg" alt=""><h1 class="title"><span class="title-line">VORA <em>AI</em></span><span class="title-line works">WORKS</span></h1><p class="tagline">${text.hero1} ${text.hero2}</p><div class="claim">${text.free}</div></main>
+        <div class="edition"><span>THE DOCS COLLECTION</span><span>01 — 04 &nbsp; / &nbsp; ${lang.toUpperCase()}</span></div><div class="rule"></div>
+        <main><img class="symbol" src="${origin}/brand/vora-works.svg" alt=""><h1 class="title"><span class="title-line">VORA <em>AI</em></span><span class="title-line works">DOCS</span></h1><p class="tagline">${text.hero1} ${text.hero2}</p><div class="claim">${text.free}</div></main>
         <section class="tools">${products.map(product=>`<div class="tool"><img src="${origin}/brand/vora-${product.id}.svg" alt=""><span>${product.name}</span></div>`).join('')}</section>
         <footer class="bottom"><span>VORA.IM</span><img src="${origin}/brand/horizon-dark.webp" alt="Linkbricks Horizon-AI"></footer>
       </body></html>`);

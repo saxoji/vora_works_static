@@ -41,7 +41,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
     close: svg('<path d="m6 6 12 12M6 18 18 6"/>'),
   };
   const brand = (id = 'works', cls = '', alt = '') => `<img class="product-icon ${cls}" src="/brand/vora-${id}.svg" alt="${alt}" width="128" height="128" />`;
-  const wordmark = (cls = '') => `<span class="wordmark ${cls}">VORA <em>AI</em> WORKS</span>`;
+  const wordmark = (cls = '') => `<span class="wordmark ${cls}">VORA <em>AI</em> DOCS</span>`;
   const escapeAttribute = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
   const link = (url, text, cls = '') => `<a class="${cls}" href="${escapeAttribute(url)}" target="_blank" rel="noopener noreferrer">${text}</a>`;
 
@@ -50,7 +50,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
   }
 
   function header() {
-    return `<a class="skip-link" href="#main">${t('skip')}</a><header class="header wrap"><a href="#" class="header-brand" aria-label="VORA AI WORKS">${brand()}${wordmark()}</a><nav class="main-nav" aria-label="VORA WORKS"><a href="#products">${t('navProducts')}</a><a href="#vora">${t('navAI')} ${icons.diagonal}</a></nav>${controls()}</header>`;
+    return `<a class="skip-link" href="#main">${t('skip')}</a><header class="header wrap"><a href="#" class="header-brand" aria-label="VORA AI DOCS">${brand()}${wordmark()}</a><nav class="main-nav" aria-label="VORA AI DOCS"><a href="#products">${t('navProducts')}</a><a href="#vora">${t('navAI')} ${icons.diagonal}</a></nav>${controls()}</header>`;
   }
 
   function platformButtons(product, full = false) {
@@ -67,12 +67,12 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
   }
 
   function collection(type = 'standard') {
-    return `<section class="collection wrap" id="products"><div class="section-heading"><div><span class="eyebrow">THE WORKS COLLECTION / 01—04</span><h2>${t('collection')}</h2></div><p>${t('collectionBody')}</p></div><div class="product-grid">${products.map((p, i) => productCard(p, i, type)).join('')}</div></section>`;
+    return `<section class="collection wrap" id="products"><div class="section-heading"><div><span class="eyebrow">THE DOCS COLLECTION / 01—04</span><h2>${t('collection')}</h2></div><p>${t('collectionBody')}</p></div><div class="product-grid">${products.map((p, i) => productCard(p, i, type)).join('')}</div></section>`;
   }
 
   function editorial() {
     const description = escapeAttribute(t('description')).replace(escapeAttribute(t('descriptionHighlight')), `<strong class="hand-underline">${escapeAttribute(t('descriptionHighlight'))}</strong>`);
-    return `${header()}<main id="main"><section class="editorial-hero wrap"><div class="editorial-topline"><span class="eyebrow">TOOLS FOR YOUR NEXT CHAPTER</span><span class="availability"><i></i>${t('free')}</span></div><h1 class="editorial-title"><span>VORA <em>AI</em></span><span class="works-line">WORKS<span class="hero-symbol">${brand()}</span></span></h1><div class="editorial-intro"><h2>${t('hero1')}<br /><span>${t('hero2')}</span></h2><div><p>${description}</p><p class="enterprise-contact"><span>${t('enterpriseContact')}</span><a href="mailto:contact@horizonai.ai">contact@horizonai.ai</a></p></div></div><div class="mini-collection">${products.map(p => `<a href="#${p.id}-overview" data-scroll-product="${p.id}">${brand(p.id)}<span>VORA ${p.name}</span>${icons.diagonal}</a>`).join('')}</div></section>${collection()}${anywhere()}${connection()}${footer()}</main>`;
+    return `${header()}<main id="main"><section class="editorial-hero wrap"><div class="editorial-topline"><span class="eyebrow">TOOLS FOR YOUR NEXT CHAPTER</span><span class="availability"><i></i>${t('free')}</span></div><h1 class="editorial-title"><span>VORA <em>AI</em></span><span class="works-line">DOCS<span class="hero-symbol">${brand()}</span></span></h1><div class="editorial-intro"><h2>${t('hero1')}<br /><span>${t('hero2')}</span></h2><div><p>${description}</p><p class="enterprise-contact"><span>${t('enterpriseContact')}</span><a href="mailto:contact@horizonai.ai">contact@horizonai.ai</a></p></div></div><div class="mini-collection">${products.map(p => `<a href="#${p.id}-overview" data-scroll-product="${p.id}">${brand(p.id)}<span>VORA ${p.name}</span>${icons.diagonal}</a>`).join('')}</div></section>${collection()}${anywhere()}${connection()}${footer()}</main>`;
   }
 
   function anywhere() {

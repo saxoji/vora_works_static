@@ -24,7 +24,7 @@ export const copy = {
     verify: '파일 검증 정보', verifyDescription: '다운로드한 파일의 SHA-256 값을 확인할 수 있습니다.',
     cloudTitle: 'AI와 함께하는 작업은, 보라에서.',
     cloudDescription: 'AI 문서 작성과 VORA로 내보내기는 보라 서비스에서 실행한 웹 버전에서 사용할 수 있습니다. 데스크톱 앱은 문서를 직접 편집하는 작업에 집중합니다.',
-    vora: '보라 서비스 바로가기', signup: '보라 서비스 가입하기', maker: '제작사', collection: 'VORA WORKS 둘러보기',
+    vora: '보라 서비스 바로가기', signup: '보라 서비스 가입하기', maker: '제작사', collection: 'VORA AI DOCS 둘러보기',
     theme: '화면 테마', language: '언어', system: '시스템 설정', light: '라이트', dark: '다크',
     shareTitle: '이제, 내 데스크톱에서.', shareDescription: 'HWP · HWPX 편집 / PDF · DOCX 내보내기',
   },
@@ -52,7 +52,7 @@ export const copy = {
     verify: 'File verification', verifyDescription: 'Check the SHA-256 checksum of your downloaded file.',
     cloudTitle: 'Bring AI into your work with VORA.',
     cloudDescription: 'AI document creation and Export to VORA are available in the web version launched from VORA. The desktop app focuses on editing documents on your device.',
-    vora: 'Explore VORA', signup: 'Join VORA', maker: 'Made by', collection: 'Explore VORA WORKS',
+    vora: 'Explore VORA', signup: 'Join VORA', maker: 'Made by', collection: 'Explore VORA AI DOCS',
     theme: 'Appearance', language: 'Language', system: 'System', light: 'Light', dark: 'Dark',
     shareTitle: 'At home on your desktop.', shareDescription: 'Edit HWP · HWPX / Export PDF · DOCX',
   },
@@ -80,7 +80,7 @@ export const copy = {
     verify: 'ファイルの検証情報', verifyDescription: 'ダウンロードしたファイルのSHA-256値を確認できます。',
     cloudTitle: 'AIとの文書作業は、VORAで。',
     cloudDescription: 'AIによる文書作成とVORAへの出力は、VORAから起動したウェブ版で利用できます。デスクトップアプリでは、端末上での文書編集に集中できます。',
-    vora: 'VORAを見る', signup: 'VORAに登録', maker: '開発元', collection: 'VORA WORKSを見る',
+    vora: 'VORAを見る', signup: 'VORAに登録', maker: '開発元', collection: 'VORA AI DOCSを見る',
     theme: '表示テーマ', language: '言語', system: 'システム設定', light: 'ライト', dark: 'ダーク',
     shareTitle: 'デスクトップでも、いつも通り。', shareDescription: 'HWP · HWPX 編集 / PDF · DOCX 出力',
   },
@@ -110,7 +110,7 @@ export const products = {
 export function desktopSocialImagePath(product, lang) {
   const definition = products[product];
   if (!definition || !languages.includes(lang)) throw new Error('Unknown product or language');
-  return `/brand/${product}-desktop-${lang}-v${definition.socialImageVersion || 1}.png`;
+  return `/brand/${product}-desktop-${lang}-v3.png`;
 }
 export function copyFor(lang, product) {
   const definition = products[product];

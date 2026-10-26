@@ -39,4 +39,4 @@ http.createServer(async (req, res) => {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Not found');
   }
-}).listen(port, '127.0.0.1', () => console.log(`VORA WORKS preview: http://127.0.0.1:${port}`));
+}).listen(port, '127.0.0.1', () => console.log(`VORA AI DOCS preview: http://127.0.0.1:${port}`));

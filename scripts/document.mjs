@@ -17,7 +17,7 @@ export function renderDocument(template, config, route) {
     ...supportedLanguages.map(code => `<link rel="alternate" hreflang="${code}" href="${escape(absolute(`/${code}/`))}" />`),
     `<link rel="alternate" hreflang="x-default" href="${escape(absolute('/'))}" />`,
     tag('property', 'og:type', 'website'),
-    tag('property', 'og:site_name', 'VORA AI WORKS'),
+    tag('property', 'og:site_name', 'VORA AI DOCS'),
     tag('property', 'og:title', meta.title),
     tag('property', 'og:description', meta.description),
     tag('property', 'og:url', meta.url),
