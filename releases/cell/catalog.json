@@ -1,5 +1,50 @@
 {
   "schemaVersion": 1,
-  "stableVersion": null,
-  "releases": []
+  "stableVersion": "1.0.0",
+  "releases": [
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.0",
+        "publishedAt": "2026-10-26T09:32:46.967238+00:00",
+        "notes": {
+          "ko": "로컬 통합 문서 편집·저장과 PDF·CSV·HTML·PNG 내보내기를 지원하는 VORA CELL 독립 실행판입니다.",
+          "en": "Standalone VORA CELL with local workbook editing, saving and PDF, CSV, HTML and PNG export.",
+          "ja": "ローカルブックの編集・保存とPDF・CSV・HTML・PNG出力に対応したVORA CELLです。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.0/VORA-CELL-1.0.0-mac-arm64.dmg",
+            "size": 62744915,
+            "sha256": "bca161363692c4983b2f58419a1ed2073a972249cc29649c920c3ea18df592c0"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.0/VORA-CELL-1.0.0-win-x64.msi",
+            "size": 52355072,
+            "sha256": "e3627b15a716cb860f1e2e356ec868f24998a44959faac2e95fad9c15f7de6f5"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.0/VORA-CELL-1.0.0-linux-x64.AppImage",
+            "size": 64207352,
+            "sha256": "3977291b07e931c0862c354e60fa5602f57463d9dc1f37ac918d9a7b83919b1a"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.0-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677652012",
+        "VORA-CELL-1.0.0-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677667598",
+        "VORA-CELL-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677652015"
+      }
+    }
+  ]
 }
