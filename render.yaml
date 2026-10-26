@@ -63,7 +63,7 @@ services:
       - key: PUBLIC_CELL_MACOS_DOWNLOAD_URL
         value: https://works.vora.im/downloads/cell/?os=macos
       - key: PUBLIC_CELL_WINDOWS_DOWNLOAD_URL
-        value: ""
+        value: https://works.vora.im/downloads/cell/?os=windows
       - key: PUBLIC_CELL_LINUX_DOWNLOAD_URL
         value: https://works.vora.im/downloads/cell/?os=linux
       - key: PUBLIC_HWP_MACOS_DOWNLOAD_URL

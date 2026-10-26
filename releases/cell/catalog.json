@@ -64,12 +64,30 @@
             "url": "https://works.vora.im/releases/cell/1.0.1/VORA-CELL-1.0.1-linux-x64.AppImage",
             "size": 1205758456,
             "sha256": "236a5b3e63373ef89be9c6d43cce509c0fd2fbd758a85a0bdbec50ecfaeda35d"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.1/VORA-CELL-1.0.1-win-x64.msi",
+            "size": 1070974854,
+            "sha256": "525e84c2654994b97693c21327d5b75cd041f207494513a14ab42b1c09ed2b0f"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.1/VORA-CELL-1.0.1-win-x64.zip",
+            "size": 1070975006,
+            "sha256": "26cdf8b8430c4a7774926ba8c0e611406db0dfb436e1b94ee90aedde30a9df50"
           }
         ]
       },
       "assets": {
         "VORA-CELL-1.0.1-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679033196",
-        "VORA-CELL-1.0.1-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679027061"
+        "VORA-CELL-1.0.1-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679027061",
+        "VORA-CELL-1.0.1-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679353425",
+        "VORA-CELL-1.0.1-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679355103"
       }
     }
   ]
