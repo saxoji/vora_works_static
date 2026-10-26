@@ -7,6 +7,16 @@ services:
     buildCommand: npm ci --omit=dev && npm run build
     staticPublishPath: ./dist
     autoDeployTrigger: commit
+    routes:
+      - type: redirect
+        source: /releases/hwp/1.0.0/VORA-HWP-1.0.0-mac-*
+        destination: /downloads/hwp/?os=macos
+      - type: redirect
+        source: /releases/hwp/1.0.1/VORA-HWP-1.0.1-mac-*
+        destination: /downloads/hwp/?os=macos
+      - type: redirect
+        source: /releases/cell/1.0.0/VORA-CELL-1.0.0-mac-*
+        destination: /downloads/cell/?os=macos
     headers:
       - path: /releases/*/stable.json
         name: Cache-Control
