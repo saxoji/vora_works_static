@@ -53,7 +53,7 @@ services:
       - key: PUBLIC_WORD_WINDOWS_DOWNLOAD_URL
         value: ""
       - key: PUBLIC_WORD_LINUX_DOWNLOAD_URL
-        value: ""
+        value: https://works.vora.im/downloads/word/?os=linux
       - key: PUBLIC_SLIDE_MACOS_DOWNLOAD_URL
         value: ""
       - key: PUBLIC_SLIDE_WINDOWS_DOWNLOAD_URL
