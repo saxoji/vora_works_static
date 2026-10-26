@@ -45,7 +45,10 @@ test('CELL and HWP desktop defaults connect all three OS links without exposing 
     assert.equal(result.config.products[product].releaseManifestURL, `https://works.vora.im/releases/${product}/stable.json`);
     for (const lang of ['ko', 'en', 'ja']) {
       const dialog = createView({ lang, config: result.config }).downloadDialog(product, 'macOS');
-      for (const url of Object.values(links)) assert.ok(dialog.includes(`href="${url}"`), `${lang}: ${url}`);
+      for (const url of Object.values(links)) {
+        const localized = url.replace(`/downloads/${product}/`, `/downloads/${product}/${lang}/`);
+        assert.ok(dialog.includes(`href="${localized}"`), `${lang}: ${localized}`);
+      }
     }
   }
   for (const product of ['word', 'slide']) {
@@ -90,5 +93,59 @@ test('invalid or credential-bearing public installer URLs fail before writing br
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /PUBLIC_CELL_MACOS_DOWNLOAD_URL/);
     assert.equal(result.source, '');
+  }
+});
+
+const hrefs = html => [...html.matchAll(/href="([^"]*)"/g)].map(match => match[1].replaceAll('&amp;', '&').replaceAll('&quot;', '"'));
+
+test('internal download labels, OS buttons and popups follow the current language without losing OS queries or fragments', async () => {
+  const { config } = await generate();
+  for (const product of ['word', 'slide', 'cell', 'hwp']) {
+    for (const lang of ['ko', 'en', 'ja']) {
+      for (const path of [`https://works.vora.im/downloads/${product}/`, `https://works.vora.im/downloads/${product}/ko/`, `/downloads/${product}/ja/`]) {
+        const input = structuredClone(config);
+        input.products[product].downloadPageURL = `${path}?from=label#install`;
+        input.products[product].downloads = Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, `${path}?os=${os}&from=a%20b#files`]));
+        const before = JSON.stringify(input);
+        const view = createView({ lang, config: input });
+        const page = hrefs(view.html), popup = hrefs(view.downloadDialog(product, 'macOS'));
+        const prefix = path.startsWith('/') ? '' : 'https://works.vora.im';
+        assert.ok(page.includes(`${prefix}/downloads/${product}/${lang}/?from=label#install`));
+        for (const os of ['macos', 'windows', 'linux']) {
+          const expected = `${prefix}/downloads/${product}/${lang}/?os=${os}&from=a%20b#files`;
+          assert.ok(page.includes(expected), `OS button ${product}/${lang}/${os}`);
+          assert.ok(popup.includes(expected), `popup ${product}/${lang}/${os}`);
+        }
+        assert.equal(JSON.stringify(input), before, 'localization must not mutate shared public configuration');
+      }
+      const input = structuredClone(config);
+      input.products[product].downloads.macos = `https://works.vora.im/downloads/${product}/ko/?lang=ko&os=macos#files`;
+      const url = hrefs(createView({ lang, config: input }).downloadDialog(product, 'macOS')).map(value => new URL(value)).find(url => url.searchParams.has('os'));
+      assert.equal(url.pathname, `/downloads/${product}/${lang}/`);
+      assert.equal(url.searchParams.get('lang'), lang);
+      assert.equal(url.searchParams.get('os'), 'macos');
+      assert.equal(url.hash, '#files');
+    }
+  }
+});
+
+test('external, custom and direct-installer URLs remain unchanged in every language', async () => {
+  const { config } = await generate();
+  const unchanged = [
+    'https://other.example.test/downloads/cell/ko/?os=macos#files',
+    'https://works.vora.im.example.test/downloads/cell/?os=macos#files',
+    'https://works.vora.im/releases/cell/1.0.0/VORA-CELL-1.0.0-mac-arm64.dmg?signature=a%2Bb#file',
+    'https://works.vora.im/custom/cell/?os=macos#files',
+    'https://works.vora.im/downloads/cell/custom/?os=macos#files',
+  ];
+  for (const lang of ['ko', 'en', 'ja']) {
+    for (const url of unchanged) {
+      const input = structuredClone(config);
+      input.products.cell.downloadPageURL = url;
+      input.products.cell.downloads = { macos: url, windows: '', linux: '' };
+      const view = createView({ lang, config: input });
+      assert.ok(hrefs(view.html).includes(url), `${lang}: main ${url}`);
+      assert.ok(hrefs(view.downloadDialog('cell', 'macOS')).includes(url), `${lang}: popup ${url}`);
+    }
   }
 });

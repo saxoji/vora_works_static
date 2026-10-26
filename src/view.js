@@ -1,9 +1,28 @@
 import { products as definitions, copy } from './content.js';
 
+// Keep navigation inside WORKS in the chosen language. Installer files and
+// custom/external destinations keep their configured addresses unchanged.
+function localizedDownloadUrl(value, siteUrl, lang) {
+  if (!value || !['ko', 'en', 'ja'].includes(lang)) return value;
+  try {
+    const site = new URL(siteUrl), url = new URL(value, site);
+    const route = url.pathname.match(/^\/downloads\/(word|slide|cell|hwp)(?:\/(ko|en|ja))?\/?$/);
+    if (url.origin !== site.origin || !route || url.username || url.password) return value;
+    url.pathname = `/downloads/${route[1]}/${lang}/`;
+    // The download page gives an explicit language query priority over its path.
+    if (url.searchParams.has('lang')) url.searchParams.set('lang', lang);
+    return value.startsWith('/') && !value.startsWith('//') ? `${url.pathname}${url.search}${url.hash}` : url.href;
+  } catch { return value; }
+}
+
 // Shared by the static build and the browser: crawlers receive the full page.
 export function createView({ lang, theme = 'dark', languagePreference = lang, themePreference = 'system', config }) {
   const t = key => copy[lang][key];
-  const products = definitions.map(product => ({ ...product, url: config.products[product.id].web, downloads: config.products[product.id].downloads, downloadPageURL: config.products[product.id].downloadPageURL }));
+  const products = definitions.map(product => ({
+    ...product, url: config.products[product.id].web,
+    downloads: Object.fromEntries(Object.entries(config.products[product.id].downloads).map(([os, url]) => [os, localizedDownloadUrl(url, config.siteUrl, lang)])),
+    downloadPageURL: localizedDownloadUrl(config.products[product.id].downloadPageURL, config.siteUrl, lang),
+  }));
   const svg = (body, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
   const icons = {
     arrow: svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
