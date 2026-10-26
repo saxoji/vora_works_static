@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.1",
+  "stableVersion": "1.0.2",
   "releases": [
     {
       "manifest": {
@@ -88,6 +88,50 @@
         "VORA-HWP-1.0.1-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590725",
         "VORA-HWP-1.0.1-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590726",
         "VORA-HWP-1.0.1-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590724"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.2",
+        "publishedAt": "2026-10-26T14:37:26.605468Z",
+        "notes": {
+          "ko": "시스템 글꼴 선택·입력·저장 호환성과 설치 후 자동 업데이트를 보강했습니다.",
+          "en": "Improved system font selection, editing and save compatibility, with verified desktop update and restart.",
+          "ja": "システムフォントの選択・入力・保存の互換性と、インストール後の自動更新を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.2/VORA-HWP-1.0.2-win-x64.exe",
+            "size": 218069288,
+            "sha256": "a2f39c0d6c5ae429088292f6a687dc103c7e2ee4d04a382d1be644d4c34378b6"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.2/VORA-HWP-1.0.2-win-x64.zip",
+            "size": 266754105,
+            "sha256": "63cd00b400c1b3ab483fbf5d8592f62a362dc9994745f4cb2581d1f599bad29a"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.2/VORA-HWP-1.0.2-linux-x64.AppImage",
+            "size": 371158016,
+            "sha256": "4f72aad727fa5974fcc94d4719ba0fd4122485114c4256f1c5920cde2d9265f9"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.2-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/678399940",
+        "VORA-HWP-1.0.2-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/678399941",
+        "VORA-HWP-1.0.2-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/678416440"
       }
     }
   ]

@@ -57,7 +57,7 @@ try {
   for(const product of Object.keys(products)) for(const lang of ['ko','en','ja']) {
     const catalog = JSON.parse(await readFile(`releases/${product}/catalog.json`));
     const manifest = catalog.releases.find(r=>r.manifest.version===catalog.stableVersion)?.manifest;
-    const available = new Set(manifest?.artifacts.filter(a=>a.format!=='zip').map(a=>a.platform)||[]);
+    const available = new Set(manifest?.artifacts.map(a=>a.platform)||[]);
     await staticPage.goto(`${base}/downloads/${product}/${lang}/`);
     assert.equal(await staticPage.locator('h1').count(),1);
     assert.equal(await staticPage.locator('a.download-button').count(),available.size);

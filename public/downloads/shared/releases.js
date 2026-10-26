@@ -15,3 +15,13 @@ export function validArtifacts(manifest, siteUrl, product = 'hwp') {
   if(manifest?.schemaVersion !== 1 || manifest.product !== product || !Array.isArray(manifest.artifacts))return [];
   return manifest.artifacts.filter(artifact=>validArtifact(artifact, product, manifest.version, siteUrl));
 }
+
+// The updater still receives the original installer in the manifest; user downloads prefer ZIP on Windows.
+export function preferredArtifact(artifacts, platform) {
+  const formats = {windows:['zip','msi','exe'],macos:['dmg','zip'],linux:['AppImage']}[platform] || [];
+  for (const format of formats) {
+    const artifact = artifacts.find(item => item.platform === platform && item.format === format);
+    if (artifact) return artifact;
+  }
+  return undefined;
+}

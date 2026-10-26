@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { publishProductReleases, publishDesktopReleases } from '../scripts/desktop-releases.mjs';
-import { validArtifacts } from '../public/downloads/shared/releases.js';
+import { validArtifacts, preferredArtifact } from '../public/downloads/shared/releases.js';
 
 const siteUrl = 'https://works.vora.im';
 const data = Buffer.from('verified desktop installer fixture');
@@ -65,4 +65,25 @@ test('cross-product archives and tampered bytes fail before publishing a stable 
     await assert.rejects(publishProductReleases({root,dist,product:'word',siteUrl,fetcher:async()=>new Response(Buffer.alloc(data.length))}),tampered?/checksum/:/Untrusted/);
     await assert.rejects(stat(new URL('releases/word/stable.json',dist)));
   });
+});
+
+test('Windows user downloads and SEO prefer ZIP while the installer remains in the update feed', async()=>{
+  const {renderDesktopPage}=await import('../scripts/desktop-pages.mjs');
+  for(const product of ['word','slide','cell','hwp']) {
+    const installer=fixture(product,'windows',product==='hwp'?'exe':'msi').manifest.artifacts[0];
+    const zip=fixture(product,'windows','zip').manifest.artifacts[0];
+    const manifest={schemaVersion:1,product,version:'1.0.0',artifacts:[installer,zip]};
+    const artifacts=validArtifacts(manifest,siteUrl,product);
+    assert.equal(preferredArtifact(artifacts,'windows'),zip);
+    assert.equal(preferredArtifact([installer],'windows'),installer);
+    const config={siteUrl,companyUrl:'https://horizonai.ai',voraUrl:'https://vora.im',voraSignupUrl:'https://vora.im',products:{[product]:{web:'https://example.org/'}}};
+    for(const language of ['ko','en','ja']) {
+      const html=renderDesktopPage(config,product,language,manifest);
+      const button=html.match(/class="button primary download-button" href="([^"]+)/);
+      assert.equal(button?.[1],zip.url);
+      const structured=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
+      assert.deepEqual(structured.downloadUrl,[zip.url]);
+    }
+    assert.equal(manifest.artifacts[0],installer,'raw installer retained for automatic update');
+  }
 });
