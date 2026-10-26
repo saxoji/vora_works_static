@@ -72,7 +72,7 @@ export const products = {
       en:{pageTitle:'Download VORA SLIDE | Desktop presentation editor',description:'Give your ideas a place to shine. Open, edit and save presentations on your own device.',features:['Open and edit presentations','Save slides on your device','New version alerts and updates'],shareDescription:'Create presentations on your desktop'},
       ja:{pageTitle:'VORA SLIDE ダウンロード | デスクトッププレゼンテーションエディター',description:'アイデアから発表まで、自分らしいスライドで伝えましょう。端末上でプレゼンテーションを開いて、編集・保存します。',features:['プレゼンテーションの編集','端末にスライドを保存','新しいバージョンの通知と更新'],shareDescription:'デスクトップで作るプレゼンテーション'},
     } },
-  cell: { name:'CELL', version:'1.0.0', formats:['XLSX','CSV','PDF'],
+  cell: { name:'CELL', version:'1.0.0', formats:['XLSX','CSV','TSV'], socialImageVersion:2,
     copy: {
       ko:{pageTitle:'VORA CELL 다운로드 | 데스크톱 스프레드시트 편집기',description:'숫자를 정리하고, 계산하고, 새로운 가능성을 발견하세요. 내 기기에서 스프레드시트를 열고 편집하고 저장합니다.',features:['스프레드시트 편집과 계산','내 기기에 시트 저장','새 버전 알림과 업데이트'],shareDescription:'내 기기에서 이어가는 스프레드시트 작업'},
       en:{pageTitle:'Download VORA CELL | Desktop spreadsheet editor',description:'Organize, calculate and discover. Open, edit and save spreadsheets on your own device.',features:['Spreadsheet editing and formulas','Save sheets on your device','New version alerts and updates'],shareDescription:'Work with spreadsheets on your desktop'},
@@ -80,6 +80,11 @@ export const products = {
     } },
   hwp: { name:'HWP', version:'1.0.0', formats:['HWP','HWPX'], copy:{} },
 };
+export function desktopSocialImagePath(product, lang) {
+  const definition = products[product];
+  if (!definition || !languages.includes(lang)) throw new Error('Unknown product or language');
+  return `/brand/${product}-desktop-${lang}-v${definition.socialImageVersion || 1}.png`;
+}
 export function copyFor(lang, product) {
   const definition = products[product];
   if (!definition || !languages.includes(lang)) throw new Error('Unknown product or language');

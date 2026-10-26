@@ -1,6 +1,6 @@
 // Authoring only: PNGs are committed; production builds need no browser.
 import { chromium } from 'playwright';
-import { copyFor, products, languages } from '../public/downloads/shared/content.js';
+import { copyFor, products, languages, desktopSocialImagePath } from '../public/downloads/shared/content.js';
 import { mkdir } from 'node:fs/promises';
 const origin = process.env.PREVIEW_URL || 'http://127.0.0.1:4190';
 const browser = await chromium.launch({headless:true,channel:'chrome'});
@@ -19,7 +19,7 @@ try {
     await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(image=>image.decode()));});
     const bounds = await page.locator('h1').evaluate(element=>{const range=document.createRange();range.selectNodeContents(element);const r=range.getBoundingClientRect();return {left:r.left,right:r.right};});
     if(bounds.left<285||bounds.right>915)throw new Error(`${product}/${lang}: product title is outside the square crop safe area`);
-    await page.screenshot({path:`public/brand/${product}-desktop-${lang}-v1.png`});
+    await page.screenshot({path:`public${desktopSocialImagePath(product, lang)}`});
     console.log(`VORA ${definition.name} OG ${lang}: 1200x630, centered product title verified`);
   }
 } finally {await browser.close();}

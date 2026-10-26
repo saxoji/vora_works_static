@@ -1,11 +1,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { copyFor, products, languages } from '../public/downloads/shared/content.js';
+import { copyFor, products, languages, desktopSocialImagePath } from '../public/downloads/shared/content.js';
 import { renderBody, escape, validArtifacts } from '../public/downloads/shared/view.js';
 export const desktopRoutes = Object.keys(products).flatMap(product => [`/downloads/${product}/`, ...languages.map(lang => `/downloads/${product}/${lang}/`)]);
 export function renderDesktopPage(config, product, lang, manifest, path = `/downloads/${product}/${lang}/`) {
   const t = copyFor(lang, product), origin = config.siteUrl, absolute = path => new URL(path, origin).href;
   const artifacts = validArtifacts(manifest, origin, product);
-  const title = t.pageTitle, description = t.description, image = absolute(`/brand/${product}-desktop-${lang}-v1.png`);
+  const title = t.pageTitle, description = t.description, image = absolute(desktopSocialImagePath(product, lang));
   const json = data => JSON.stringify(data).replaceAll('<', '\\u003c');
   const structured = {'@context':'https://schema.org','@type':'SoftwareApplication', name:'VORA '+products[product].name, applicationCategory:'ProductivityApplication', url:absolute(path), description, image,
     ...(artifacts.length ? {operatingSystem:[...new Set(artifacts.map(a => ({macos:'macOS (Apple Silicon)',windows:'Windows',linux:'Linux'}[a.platform])))].join(', ')} : {}),
