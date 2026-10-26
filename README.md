@@ -45,6 +45,20 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 `WORD`를 `SLIDE`, `CELL`, `HWP`로 바꾼 변수도 같은 방식으로 사용한다.
 값이 없으면 준비 중 안내를 표시한다. 설치 파일이 준비된 OS만 다운로드 링크를 설정한다. 공개 HTTPS URL만 허용한다.
 
+CELL은 세 OS의 설치 파일이 등록되어 있어 다음 다운로드 페이지 주소를 기본값으로 사용한다.
+주소를 변경하려면 `.env.local` 또는 Render Environment에서 해당 키를 덮어쓴다.
+특정 OS의 링크를 임시로 숨길 때는 그 키의 값을 빈 문자열로 설정한다.
+
+```dotenv
+PUBLIC_CELL_MACOS_DOWNLOAD_URL=https://works.vora.im/downloads/cell/?os=macos
+PUBLIC_CELL_WINDOWS_DOWNLOAD_URL=https://works.vora.im/downloads/cell/?os=windows
+PUBLIC_CELL_LINUX_DOWNLOAD_URL=https://works.vora.im/downloads/cell/?os=linux
+```
+
+이 설정은 메인 페이지의 OS별 다운로드 링크를 연결한다. 다운로드 페이지의 실제 설치 파일·버전·체크섬은
+`releases/cell/catalog.json`에서 관리하며, 공개 링크 설정만으로 카탈로그나 설치 파일을 변경하지 않는다.
+HWP도 세 OS의 설치 파일이 등록되어 있으며 `PUBLIC_HWP_*_DOWNLOAD_URL`의 기본값은 같은 형식의 `/downloads/hwp/?os=macos|windows|linux` 주소다.
+
 - VORA 링크: `PUBLIC_VORA_URL`
 - VORA 가입 링크: `PUBLIC_VORA_SIGNUP_URL` (현재 공식 로그인·가입 공용 화면)
 - 제작사 링크: `PUBLIC_COMPANY_URL`
@@ -152,13 +166,24 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 ### 로컬 검증 — 2026-10-26
 
 ```sh
+npm run test:config
 npm run test:releases
 PREVIEW_URL=http://127.0.0.1:4190 npm run test:downloads
 npm run build
 ```
 
+- 공개 설정 검사는 임시 경로에서 기본값·로컬 및 환경변수 우선순위·빈 값으로 링크 숨기기·잘못된 URL 거부·토큰 비노출과 3언어 다운로드 링크를 확인한다. 실제 `.env.local`이나 공개 빌드 결과는 변경하지 않는다.
+- 메인과 제품별 다운로드 페이지 하단의 `AI`는 기존 메인 로고와 같은 Instrument Serif 기울임체·파란색을 사용하며, 주변 글자의 1.4배 크기로 맞춘다.
 - 4제품 × 3언어 × 2테마 × 4화면 폭(320·390·768·1440px), 96개 조합의 오버플로·폰트·로고·공식 링크·제품 내비게이션.
 - 실시간 시스템 테마와 수동 설정 저장, 언어 전환, 실제 다운로드 파일 검증 정보.
 - JavaScript를 끈 상태의 정적 본문·다운로드·canonical·hreflang·JSON-LD·12개 OG 이미지 규격.
 - 4제품 설치 파일 발행, 준비 중 피드, 다른 제품/호스트/버전/아키텍처 및 변조된 파일 거부.
+- 다운로드 페이지는 같은 제품의 유효한 준비 중 피드를 받으면 이전 설치 링크를 제거한다. 잘못된 피드·다른 제품 응답·통신 실패 때는 빌드 당시의 다운로드 정보를 유지한다. 이 전환은 실제 페이지 코드의 Node 회귀로 검사한다.
 - 검토 스크린샷은 `output/desktop-downloads/`에 보관한다. 배포 후 기능 검증은 사용자가 직접 진행한다.
+
+### 메인 다운로드·브랜드·SEO 후속 검증 — 2026-10-26
+
+- CELL·HWP 공개 설치 파일의 macOS·Windows·Linux 링크를 기본 환경값 및 Render 공개 설정에 연결했다. WORD·SLIDE는 설치 파일 공개 전까지 준비 중 상태를 유지한다.
+- 실제 배포 파일을 제공하는 정적 서버에서 메인 24조합, 다운로드 96조합, 하단 AI 로고 40조합을 검사했다. UI와 JavaScript 비활성 HTML의 CELL·HWP 3개 링크가 일치한다. 이전 설정을 보관한 개발 서버의 응답은 최종 증거로 사용하지 않는다.
+- 한국어·영어·일본어 메인 OG 3장과 제품별 다운로드 OG 12장을 재생성했다. 메인은 파란 AI 로고에 맞춘 `social-*-v5.png`로 캐시를 분리했다. 15개 언어별 페이지의 제목·설명·canonical·hreflang·JSON-LD·Twitter/OG 주소 및 실제 1200×630 이미지를 확인했다.
+- 로컬 UI 빌드는 변경하지 않은 릴리스 카탈로그·이미 검증된 설치 파일/manifest를 재사용하여 중복 다운로드를 피했다. 운영 Render 빌드는 기존 publisher의 실제 설치 파일 다운로드·SHA 검증을 그대로 실행한다. 배포 후 기능 검사는 사용자 검증 범위이며 자동 확인은 배포 상태에 한정한다.

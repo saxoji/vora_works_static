@@ -26,7 +26,7 @@ try {
       .symbol { display: block; width: 72px; height: 72px; margin: 0 auto 21px; background: #151619; }
       .title { margin: 0; font-size: 142px; font-weight: 650; line-height: .95; letter-spacing: -8px; }
       .title-line { display: inline-block; white-space: nowrap; }
-      .title em { font-family: Editorial, serif; font-weight: 400; color: #bfe1c6; letter-spacing: -5px; }
+      .title em { font-family: Editorial, serif; font-weight: 400; color: #a9c5ff; letter-spacing: -5px; }
       .title .works { display: block; letter-spacing: -6px; }
       .tagline { margin: 24px 0 0; font-size: 27px; font-weight: 500; letter-spacing: -1px; color: #c0c4bd; white-space: nowrap; }
       .claim { display: inline-block; position: relative; margin-top: 14px; padding-bottom: 8px; font-size: 20px; font-weight: 600; letter-spacing: -.3px; }

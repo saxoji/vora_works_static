@@ -31,7 +31,13 @@ try {
   const response = await fetch(config.products[product].releaseManifestURL || `/releases/${product}/stable.json`, {cache:'no-store'});
   if (response.ok) {
     const data = await response.json();
-    if (validArtifacts(data, config.siteUrl, product).length && JSON.stringify(data) !== JSON.stringify(manifest)) {
+    // A valid pending feed intentionally withdraws the build-time download links.
+    // Missing/invalid artifacts alone are not authority to remove a release.
+    const pending = data?.schemaVersion === 1 && data.product === product && data.status === 'pending'
+      && typeof data.version === 'string' && data.version === data.version.trim() && /^\d+\.\d+\.\d+$/.test(data.version)
+      && Array.isArray(data.artifacts) && data.artifacts.length === 0;
+    const available = data?.status !== 'pending' && validArtifacts(data, config.siteUrl, product).length > 0;
+    if ((pending || available) && JSON.stringify(data) !== JSON.stringify(manifest)) {
       manifest = data; render();
     }
   }

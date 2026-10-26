@@ -3,7 +3,7 @@ import { copy, products } from './content.js';
 export const localeCodes = { ko: 'ko_KR', ja: 'ja_JP', en: 'en_US' };
 export const supportedLanguages = Object.keys(localeCodes);
 // Version the image URL so clients fetch the revised thumbnail composition.
-export const socialImagePath = lang => `/brand/social-${lang}-v4.png`;
+export const socialImagePath = lang => `/brand/social-${lang}-v5.png`;
 
 const descriptions = {
   ko: '개인 누구나 무료로, 자유롭게. VORA WORD·SLIDE·CELL·HWP로 문서, 발표, 스프레드시트, 한글 문서를 만드세요. VORA.IM과 무료 클라우드 HYPER RAG로 연결되는 AI 작업 공간.',
