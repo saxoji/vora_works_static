@@ -51,9 +51,14 @@ test('CELL and HWP desktop defaults connect all three OS links without exposing 
       }
     }
   }
-  for (const product of ['word', 'slide']) {
-    assert.deepEqual(result.config.products[product].downloads, { macos: '', windows: '', linux: '' });
+  assert.deepEqual(result.config.products.word.downloads, {
+    macos: '', windows: '', linux: 'https://works.vora.im/downloads/word/?os=linux',
+  });
+  for (const lang of ['ko', 'en', 'ja']) {
+    const dialog = createView({lang, config:result.config}).downloadDialog('word', 'Linux');
+    assert.ok(dialog.includes(`href="https://works.vora.im/downloads/word/${lang}/?os=linux"`));
   }
+  assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: '' });
   assert.doesNotMatch(result.source, /synthetic-token-must-stay-private|DESKTOP_RELEASE_GITHUB_TOKEN/);
 });
 
