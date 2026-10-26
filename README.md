@@ -201,3 +201,5 @@ npm run build
 
 - WORD 1.0.0 Apple Silicon DMG는 소스·패키징 `5296e15881240527e463e8ed8a5e2c77ea230c55`로, Developer ID 서명·Apple 공증·앱/DMG 스테이플링을 완료했다. 실제 Chrome 다운로드 격리 속성, Finder 설치, 정상 보안 안내, Arial 입력·DOCX 재열기와 자동 업데이트·시작 실패 복구 검증을 통과했다.
 - 파일 크기 87,726,392바이트, SHA-256 `2b4a8f796e87954f61eac5cb5b9e274717ed1d9f98957b30632328197a2b42a2`. `PUBLIC_WORD_MACOS_DOWNLOAD_URL`을 추가 활성화하고 기존 Linux 파일을 보존한다. Windows는 최종 검증 전까지 비활성이다.
+
+- 2026-10-27: 4개 제품·3개 언어 다운로드 페이지의 설치 안내를 정식 서명·Apple 공증된 Mac 공개본에 맞췄습니다. DMG 열기 → 응용 프로그램 복사 → 표준 첫 실행 확인을 안내하고, Windows 코드 서명 상태는 별도로 표시합니다. 기본 보안 우회 안내는 제거했습니다.
