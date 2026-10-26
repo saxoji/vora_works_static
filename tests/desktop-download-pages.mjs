@@ -4,6 +4,10 @@ import { readFile, mkdir } from 'node:fs/promises';
 import { products } from '../public/downloads/shared/content.js';
 await mkdir('output/desktop-downloads',{recursive:true});
 const base = process.env.PREVIEW_URL || 'http://127.0.0.1:4190';
+const expectedVersions = Object.fromEntries(await Promise.all(Object.keys(products).map(async product => {
+  const catalog = JSON.parse(await readFile(`releases/${product}/catalog.json`));
+  return [product, catalog.stableVersion || products[product].version];
+})));
 const browser = await chromium.launch({headless:true,channel:'chrome'});
 const errors = [];
 try {
@@ -23,7 +27,7 @@ try {
     assert.equal(await page.locator('.product-navigation a').count(),4);
     assert.equal(await page.locator('.product-navigation [aria-current=page]').textContent(),product.toUpperCase());
     assert.match(await page.locator('h1').textContent(),new RegExp('VORA '+product.toUpperCase()));
-    assert.match(await page.locator('#release').textContent(),/1\.0\.0/);
+    assert.ok((await page.locator('#release').textContent()).includes(expectedVersions[product]));
     const metrics = await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,background:getComputedStyle(document.body).backgroundColor,logoDark:getComputedStyle(document.querySelector('.maker-dark')).display,broken:[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.src)}));
     assert.equal(metrics.overflow,false,`${product}/${lang}/${colorScheme}/${width}: horizontal overflow`);
     assert.deepEqual(metrics.broken,[]);
@@ -63,7 +67,7 @@ try {
     const json=JSON.parse(await staticPage.locator('script[type="application/ld+json"]').textContent());
     assert.equal(json['@type'],'SoftwareApplication');
     assert.equal(json.name,'VORA '+product.toUpperCase());
-    assert.equal(json.softwareVersion,available.size?'1.0.0':undefined);
+    assert.equal(json.softwareVersion,available.size?manifest.version:undefined);
     assert.equal(json.downloadUrl?.length||0,available.size);
     if(!available.size) assert.equal(json.operatingSystem,undefined);
     assert.equal(await staticPage.locator('meta[name=description]').getAttribute('content'),json.description);

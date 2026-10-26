@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.0",
+  "stableVersion": "1.0.1",
   "releases": [
     {
       "manifest": {
@@ -62,6 +62,68 @@
         "VORA-HWP-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677253819",
         "VORA-HWP-1.0.0-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677293574",
         "VORA-HWP-1.0.0-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677293571"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.1",
+        "publishedAt": "2026-10-26T08:43:09.195Z",
+        "notes": {
+          "ko": "대체 글꼴 정보와 텍스트 바꾸기 후 글자 서식·저장 호환성을 보강했습니다.",
+          "en": "Improved alternate font metadata and character-style preservation when replacing and saving text.",
+          "ja": "代替フォント情報と文字の置換・保存時の書式互換性を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.1/VORA-HWP-1.0.1-win-x64.exe",
+            "size": 192615058,
+            "sha256": "8482f6d0f66a6819ac1d777c02229ab5aada087e7ba985800fcb9ebd1137c3de"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.1/VORA-HWP-1.0.1-win-x64.zip",
+            "size": 234304032,
+            "sha256": "e68aab25d871ffd217ec4a636e74aeb7adeeb68e6edad52e0f6455edd90238c1"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.1/VORA-HWP-1.0.1-linux-x64.AppImage",
+            "size": 336919873,
+            "sha256": "77358fd43a99eb043bc3881535b33d98e00fa2ce0e25abef091a48219c701864"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.1/VORA-HWP-1.0.1-mac-arm64.dmg",
+            "size": 329105787,
+            "sha256": "8bfc8d8ac37a1a73ff2a2ced47db25953bed8fbb54252f3c2ea46d5158d57a33"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.1/VORA-HWP-1.0.1-mac-arm64.zip",
+            "size": 326416639,
+            "sha256": "787158691e0e2e40ffabe1d6d925130b6236dd7af85f354f308bda3517597e35"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.1-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590725",
+        "VORA-HWP-1.0.1-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590729",
+        "VORA-HWP-1.0.1-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590732",
+        "VORA-HWP-1.0.1-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590726",
+        "VORA-HWP-1.0.1-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677590724"
       }
     }
   ]
