@@ -15,14 +15,6 @@
         },
         "artifacts": [
           {
-            "platform": "macos",
-            "arch": "arm64",
-            "format": "dmg",
-            "url": "https://works.vora.im/releases/cell/1.0.0/VORA-CELL-1.0.0-mac-arm64.dmg",
-            "size": 62744915,
-            "sha256": "bca161363692c4983b2f58419a1ed2073a972249cc29649c920c3ea18df592c0"
-          },
-          {
             "platform": "windows",
             "arch": "x64",
             "format": "msi",
@@ -41,7 +33,6 @@
         ]
       },
       "assets": {
-        "VORA-CELL-1.0.0-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677652012",
         "VORA-CELL-1.0.0-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677667598",
         "VORA-CELL-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677652015"
       }
