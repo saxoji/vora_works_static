@@ -52,7 +52,7 @@ test('verified CELL and HWP desktop defaults exclude pending platforms and priva
     }
   }
   assert.deepEqual(result.config.products.word.downloads, {
-    macos: 'https://works.vora.im/downloads/word/?os=macos', windows: '', linux: 'https://works.vora.im/downloads/word/?os=linux',
+    macos: 'https://works.vora.im/downloads/word/?os=macos', windows: 'https://works.vora.im/downloads/word/?os=windows', linux: 'https://works.vora.im/downloads/word/?os=linux',
   });
   for (const lang of ['ko', 'en', 'ja']) {
     const dialog = createView({lang, config:result.config}).downloadDialog('word', 'Linux');
