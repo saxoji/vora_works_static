@@ -45,13 +45,13 @@ export const copy = {
     "aiEyebrow": "YOUR WORK, WITH YOUR AI",
     "aiTitle1": "당신의 도구에,",
     "aiTitle2": "당신을 아는 AI를.",
-    "aiBody": "무료 서비스 VORA.IM에 가입하고, 보라에서 WORKS를 호출하세요. AI 기능은 보라에서 호출해 열었을 때 활성화됩니다. 무료 클라우드 RAG 저장소와 함께, 내 자료를 작업의 맥락으로 연결하세요.",
+    "aiBody": "무료 서비스 VORA.IM에 가입하고, 보라에서 VORA DOCS를 호출하세요. AI 기능은 보라에서 호출해 열었을 때 활성화됩니다. 무료 클라우드 RAG 저장소와 함께, 내 자료를 작업의 맥락으로 연결하세요.",
     "aiCTA": "VORA.IM에서 시작하기",
     "aiNote": "일반 문서 편집은 독립적으로 자유롭게 사용할 수 있습니다.",
     "aiSteps": [
       "VORA.IM 무료 가입",
       "내 자료를 RAG 저장소에",
-      "보라에서 WORKS 호출"
+      "보라에서 VORA DOCS 호출"
     ],
     "aiCloud": "나의 지식",
     "aiCloudSub": "HYPER RAG",
@@ -104,13 +104,13 @@ export const copy = {
     "aiEyebrow": "YOUR WORK, WITH YOUR AI",
     "aiTitle1": "Your tools.",
     "aiTitle2": "AI that knows your context.",
-    "aiBody": "Join VORA.IM for free and launch WORKS from VORA. AI features activate only when the editor is launched from VORA. Connect your work to your own knowledge with free cloud RAG storage.",
+    "aiBody": "Join VORA.IM for free and launch VORA DOCS from VORA. AI features activate only when the editor is launched from VORA. Connect your work to your own knowledge with free cloud RAG storage.",
     "aiCTA": "Get started at VORA.IM",
     "aiNote": "Everyday document editing is freely available on its own.",
     "aiSteps": [
       "Join VORA.IM for free",
       "Add your files to RAG storage",
-      "Launch WORKS from VORA"
+      "Launch VORA DOCS from VORA"
     ],
     "aiCloud": "Your knowledge",
     "aiCloudSub": "HYPER RAG",
@@ -163,13 +163,13 @@ export const copy = {
     "aiEyebrow": "YOUR WORK, WITH YOUR AI",
     "aiTitle1": "いつもの道具に、",
     "aiTitle2": "あなたを知るAIを。",
-    "aiBody": "無料サービスVORA.IMに登録し、VORAからWORKSを起動してください。AI機能はVORAから起動した場合に有効になります。無料のクラウドRAGストレージで、自分の資料を作業の文脈につなげましょう。",
+    "aiBody": "無料サービスVORA.IMに登録し、VORAからVORA DOCSを起動してください。AI機能はVORAから起動した場合に有効になります。無料のクラウドRAGストレージで、自分の資料を作業の文脈につなげましょう。",
     "aiCTA": "VORA.IMで始める",
     "aiNote": "通常の文書編集は、単独で自由に利用できます。",
     "aiSteps": [
       "VORA.IMに無料登録",
       "資料をRAGストレージへ",
-      "VORAからWORKSを起動"
+      "VORAからVORA DOCSを起動"
     ],
     "aiCloud": "あなたの知識",
     "aiCloudSub": "HYPER RAG",
