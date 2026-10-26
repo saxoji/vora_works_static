@@ -10,7 +10,7 @@ export const copy = {
     features: ['익숙한 HWP·HWPX 편집', '내 기기에서 PDF·DOCX 내보내기', '새 버전 알림과 업데이트'],
     downloadsTitle: '내 기기에 맞는 앱을 선택하세요', downloadsDescription: 'macOS는 Apple Silicon 버전을 제공합니다.',
     noticeTitle: '설치 전에 확인하세요', installation: '설치 안내',
-    notice: '공개된 macOS 설치본은 Developer ID 서명과 Apple 공증을 완료했습니다. Windows 설치 파일은 아직 코드 서명이 없어 Windows의 확인 메시지가 표시될 수 있습니다.',
+    notice: '공개된 macOS 설치본은 Developer ID 서명과 Apple 공증을 완료했습니다. Windows 설치 파일은 아직 코드 서명이 없어 Windows의 확인 메시지가 표시될 수 있습니다. Linux에서는 AppImage 파일의 속성에서 실행을 허용한 뒤 파일을 열어 실행하세요.',
     macHelp: 'macOS 첫 실행 안내', macTitle: 'macOS에서 처음 실행할 때',
     macIntro: '웹에서 내려받은 앱은 처음 실행할 때 macOS의 보안 확인이 표시될 수 있습니다.',
     macSteps: [
@@ -39,7 +39,7 @@ export const copy = {
     features: ['Familiar HWP & HWPX editing', 'Local PDF & DOCX export', 'New version alerts and updates'],
     downloadsTitle: 'Choose the app for your device', downloadsDescription: 'The macOS app is built for Apple Silicon.',
     noticeTitle: 'Before you install', installation: 'Installation',
-    notice: 'Published macOS installers are Developer ID-signed and notarized by Apple. Windows installers are not yet code-signed, so Windows may display a verification notice.',
+    notice: 'Published macOS installers are Developer ID-signed and notarized by Apple. Windows installers are not yet code-signed, so Windows may display a verification notice. On Linux, allow the AppImage to run as a program in its file properties, then open it.',
     macHelp: 'First launch on macOS', macTitle: 'Opening the app on macOS for the first time',
     macIntro: 'macOS may ask you to approve an app downloaded from the web when you first open it.',
     macSteps: [
@@ -68,7 +68,7 @@ export const copy = {
     features: ['HWP・HWPX文書の編集', '端末内でPDF・DOCXに出力', '新しいバージョンの通知と更新'],
     downloadsTitle: 'お使いの端末に合ったアプリを', downloadsDescription: 'macOSはApple Silicon版を提供します。',
     noticeTitle: 'インストールの前に', installation: 'インストールについて',
-    notice: '公開済みのmacOS版はDeveloper ID署名とAppleの公証を完了しています。Windows版はまだコード署名がないため、Windowsの確認メッセージが表示される場合があります。',
+    notice: '公開済みのmacOS版はDeveloper ID署名とAppleの公証を完了しています。Windows版はまだコード署名がないため、Windowsの確認メッセージが表示される場合があります。LinuxではAppImageのファイルプロパティでプログラムとしての実行を許可し、ファイルを開いて起動してください。',
     macHelp: 'macOSの初回起動ガイド', macTitle: 'macOSで初めて起動する場合',
     macIntro: 'ウェブからダウンロードしたアプリは、初回起動時にmacOSの確認が表示される場合があります。',
     macSteps: [
