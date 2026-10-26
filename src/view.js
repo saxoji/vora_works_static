@@ -63,7 +63,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
   }
 
   function productCard(p, i, type = 'standard') {
-    return `<article id="${p.id}-overview" class="product-card product-${p.id}" style="--product-color:${p.color}"><div class="product-card-top"><span class="small-code">0${i + 1} / ${p.category}</span>${brand(p.id)}</div><div class="product-card-copy"><h3>VORA ${p.name}</h3><h4>${t(`${p.id}Title`)}</h4><p>${t(`${p.id}Desc`)}</p></div><div class="product-card-bottom"><div class="product-meta"><span>${p.format}</span><span class="free-dot">${t('free')}</span></div>${link(p.url, `${t('online')}${icons.diagonal}`, 'product-open')}${platformButtons(p, type === 'wide')}</div></article>`;
+    return `<article id="${p.id}-overview" class="product-card product-${p.id}" style="--product-color:${p.color}"><div class="product-card-top"><span class="small-code">0${i + 1} / ${p.category}</span>${brand(p.id)}</div><div class="product-card-copy"><h3>VORA ${p.name}</h3><h4>${t(`${p.id}Title`)}</h4><p>${t(`${p.id}Desc`)}</p>${p.id === 'hwp' ? `<p class="government-format-tag">${t('hwpGovernmentTag')}</p>` : ''}</div><div class="product-card-bottom"><div class="product-meta"><span>${p.format}</span><span class="free-dot">${t('free')}</span></div>${link(p.url, `${t('online')}${icons.diagonal}`, 'product-open')}${platformButtons(p, type === 'wide')}</div></article>`;
   }
 
   function collection(type = 'standard') {

@@ -1,6 +1,7 @@
 export const languages = ['ko', 'en', 'ja'];
 export const copy = {
   ko: {
+    governmentFormatTag: 'HWP는 대한민국 정부에서 사용하는 표준 문서 양식입니다.',
     pageTitle: 'VORA HWP 다운로드 | 데스크톱 한글 문서 편집기',
     title: 'VORA HWP.<br>이제, 내 데스크톱에서.',
     description: 'HWP·HWPX 문서를 열고, 편집하고, 저장하세요. PDF·DOCX 내보내기도 내 기기에서 처리합니다.',
@@ -29,6 +30,7 @@ export const copy = {
     shareTitle: '이제, 내 데스크톱에서.', shareDescription: 'HWP · HWPX 편집 / PDF · DOCX 내보내기',
   },
   en: {
+    governmentFormatTag: 'HWP is a standard document format used by the South Korean government.',
     pageTitle: 'Download VORA HWP | Desktop HWP document editor',
     title: 'VORA HWP.<br>At home on your desktop.',
     description: 'Open, edit and save HWP and HWPX documents. Export to PDF and DOCX, all on your own device.',
@@ -57,6 +59,7 @@ export const copy = {
     shareTitle: 'At home on your desktop.', shareDescription: 'Edit HWP · HWPX / Export PDF · DOCX',
   },
   ja: {
+    governmentFormatTag: 'HWPは韓国政府で使用されている標準文書形式です。',
     pageTitle: 'VORA HWP ダウンロード | デスクトップHWP文書エディター',
     title: 'VORA HWP.<br>デスクトップでも、いつも通り。',
     description: 'HWP・HWPX文書を開いて、編集・保存。PDF・DOCXへの出力も、お使いの端末内で処理します。',
