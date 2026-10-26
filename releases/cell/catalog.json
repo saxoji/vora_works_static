@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.0",
+  "stableVersion": "1.0.1",
   "releases": [
     {
       "manifest": {
@@ -35,6 +35,41 @@
       "assets": {
         "VORA-CELL-1.0.0-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677667598",
         "VORA-CELL-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/677652015"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.1",
+        "publishedAt": "2026-10-26T19:12:03.102442+00:00",
+        "notes": {
+          "ko": "글꼴 선택과 저장 보존, 파일 대화상자 및 자동 업데이트를 보강한 VORA CELL 독립 실행판입니다.",
+          "en": "Standalone VORA CELL with improved font selection and preservation, file dialogs and automatic updates.",
+          "ja": "フォントの選択・保存、ファイルダイアログ、自動更新を改善したVORA CELL独立実行版です。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.1/VORA-CELL-1.0.1-mac-arm64.dmg",
+            "size": 1354199752,
+            "sha256": "7ebaeb690c27c06c1862edfded3899b073e37699141b6121b71b2b9f9e7e804a"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.1/VORA-CELL-1.0.1-linux-x64.AppImage",
+            "size": 1205758456,
+            "sha256": "236a5b3e63373ef89be9c6d43cce509c0fd2fbd758a85a0bdbec50ecfaeda35d"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.1-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679033196",
+        "VORA-CELL-1.0.1-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679027061"
       }
     }
   ]

@@ -45,13 +45,13 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 `WORD`를 `SLIDE`, `CELL`, `HWP`로 바꾼 변수도 같은 방식으로 사용한다.
 값이 없으면 준비 중 안내를 표시한다. 설치 파일이 준비된 OS만 다운로드 링크를 설정한다. 공개 HTTPS URL만 허용한다.
 
-CELL은 세 OS의 설치 파일이 등록되어 있어 다음 다운로드 페이지 주소를 기본값으로 사용한다.
+CELL은 검증된 macOS·Linux 설치 파일의 다운로드 페이지 주소를 기본값으로 사용한다. Windows는 최종 설치·업데이트 검수 후 활성화한다.
 주소를 변경하려면 `.env.local` 또는 Render Environment에서 해당 키를 덮어쓴다.
 특정 OS의 링크를 임시로 숨길 때는 그 키의 값을 빈 문자열로 설정한다.
 
 ```dotenv
 PUBLIC_CELL_MACOS_DOWNLOAD_URL=https://works.vora.im/downloads/cell/?os=macos
-PUBLIC_CELL_WINDOWS_DOWNLOAD_URL=https://works.vora.im/downloads/cell/?os=windows
+PUBLIC_CELL_WINDOWS_DOWNLOAD_URL=
 PUBLIC_CELL_LINUX_DOWNLOAD_URL=https://works.vora.im/downloads/cell/?os=linux
 ```
 
@@ -203,3 +203,10 @@ npm run build
 - 파일 크기 87,726,392바이트, SHA-256 `2b4a8f796e87954f61eac5cb5b9e274717ed1d9f98957b30632328197a2b42a2`. `PUBLIC_WORD_MACOS_DOWNLOAD_URL`을 추가 활성화하고 기존 Linux 파일을 보존한다. Windows는 최종 검증 전까지 비활성이다.
 
 - 2026-10-27: 4개 제품·3개 언어 다운로드 페이지의 설치 안내를 정식 서명·Apple 공증된 Mac 공개본에 맞췄습니다. DMG 열기 → 응용 프로그램 복사 → 표준 첫 실행 확인을 안내하고, Windows 코드 서명 상태는 별도로 표시합니다. 기본 보안 우회 안내는 제거했습니다.
+
+
+### CELL 1.0.1 Mac·Linux 최종본 — 2026-10-27
+
+- 소스 `39bf7523d60f87418914d7654c3e72069059fd19`의 Mac DMG와 Linux AppImage를 새 stable 피드에 연결한다. 이전 버전 파일은 바꾸지 않는다. Windows는 최종 설치·업데이트 검수 전까지 메인과 다운로드 페이지에서 비활성 상태다.
+- Mac은 Developer ID 서명·Apple 공증·스테이플링, 실제 Chrome 격리 다운로드/Finder 설치/정상 첫 실행, 파일 대화상자 취소·재열기·창 크기 변경, 기존 셀 Arial 변경·이어 입력·XLSX 저장과 구버전 0.9.9→1.0.1 실제 자동 교체·미저장 내용 보존·다시 열기를 확인했다.
+- Linux는 같은 최종 바이트를 새 환경에 풀어 실제 Arial 리본 입력, 2,031개 글꼴 선택 항목, XLSX/VORAC 재열기·인쇄/PDF 등 11개 설치 검사를 통과했다. 파일 크기와 SHA-256은 카탈로그에 고정한다. 소스 푸시와 실제 운영 URL의 전체 바이트 확인은 별도 검수한다.

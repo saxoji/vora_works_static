@@ -9,7 +9,7 @@ import { createView } from '../src/view.js';
 
 const root = new URL('../', import.meta.url);
 const linksFor = product => Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, `https://works.vora.im/downloads/${product}/?os=${os}`]));
-const cellLinks = linksFor('cell');
+const cellLinks = { ...linksFor('cell'), windows: '' };
 const desktopLinks = { cell: cellLinks, hwp: linksFor('hwp') };
 const keyFor = (os, product = 'cell') => `PUBLIC_${product.toUpperCase()}_${os.toUpperCase()}_DOWNLOAD_URL`;
 
@@ -36,7 +36,7 @@ async function generate({ local = '', env = {} } = {}) {
   }
 }
 
-test('CELL and HWP desktop defaults connect all three OS links without exposing private build credentials', async () => {
+test('verified CELL and HWP desktop defaults exclude pending platforms and private build credentials', async () => {
   const result = await generate();
   assert.equal(result.status, 0, result.stderr);
   for (const [product, links] of Object.entries(desktopLinks)) {
@@ -45,7 +45,7 @@ test('CELL and HWP desktop defaults connect all three OS links without exposing 
     assert.equal(result.config.products[product].releaseManifestURL, `https://works.vora.im/releases/${product}/stable.json`);
     for (const lang of ['ko', 'en', 'ja']) {
       const dialog = createView({ lang, config: result.config }).downloadDialog(product, 'macOS');
-      for (const url of Object.values(links)) {
+      for (const url of Object.values(links).filter(Boolean)) {
         const localized = url.replace(`/downloads/${product}/`, `/downloads/${product}/${lang}/`);
         assert.ok(dialog.includes(`href="${localized}"`), `${lang}: ${localized}`);
       }
@@ -71,7 +71,7 @@ test('CELL and HWP samples and Render blueprint keep the same configurable downl
       const key = keyFor(os, product);
       assert.ok(example.split(/\r?\n/).includes(`${key}=${url}`), key);
       const configured = blueprint.match(new RegExp(`- key: ${key}\\s*\\n\\s*value: ([^\\r\\n]+)`));
-      assert.equal(configured?.[1], url, key);
+      assert.equal(configured?.[1], url || '""', key);
     }
   }
 });
@@ -89,7 +89,7 @@ test('process settings override local settings and an explicit empty URL hides o
   const dialog = createView({ lang: 'en', config: result.config }).downloadDialog('cell', 'Windows');
   assert.ok(dialog.includes('href="https://custom.example.test/cell/mac"'));
   assert.ok(dialog.includes('href="https://local.example.test/cell/linux"'));
-  assert.ok(!dialog.includes(cellLinks.windows));
+  assert.ok(!dialog.includes(linksFor('cell').windows));
   assert.match(dialog, /<span>Windows<\/span><small>/);
 });
 
