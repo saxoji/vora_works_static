@@ -65,7 +65,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
   }
 
   function footer() {
-    return `<footer class="footer wrap"><div class="footer-top"><div>${wordmark('footer-wordmark')}<p>${t('intro')}</p></div><a class="maker" href="${escapeAttribute(config.companyUrl)}" target="_blank" rel="noopener noreferrer"><span>${t('madeBy')}</span><img src="/brand/horizon-${theme}.webp" alt="Linkbricks Horizon-AI" width="220" height="54"/><span>www.horizonai.ai ${icons.diagonal}</span></a></div><div class="footer-bottom"><small>${t('copyright')}</small><nav class="footer-languages" aria-label="${t('language')}">${[['ko', '한국어'], ['ja', '日本語'], ['en', 'English']].map(([code, name]) => `<a href="/${code}/" lang="${code}" hreflang="${code}" ${lang === code ? 'aria-current="page"' : ''}>${name}</a>`).join('')}</nav><a href="#">↑ TOP</a></div></footer>`;
+    return `<footer class="footer wrap"><div class="footer-top"><div><a class="footer-brand" href="/${lang}/">${brand('works')}<span>VORA AI WORKS</span></a><p>${t('intro')}</p></div><a class="maker" href="${escapeAttribute(config.companyUrl)}" target="_blank" rel="noopener noreferrer"><span>${t('madeBy')}</span><img src="/brand/horizon-${theme}.webp" alt="Linkbricks Horizon-AI" width="220" height="54"/><span>www.horizonai.ai ${icons.diagonal}</span></a></div><div class="footer-bottom"><small>${t('copyright')}</small><nav class="footer-languages" aria-label="${t('language')}">${[['ko', '한국어'], ['ja', '日本語'], ['en', 'English']].map(([code, name]) => `<a href="/${code}/" lang="${code}" hreflang="${code}" ${lang === code ? 'aria-current="page"' : ''}>${name}</a>`).join('')}</nav><a href="#">↑ TOP</a></div></footer>`;
   }
 
 
