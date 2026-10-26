@@ -196,3 +196,8 @@ npm run build
 
 - WORD 1.0.0 Linux x64는 소스 `5296e15881240527e463e8ed8a5e2c77ea230c55`의 설치·폰트·편집·내보내기·업데이트·복구 검사를 통과한 AppImage를 그대로 연결했다. 파일 크기 84,232,696바이트, SHA-256 `2e71f0cbf554cf826d6977242ac499f7fe4a3370d5add5d2fa38298781764686`이다.
 - `PUBLIC_WORD_LINUX_DOWNLOAD_URL`만 활성화한다. WORD macOS와 Windows는 해당 플랫폼의 최종 검증이 끝나기 전까지 비활성 상태를 유지한다. 기존 HWP/CELL 릴리스 파일은 변경하지 않는다.
+
+### WORD Mac 최종 공증본 공개 — 2026-10-27
+
+- WORD 1.0.0 Apple Silicon DMG는 소스·패키징 `5296e15881240527e463e8ed8a5e2c77ea230c55`로, Developer ID 서명·Apple 공증·앱/DMG 스테이플링을 완료했다. 실제 Chrome 다운로드 격리 속성, Finder 설치, 정상 보안 안내, Arial 입력·DOCX 재열기와 자동 업데이트·시작 실패 복구 검증을 통과했다.
+- 파일 크기 87,726,392바이트, SHA-256 `2b4a8f796e87954f61eac5cb5b9e274717ed1d9f98957b30632328197a2b42a2`. `PUBLIC_WORD_MACOS_DOWNLOAD_URL`을 추가 활성화하고 기존 Linux 파일을 보존한다. Windows는 최종 검증 전까지 비활성이다.
