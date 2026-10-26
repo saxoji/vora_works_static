@@ -90,7 +90,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,[tabindex]:focus-visib
 .product-open{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:16px 0;font-size:13px;font-weight:650;gap:12px}
 .product-open .icon{width:17px;height:17px;color:var(--product-color)}
 .product-open:hover{color:var(--product-color)}
-.platforms{padding-top:12px;border-top:1px solid var(--line)}
+.platforms{padding-top:12px;border-top:1px solid var(--line);container:platforms/inline-size}
 .platform-label{display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:10px;color:var(--muted)}
 .platform-label small{font-size:8px;border:1px solid var(--line);padding:2px 4px;border-radius:3px}
 .os-buttons{display:flex;justify-content:space-between;gap:5px;margin-top:9px}
@@ -320,11 +320,12 @@ html{scroll-behavior:auto}
 .theme-picker:focus-within{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
 .theme-picker option{color:var(--ink);background:var(--bg)}
 .available-download{color:var(--ink)}
-.available-download>.icon:last-child{width:12px;height:12px;margin-left:1px}
-.os-buttons{flex-wrap:wrap;column-gap:6px;row-gap:0}
-.os-button{min-height:42px;font-size:10px}
+.available-download>.icon:last-child{width:10px;height:10px;margin-left:0;flex:none}
+.os-buttons{flex-wrap:nowrap;align-items:center;column-gap:4px;row-gap:0}
+.os-button{min-height:42px;font-size:10px;white-space:nowrap;flex:0 0 auto;gap:4px;padding-inline:0}
 .dialog-platforms a{margin-left:auto;font-size:11px;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 .icon.os-icon{width:26px;height:26px;flex:0 0 26px}
+@container platforms (max-width:265px){.os-buttons{column-gap:2px}.os-button{font-size:9.5px;gap:3px}.os-button .os-icon{width:22px;height:22px;flex-basis:22px}}
 .anywhere-options>div{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:18px}
 .anywhere-options>div>.icon:first-child{justify-self:center}
 .anywhere-os{width:100px;display:flex;flex-wrap:nowrap;justify-content:center;gap:8px}
