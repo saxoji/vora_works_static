@@ -29,12 +29,21 @@
             "url": "https://works.vora.im/releases/hwp/1.0.0/VORA-HWP-1.0.0-mac-arm64.zip",
             "size": 326434175,
             "sha256": "548cebc1b2b9eae0027c73481f3ee98a0ea41a37c31747bcbcbcfd34c9578a54"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.0/VORA-HWP-1.0.0-linux-x64.AppImage",
+            "size": 336899267,
+            "sha256": "692d69c8a375847df1904ed02de78cb6781cc3ccc6912a23ceecc685735da148"
           }
         ]
       },
       "assets": {
         "VORA-HWP-1.0.0-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677123926",
-        "VORA-HWP-1.0.0-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677123930"
+        "VORA-HWP-1.0.0-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677123930",
+        "VORA-HWP-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/677253819"
       }
     }
   ]
