@@ -162,7 +162,8 @@ try {
     assert.equal(await page.locator('.installation-guide,.install-guide-trigger').count(),0);
     assert.equal(await page.locator('#dialog-title').textContent(),copy[lang].download);
     await shot(page,`popup-webkit-cell-${lang}-390`);await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#download-dialog[open]').count(),0);report.webkit++;
+    assert.equal(await page.locator('#download-dialog[open]').count(),0);
+    await safe(page,`webkit main ${lang}`);report.webkit++;
   }
 } finally {await safari.close();}
 assert.deepEqual(report.errors,[]);

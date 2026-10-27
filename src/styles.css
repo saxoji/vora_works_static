@@ -60,6 +60,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,[tabindex]:focus-visib
 .editorial-intro h2 span{color:var(--muted)}
 .editorial-intro>div{max-width:450px}
 .editorial-intro p{font-size:15px;line-height:1.9;color:var(--muted);word-break:keep-all}
+:lang(ja) .editorial-intro p{word-break:normal}
 .editorial-intro .enterprise-contact{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:12px;font-size:13px}
 .enterprise-contact a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .enterprise-contact a:hover{color:var(--accent)}

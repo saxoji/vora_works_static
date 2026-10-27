@@ -25,3 +25,16 @@ Node 설정·릴리스·설치/다국어/SEO 검사, 20개 페이지의 로컬 Q
 - 최종 메인/팝업 증거: `output/playwright/download179-popupfix/result.json`. 변경 없는 상세 페이지 증거: `output/playwright/download179/result.json`. 파일 보존 검증: `output/playwright/download179/preserved-files.json`. 공유 UI lease는 두 검사 종료 후 모두 반환했다.
 
 실제 설치 파일·release manifest·공개 URL은 변경하지 않았다. 소스 커밋만 총괄에 전달하며 push·배포는 publisher가 수행한다.
+
+
+## 운영 확인 중 발견한 일본어 WebKit 후속 보강
+
+`d391a7d2d1a620a295e1373cabb3c0d223c0c946`의 Render 배포 `dep-dbg27eifngtc738f814g`가 2026-10-27 04:10:24Z LIVE 된 뒤 읽기 전용으로 확인했다. 운영 소스 9개 파일·4개 stable feed·15개 OG 이미지는 검증된 값과 일치했고, 7개 설치 파일은 HEAD 응답 크기가 manifest와 같았다. 설치 파일 본문을 내려받지 않았다. 실제 Chrome 메인 12조합·공개 상태에 따른 팝업 36개·가로챈 다운로드 링크 클릭 108회·상세 12페이지는 모두 통과했다. CELL은 모든 OS 버튼이 직접 다운로드 링크여서 운영 pending 팝업이 없으며, 기존 로컬 fixture 증거를 유지한다.
+
+WebKit의 일본어 390px 메인에서 `.editorial-intro p`의 `word-break:keep-all`이 소개/기업 문의 문단의 grid 최소폭을 늘렸다. 폰트가 loaded인 새 페이지에서 viewport 390px 대비 문서 429px, 소개 자식 409px였으며 팝업 전·후, 2프레임 뒤, 500ms 뒤에도 같았다. 측정 시점이나 다운로드 팝업 문제로 처리하지 않았다.
+
+일본어 소개 영역에만 `word-break:normal`을 지정했다. 한국어·영어의 기존 규칙, 다운로드 상세 페이지, 팝업, 환경설정·공개 상태는 바꾸지 않았다. 기존 WebKit 테스트에 팝업 닫기 후 메인 가로 넘침 검사도 추가했다.
+
+후속 로컬 검증은 Chrome/WebKit × ko/en/ja × light/dark × 320/390/1440px, 총 36조합을 통과했다. 소개 영역 bounds, 전체 문서 너비, 팝업 전·후의 가로 넘침과 기존 메뉴를 확인했다. 새 일본어 WebKit390은 문서 너비도 390px였으며 실제 PNG에서 줄바꿈을 확인했다. 이 좁은 CSS 변경에는 이전 Node·다운로드 상세·릴리스 검증 증거를 재사용한다.
+
+실패 원본과 최종 로컬 증거는 `/private/tmp/cell-static-live179/`의 `attempt2-result.json`, `webkit-ja-bounds.json`, `layout-fixed-result.json`, `layout-fixed-*.png`에 보존한다. 후속 CSS의 운영 배포는 총괄이 별도로 수행하며, 이 로컬 검증을 이미 운영 반영됐다고 기록하지 않는다.
