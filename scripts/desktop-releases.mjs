@@ -8,6 +8,31 @@ import { pipeline } from 'node:stream/promises';
 import { products } from '../public/downloads/shared/content.js';
 import { validArtifact } from '../public/downloads/shared/releases.js';
 
+function verifiedSources(source, artifact, product) {
+  let parts;
+  if (typeof source === 'string') {
+    if (artifact.size >= 2 * 1024**3) throw new Error('Large GitHub release assets require verified SLIDE source parts');
+    parts = [{url: source, size: artifact.size, sha256: artifact.sha256}];
+  } else {
+    const supported = product === 'slide' && (artifact.format === 'dmg' || artifact.format === 'AppImage'
+      || (artifact.platform === 'windows' && artifact.format === 'zip' && artifact.bundleKind === 'windows-msi-cab-v1'));
+    if (!supported || !source || Object.keys(source).length !== 1 || !Array.isArray(source.parts)
+      || source.parts.length < 2 || source.parts.length > 4) throw new Error('Invalid release source parts');
+    parts = source.parts;
+    if (parts.some(part => !part || typeof part.url !== 'string' || !Number.isSafeInteger(part.size)
+      || part.size <= 0 || part.size > 1024**3 || !/^[a-f0-9]{64}$/.test(part.sha256))
+      || parts.reduce((size, part) => size + part.size, 0) !== artifact.size) throw new Error('Invalid release source parts');
+  }
+  const used = new Set();
+  return parts.map(part => {
+    const url = new URL(part.url);
+    if (url.protocol !== 'https:' || url.hostname !== 'api.github.com' || !new RegExp(`^/repos/saxoji/vora_works_${product}/releases/assets/[0-9]+$`).test(url.pathname)
+      || url.username || url.password || url.search || url.hash || url.port || used.has(url.href)) throw new Error('Untrusted build archive');
+    used.add(url.href);
+    return {...part, url};
+  });
+}
+
 export async function publishProductReleases({ root, dist, siteUrl, product, fetcher = fetch }) {
   if (!products[product]) throw new Error('Unknown desktop product');
   let catalog;
@@ -30,21 +55,24 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
       const name = basename(url.pathname);
       if (!validArtifact(artifact, product, manifest.version, siteUrl) || used.has(name)) throw new Error('Invalid release artifact');
       used.add(name);
-      const source = new URL(release.assets[name]);
-      if (source.protocol !== 'https:' || source.hostname !== 'api.github.com' || !new RegExp(`^/repos/saxoji/vora_works_${product}/releases/assets/[0-9]+$`).test(source.pathname)
-        || source.username || source.password || source.search || source.hash) throw new Error('Untrusted build archive');
+      const parts = verifiedSources(release.assets[name], artifact, product);
       const headers = { Accept: 'application/octet-stream', 'X-GitHub-Api-Version': '2022-11-28' };
       if (process.env.DESKTOP_RELEASE_GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.DESKTOP_RELEASE_GITHUB_TOKEN}`;
-      const response = await fetcher(source, { headers, signal: AbortSignal.timeout(15 * 60 * 1000) });
-      if (!response.ok || !response.body) throw new Error(`Cannot retrieve desktop installer (${response.status})`);
       const hash = createHash('sha256'); let size = 0;
-      const verifier = new Transform({ transform(chunk, _encoding, done) {
-        size += chunk.length; if (size > artifact.size) { done(new Error('Artifact exceeds expected size')); return; }
-        hash.update(chunk); done(null, chunk);
-      } });
       const target = new URL(name, folder);
       try {
-        await pipeline(Readable.fromWeb(response.body), verifier, createWriteStream(target, { flags: 'wx' }));
+        for (const [index, part] of parts.entries()) {
+          const response = await fetcher(part.url, { headers, signal: AbortSignal.timeout(15 * 60 * 1000) });
+          if (!response.ok || !response.body) throw new Error(`Cannot retrieve desktop installer (${response.status})`);
+          const partHash = parts.length > 1 ? createHash('sha256') : null; let partSize = 0;
+          const verifier = new Transform({ transform(chunk, _encoding, done) {
+            size += chunk.length; partSize += chunk.length;
+            if (size > artifact.size || partSize > part.size) { done(new Error('Artifact exceeds expected size')); return; }
+            hash.update(chunk); partHash?.update(chunk); done(null, chunk);
+          } });
+          await pipeline(Readable.fromWeb(response.body), verifier, createWriteStream(target, { flags: index === 0 ? 'wx' : 'a' }));
+          if (partSize !== part.size || (partHash && partHash.digest('hex') !== part.sha256)) throw new Error('Artifact source part checksum mismatch');
+        }
         if (size !== artifact.size || hash.digest('hex') !== artifact.sha256) throw new Error('Artifact checksum mismatch');
       } catch (error) { await rm(target, { force: true }); throw error; }
     }

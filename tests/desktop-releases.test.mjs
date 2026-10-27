@@ -15,6 +15,15 @@ function fixture(product, platform='macos', format='dmg') {
   const name=`VORA-${product.toUpperCase()}-1.0.0-${{macos:'mac',windows:'win',linux:'linux'}[platform]}-${arch}.${format}`;
   return {manifest:{schemaVersion:1,product,version:'1.0.0',artifacts:[{platform,arch,format,url:`${siteUrl}/releases/${product}/1.0.0/${name}`,size:data.length,sha256:createHash('sha256').update(data).digest('hex')}]},assets:{[name]:`https://api.github.com/repos/saxoji/vora_works_${product}/releases/assets/123`}};
 }
+function multipartFixture(product='slide') {
+  const release=fixture(product);
+  const name=Object.keys(release.assets)[0];
+  const bodies=[data.subarray(0,10),data.subarray(10)];
+  const parts=bodies.map((body,index)=>({url:`https://api.github.com/repos/saxoji/vora_works_${product}/releases/assets/${123+index}`,
+    size:body.length,sha256:createHash('sha256').update(body).digest('hex')}));
+  release.assets[name]={parts};
+  return {release,name,bodies,parts};
+}
 async function workspace(run) {
   const directory=await mkdtemp(join(tmpdir(),'vora-desktop-catalog-'));
   const root=pathToFileURL(directory+'/'),dist=new URL('dist/',root);
@@ -174,3 +183,72 @@ test('verified SLIDE wrapper keeps its marker and bytes in both manifests while 
     assert.deepEqual(await readFile(new URL(`releases/slide/1.0.0/${Object.keys(release.assets)[0]}`,dist)),data);
   });
 });
+
+test('SLIDE source parts stream into one byte-identical installer without exposing private part locations',async()=>workspace(async({root,dist})=>{
+  const {release,name,bodies,parts}=multipartFixture();await catalog(root,'slide',release);
+  const fetched=[];
+  await publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async(url)=>{
+    fetched.push(url.href);return new Response(bodies[parts.findIndex(part=>part.url===url.href)]);
+  }});
+  assert.deepEqual(fetched,parts.map(part=>part.url));
+  assert.deepEqual(await readFile(new URL(`releases/slide/1.0.0/${name}`,dist)),data);
+  for(const path of ['stable.json','1.0.0/manifest.json']) {
+    const raw=await readFile(new URL(`releases/slide/${path}`,dist),'utf8');
+    assert.deepEqual(JSON.parse(raw),release.manifest);assert.ok(!raw.includes('api.github.com'));
+  }
+}));
+
+test('invalid multipart bounds, hashes, URLs and product bindings are rejected before any download',async()=>{
+  const patches=[
+    value=>{value.release.assets[value.name].extra=true;},
+    value=>{value.parts.length=1;},
+    value=>{value.parts.push(...value.parts,...value.parts);},
+    value=>{value.parts[0].size=0;},
+    value=>{value.parts[0].size=1024**3+1;},
+    value=>{value.parts[0].size+=1;},
+    value=>{value.parts[0].sha256='invalid';},
+    value=>{value.parts[1].url=value.parts[0].url;},
+    value=>{value.parts[1].url=value.parts[1].url.replace('/vora_works_slide/','/vora_works_word/');},
+    value=>{value.parts[1].url=value.parts[1].url.replace('https:','http:');},
+    value=>{value.parts[1].url=value.parts[1].url.replace('api.github.com','api.github.com:8443');},
+    value=>{value.parts[1].url+='?token=not-allowed';},
+    value=>{value.parts[1]=null;},
+  ];
+  for(const patch of patches) await workspace(async({root,dist})=>{
+    const value=multipartFixture();patch(value);await catalog(root,'slide',value.release);
+    let fetched=0;
+    await assert.rejects(publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async()=>{fetched++;return new Response(data);}}),/Invalid release source parts|Untrusted build archive/);
+    assert.equal(fetched,0);await assert.rejects(stat(new URL('releases/slide/stable.json',dist)));
+  });
+  for(const product of ['word','cell','hwp']) await workspace(async({root,dist})=>{
+    const {release}=multipartFixture(product);await catalog(root,product,release);
+    await assert.rejects(publishProductReleases({root,dist,product,siteUrl,fetcher:async()=>{throw Error('unexpected fetch');}}),/Invalid release source parts/);
+  });
+});
+
+test('part download failures, truncation, corruption and wrong assembly remove partial installers and never publish a feed',async()=>{
+  for(const mode of ['http','truncated','oversized','corrupt','reversed','whole-hash']) await workspace(async({root,dist})=>{
+    const {release,name,bodies,parts}=multipartFixture();
+    const sourceBodies=new Map(parts.map((part,index)=>[part.url,bodies[index]]));
+    if(mode==='reversed') parts.reverse();
+    if(mode==='whole-hash') release.manifest.artifacts[0].sha256='0'.repeat(64);
+    await catalog(root,'slide',release);
+    await assert.rejects(publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async(url)=>{
+      let body=sourceBodies.get(url.href);
+      if(url.href.endsWith('/124')) {
+        if(mode==='http') return new Response('unavailable',{status:503});
+        if(mode==='truncated') body=body.subarray(1);
+        if(mode==='oversized') body=Buffer.concat([body,Buffer.from('x')]);
+        if(mode==='corrupt') body=Buffer.alloc(body.length);
+      }
+      return new Response(body);
+    }}),/checksum|expected size|Cannot retrieve/);
+    await assert.rejects(stat(new URL(`releases/slide/1.0.0/${name}`,dist)));
+    await assert.rejects(stat(new URL('releases/slide/stable.json',dist)));
+  });
+});
+
+test('a GitHub source URL cannot claim an unsplit asset of 2 GiB or larger',async()=>workspace(async({root,dist})=>{
+  const release=fixture('slide');release.manifest.artifacts[0].size=3*1024**3;await catalog(root,'slide',release);
+  await assert.rejects(publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async()=>{throw Error('unexpected fetch');}}),/require verified SLIDE source parts/);
+}));
