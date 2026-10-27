@@ -1,14 +1,15 @@
 import { copy, products } from './content.js';
+import { installCopy } from './install.js';
 
 export const localeCodes = { ko: 'ko_KR', ja: 'ja_JP', en: 'en_US' };
 export const supportedLanguages = Object.keys(localeCodes);
 // Version the image URL so clients fetch the revised thumbnail composition.
-export const socialImagePath = lang => `/brand/social-${lang}-v6.png`;
+export const socialImagePath = lang => `/brand/social-${lang}-v7.png`;
 
 const descriptions = {
-  ko: '개인 누구나 무료로, 자유롭게. VORA WORD·SLIDE·CELL·HWP로 문서, 발표, 스프레드시트, 한글 문서를 만드세요. VORA.IM과 무료 클라우드 HYPER RAG로 연결되는 AI 작업 공간.',
-  ja: '個人なら誰でも無料で自由に。VORA WORD・SLIDE・CELL・HWPで文書、プレゼン、表計算、ハングル文書を作成。VORA.IMと無料クラウドHYPER RAGにつながるAIワークスペース。',
-  en: 'Free for personal use. Create documents, slides, spreadsheets and HWP files with VORA AI DOCS. Connect your knowledge through VORA.IM and free cloud HYPER RAG.',
+  ko: '개인 누구나 무료로 사용하는 VORA AI DOCS. WORD·SLIDE·CELL·HWP 웹 앱, 공개된 데스크톱 다운로드와 macOS·Windows·Linux 설치 방법을 확인하세요. VORA.IM과 무료 클라우드 HYPER RAG로 작업을 이어가세요.',
+  ja: '個人利用は無料のVORA AI DOCS。WORD・SLIDE・CELL・HWPのウェブ版、公開済みのデスクトップ版とmacOS・Windows・Linuxのインストール方法をご案内。VORA.IMと無料のHYPER RAGにつながります。',
+  en: 'Free personal document, slide, spreadsheet and HWP editing with VORA AI DOCS. Explore web apps, published desktop downloads and macOS, Windows and Linux installation guides.',
 };
 
 export function getPageMeta(lang, config, pathname = `/${lang}/`) {
@@ -21,7 +22,7 @@ export function getPageMeta(lang, config, pathname = `/${lang}/`) {
   const description = descriptions[lang];
   return {
     title, description, url, image,
-    imageAlt: `VORA AI DOCS — ${text.pageTitle}. ${text.free}. WORD · SLIDE · CELL · HWP.`,
+    imageAlt: `VORA AI DOCS — ${text.pageTitle}. ${text.free}. ${installCopy[lang].title}. WORD · SLIDE · CELL · HWP.`,
     structuredData: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -29,7 +30,7 @@ export function getPageMeta(lang, config, pathname = `/${lang}/`) {
         { '@type': 'WebSite', '@id': `${absolute('/')}#website`, name: 'VORA AI DOCS', url: absolute('/'), inLanguage: supportedLanguages, publisher: { '@id': `${config.companyUrl}#organization` } },
         {
           '@type': 'CollectionPage', '@id': `${url}#page`, url, name: title, description,
-          inLanguage: lang, image, isPartOf: { '@id': `${absolute('/')}#website` },
+          inLanguage: lang, image, hasPart: products.map(product => ({'@type':'WebPage',name:`VORA ${product.name} · ${installCopy[lang].title}`,url:absolute(`/downloads/${product.id}/${lang}/`)})), isPartOf: { '@id': `${absolute('/')}#website` },
           mainEntity: {
             '@type': 'ItemList', numberOfItems: products.length,
             itemListElement: products.map((product, index) => ({

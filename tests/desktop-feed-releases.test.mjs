@@ -29,7 +29,7 @@ async function refresh(initial, response, lang = 'en') {
   const renders = [], requests = [];
   const app = { set innerHTML(html) { renders.push(html); } };
   const document = {
-    documentElement: { dataset: {} }, title: '', addEventListener() {},
+    documentElement: { dataset: {} }, title: '', addEventListener() {}, querySelectorAll: () => [],
     getElementById: id => id === 'app' ? app : id === 'release-data' ? { textContent: JSON.stringify(initial) } : null,
   };
   await runInNewContext(`(async () => { ${source}\n })()`, {

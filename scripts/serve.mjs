@@ -4,6 +4,7 @@ import path from 'node:path';
 import { generateConfig } from './config.mjs';
 import { renderDocument, routes } from './document.mjs';
 import { renderDesktopPage, desktopRoutes } from './desktop-pages.mjs';
+import { currentManifest } from '../public/downloads/shared/releases.js';
 const built = process.argv.includes('dist');
 const config = !built ? await generateConfig() : null;
 const root = path.resolve(built ? 'dist' : '.');
@@ -15,7 +16,7 @@ http.createServer(async (req, res) => {
     if (!built && desktopRoutes.some(route => route === requested || route.slice(0, -1) === requested)) {
       const product = requested.split('/')[2];
       let manifest = null;
-      try { const catalog = JSON.parse(await readFile(path.join(root, `releases/${product}/catalog.json`), 'utf8')); manifest = catalog.releases.find(release => release.manifest.version === catalog.stableVersion)?.manifest || null; } catch {}
+      try { const catalog = JSON.parse(await readFile(path.join(root, `releases/${product}/catalog.json`), 'utf8')); manifest = currentManifest(catalog, product); } catch {}
       const lang = requested.match(/\/(ko|en|ja)\/?$/)?.[1] || 'ko';
       res.writeHead(200, {'Content-Type':mime['.html'], 'Cache-Control':'no-cache'});
       res.end(renderDesktopPage(config, product, lang, manifest, requested.endsWith('/') ? requested : requested + '/'));

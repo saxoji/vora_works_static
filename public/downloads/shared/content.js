@@ -1,3 +1,4 @@
+import { installCopy } from '../../../src/install.js';
 export const languages = ['ko', 'en', 'ja'];
 export const copy = {
   ko: {
@@ -113,12 +114,17 @@ export const products = {
 export function desktopSocialImagePath(product, lang) {
   const definition = products[product];
   if (!definition || !languages.includes(lang)) throw new Error('Unknown product or language');
-  return `/brand/${product}-desktop-${lang}-v3.png`;
+  return `/brand/${product}-desktop-${lang}-v4.png`;
 }
 export function copyFor(lang, product) {
   const definition = products[product];
   if (!definition || !languages.includes(lang)) throw new Error('Unknown product or language');
-  return {...copy[lang], ...definition.copy[lang], title:copy[lang].title.replace('VORA HWP','VORA '+definition.name),
+  return {...copy[lang], ...definition.copy[lang],
+    pageTitle:`VORA ${definition.name} | ${installCopy[lang].title}`,
+    description:`${definition.copy[lang]?.description || copy[lang].description} ${installCopy[lang].seo}`,
+    shareTitle:installCopy[lang].title,
+    notice:{ko:'제품과 운영체제에 맞는 공식 파일을 선택하세요. 아래 설치 안내는 내려받는 파일 형식에 맞춰 표시됩니다.',en:'Choose the official file for your product and operating system. The guide follows the format of the download.',ja:'製品とOSに合う公式ファイルを選んでください。ダウンロード形式に合わせた手順をご案内します。'}[lang],
+    title:copy[lang].title.replace('VORA HWP','VORA '+definition.name),
     pendingRelease:{ko:'준비 중인 버전',en:'Upcoming version',ja:'準備中のバージョン'}[lang],
     cloudDescription:{ko:'AI 기능과 VORA로 내보내기는 보라 서비스에서 실행한 웹 버전에서 사용할 수 있습니다. 데스크톱 앱은 내 기기에서 직접 편집하는 작업에 집중합니다.',en:'AI features and Export to VORA are available in the web version launched from VORA. The desktop app focuses on editing files on your device.',ja:'AI機能とVORAへの出力は、VORAから起動したウェブ版で利用できます。デスクトップアプリでは、端末上での編集に集中できます。'}[lang],
   };

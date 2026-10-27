@@ -3,6 +3,7 @@ import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
 import { copy, products } from '../src/content.js';
 import { socialImagePath } from '../src/seo.js';
+import { installCopy } from '../src/install.js';
 const origin = process.env.PREVIEW_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless: true, channel: process.env.BROWSER_CHANNEL || 'chrome' });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
@@ -22,14 +23,15 @@ try {
       .edition { position: absolute; inset: 40px 48px auto; display: flex; justify-content: space-between; color: #9da29c; font-size: 11px; letter-spacing: 2px; }
       .rule { position: absolute; left: 48px; right: 48px; top: 78px; height: 1px; background: #363a37; }
       /* The central 570px survives a 630px square center crop with room to spare. */
-      main { position: absolute; top: 41px; left: 315px; width: 570px; text-align: center; }
+      main { position: absolute; top: 29px; left: 315px; width: 570px; text-align: center; }
       .symbol { display: block; width: 72px; height: 72px; margin: 0 auto 21px; background: #151619; }
       .title { margin: 0; font-size: 142px; font-weight: 650; line-height: .95; letter-spacing: -8px; }
       .title-line { display: inline-block; white-space: nowrap; }
       .title em { font-family: Editorial, serif; font-weight: 400; color: #a9c5ff; letter-spacing: -5px; }
       .title .works { display: block; letter-spacing: -6px; }
-      .tagline { margin: 24px 0 0; font-size: 27px; font-weight: 500; letter-spacing: -1px; color: #c0c4bd; white-space: nowrap; }
-      .claim { display: inline-block; position: relative; margin-top: 14px; padding-bottom: 8px; font-size: 20px; font-weight: 600; letter-spacing: -.3px; }
+      .tagline { margin: 18px 0 0; font-size: 27px; font-weight: 500; letter-spacing: -1px; color: #c0c4bd; white-space: nowrap; }
+      .claim { display: inline-block; position: relative; margin-top: 10px; padding-bottom: 8px; font-size: 20px; font-weight: 600; letter-spacing: -.3px; }
+      .download-note { margin-top: 4px; font-size: 14px; color: #a9c5ff; }
       .claim:after { content: ''; position: absolute; left: -4px; right: -4px; bottom: 0; height: 7px; background: url('${origin}/brand/hand-underline.svg') center / 100% 100% no-repeat; }
       .tools { position: absolute; left: 345px; right: 345px; bottom: 34px; display: flex; justify-content: space-between; border-top: 1px solid #363a37; padding-top: 18px; }
       .tool { display: flex; align-items: center; gap: 8px; }
@@ -40,7 +42,7 @@ try {
       .bottom img { width: 155px; height: auto; max-height: 36px; object-fit: contain; }
       </style></head><body>
         <div class="edition"><span>THE DOCS COLLECTION</span><span>01 — 04 &nbsp; / &nbsp; ${lang.toUpperCase()}</span></div><div class="rule"></div>
-        <main><img class="symbol" src="${origin}/brand/vora-works.svg" alt=""><h1 class="title"><span class="title-line">VORA <em>AI</em></span><span class="title-line works">DOCS</span></h1><p class="tagline">${text.hero1} ${text.hero2}</p><div class="claim">${text.free}</div></main>
+        <main><img class="symbol" src="${origin}/brand/vora-works.svg" alt=""><h1 class="title"><span class="title-line">VORA <em>AI</em></span><span class="title-line works">DOCS</span></h1><p class="tagline">${text.hero1} ${text.hero2}</p><div class="claim">${text.free}</div><div class="download-note">${installCopy[lang].title}</div></main>
         <section class="tools">${products.map(product=>`<div class="tool"><img src="${origin}/brand/vora-${product.id}.svg" alt=""><span>${product.name}</span></div>`).join('')}</section>
         <footer class="bottom"><span>VORA.IM</span><img src="${origin}/brand/horizon-dark.webp" alt="Linkbricks Horizon-AI"></footer>
       </body></html>`);
@@ -55,6 +57,8 @@ try {
       return { left: rect.left, right: rect.right };
     }));
     if (brandBounds.some(bounds => bounds.left < 300 || bounds.right > 900)) throw new Error(`${lang}: brand would be clipped by a square thumbnail`);
+    const vertical = await page.evaluate(() => ({ note: document.querySelector('.download-note').getBoundingClientRect().bottom, tools: document.querySelector('.tools').getBoundingClientRect().top }));
+    if (vertical.note + 12 > vertical.tools) throw new Error(`${lang}: installation title overlaps product row: ${JSON.stringify(vertical)}`);
     const file = new URL(`../public${socialImagePath(lang)}`, import.meta.url).pathname;
     await page.screenshot({ path: file });
     console.log(`Generated ${lang} social card · 1200 × 630 · centered brand verified`);

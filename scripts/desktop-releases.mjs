@@ -6,7 +6,7 @@ import { Readable, Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 
 import { products } from '../public/downloads/shared/content.js';
-import { validArtifact } from '../public/downloads/shared/releases.js';
+import { validArtifact, currentManifest } from '../public/downloads/shared/releases.js';
 
 function verifiedSources(source, artifact, product) {
   let parts;
@@ -78,13 +78,9 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
     }
     await writeFile(new URL('manifest.json', folder), JSON.stringify(manifest, null, 2) + '\n');
   }
-  const stable = catalog.releases.find(release => release.manifest.version === catalog.stableVersion);
-  if (!stable && catalog.releases.length) throw new Error('Missing stable release');
   // Keep immutable versioned files available to existing users while withdrawing
   // incomplete platforms from current download pages and automatic update discovery.
-  const artifacts = stable?.manifest.artifacts.filter(artifact => !withdrawn.includes(artifact.platform)) ?? [];
-  const current = artifacts.length ? {...stable.manifest, artifacts}
-    : {schemaVersion:1,product,version:stable?.manifest.version ?? products[product].version,status:'pending',artifacts:[]};
+  const current = currentManifest(catalog, product);
   await mkdir(new URL(`releases/${product}/`, dist), {recursive:true});
   await writeFile(new URL(`releases/${product}/stable.json`, dist), JSON.stringify(current, null, 2) + '\n');
 }

@@ -1,4 +1,5 @@
 import { products as definitions, copy } from './content.js';
+import { installCopy, renderInstallGuide } from './install.js';
 
 // Keep navigation inside WORKS in the chosen language. Installer files and
 // custom/external destinations keep their configured addresses unchanged.
@@ -55,7 +56,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
 
   function platformButtons(product, full = false) {
     const pending = Object.values(product.downloads).every(value => !value);
-    return `<div class="platforms"><span class="platform-label">${product.downloadPageURL ? `<a href="${escapeAttribute(product.downloadPageURL)}">${t('download')}</a>` : t('download')} ${pending ? `<small>${t('coming')}</small>` : ''}</span><div class="os-buttons">${[['mac', 'macos', 'macOS'], ['windows', 'windows', 'Windows'], ['linux', 'linux', 'Linux']].map(([icon, os, name]) => {
+    return `<div class="platforms"><span class="platform-label">${product.downloadPageURL ? `<a href="${escapeAttribute(product.downloadPageURL)}">${t('download')}</a>` : t('download')} ${pending ? `<small>${t('coming')}</small>` : ''}<button class="install-guide-trigger" data-download="${product.id}" data-os="macOS">${installCopy[lang].short}</button></span><div class="os-buttons">${[['mac', 'macos', 'macOS'], ['windows', 'windows', 'Windows'], ['linux', 'linux', 'Linux']].map(([icon, os, name]) => {
       const content = `${icons[icon]}<span${full ? '' : ' class="os-name"'}>${name}</span>`;
       const url = product.downloads[os];
       return url ? `<a href="${escapeAttribute(url)}" class="os-button available-download" target="_blank" rel="noopener noreferrer" aria-label="VORA ${product.name} ${name} — ${t('download')}">${content}${icons.down}</a>` : `<button data-download="${product.id}" data-os="${name}" class="os-button" aria-label="VORA ${product.name} ${name} — ${t('coming')}" title="${name} · ${t('coming')}">${content}</button>`;
@@ -88,10 +89,14 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
   }
 
 
-  function downloadDialog(id, osName) {
+  function downloadDialog(id, osName, release) {
     const p = products.find(product => product.id === id);
     if (!p) return '';
-    return `${brand(p.id)}<span class="eyebrow">VORA ${p.name} / ${escapeAttribute(osName)}</span><h2 id="dialog-title">${t('dialogTitle')}</h2><p>${t('dialogBody')}</p><div class="dialog-platforms">${[['mac', 'macos', 'macOS'], ['windows', 'windows', 'Windows'], ['linux', 'linux', 'Linux']].map(([id, os, name]) => `<div>${icons[id]}<span>${name}</span>${p.downloads[os] ? link(p.downloads[os], t('download')) : `<small>${t('coming')}</small>`}</div>`).join('')}</div>${link(p.url, `${t('online')} ${icons.diagonal}`, 'button solid')}`;
+    const guideCopy = installCopy[lang], artifacts = release || {};
+    const knownRelease = release !== undefined;
+    const available = os => Boolean(p.downloads[os]) && (!knownRelease || Boolean(artifacts[os]));
+    const platform = {macOS:'macos',Windows:'windows',Linux:'linux'}[osName] || 'macos';
+    return `${brand(p.id)}<span class="eyebrow">VORA ${p.name} / ${escapeAttribute(osName)}</span><h2 id="dialog-title">${guideCopy.title}</h2><p>${guideCopy.intro}</p><div class="dialog-platforms">${[['mac', 'macos', 'macOS'], ['windows', 'windows', 'Windows'], ['linux', 'linux', 'Linux']].map(([icon, os, name]) => `<div>${icons[icon]}<span>${name}</span>${available(os) ? link(p.downloads[os], t('download')) : `<small>${t('coming')}</small>`}</div>`).join('')}</div>${['macos','windows','linux'].map(os=>renderInstallGuide(lang,os,artifacts[os],id,{compact:true,pending:!available(os),open:os===platform})).join('')}${link(p.url, `${t('online')} ${icons.diagonal}`, 'button solid')}`;
   }
 
   return { html: editorial() + `<dialog id="download-dialog" aria-labelledby="dialog-title"><button class="dialog-close" data-action="close-dialog" aria-label="${t('close')}">${icons.close}</button><div id="dialog-content"></div></dialog>`, downloadDialog };

@@ -15,7 +15,14 @@ function render() {
   document.documentElement.dataset.theme = theme;
   document.title = copyFor(language, product).pageTitle;
   document.getElementById('app').innerHTML = renderBody(language, config, manifest, theme, product);
+  const platform = ['macos','windows','linux'].includes(query.get('os')) ? query.get('os') : 'macos';
+  document.querySelectorAll('.installation-guide').forEach(guide => { guide.open = guide.dataset.platform === platform; });
 }
+document.addEventListener('click', event => {
+  const link = event.target.closest('.install-help');
+  const guide = link && document.querySelector(link.getAttribute('href'));
+  if (guide) guide.open = true;
+});
 document.addEventListener('change', event => {
   if (event.target.id === 'theme') {
     theme = event.target.value; savePreference(THEME_KEY, theme);

@@ -1,4 +1,4 @@
-# VORA AI WORKS — Static Site
+# VORA AI DOCS — Static Site
 
 VORA WORD · VORA SLIDE · VORA CELL · VORA HWP 소개 사이트.
 
@@ -11,6 +11,8 @@ npm run dev
 ```
 
 http://127.0.0.1:4173/ 에서 실행한다.
+
+설치 파일을 다시 내려받지 않고 페이지·팝업·SEO만 로컬 검수하려면 `npm run build:preview`를 사용한다. 결과는 게시용 `dist/`와 분리된 `output/install-guide-preview/`에 생성되며 설치 파일은 포함하지 않는다. 이 결과를 운영에 배포하지 않는다. 운영 `npm run build`는 모든 릴리스 파일의 출처·크기·SHA 검증을 그대로 수행한다.
 
 - 최초 언어는 브라우저 언어 우선순위에서 한국어·일본어·영어를 선택한다. 지원 언어가 없으면 영어를 사용한다.
 - 언어 메뉴에서 자동 또는 특정 언어를 고를 수 있으며 수동 선택은 유지된다.
@@ -168,6 +170,16 @@ SLIDE 전체 서식을 포함한 DMG·AppImage 및 Windows ZIP만 최대 4 GiB�
 - 설치 파일이 없는 제품은 구조화 데이터에 다운로드 URL·설치 가능 OS·출시 버전을 주장하지 않는다.
 - 공유 카드 12장: `public/brand/{word,slide,cell,hwp}-desktop-{ko,en,ja}-v1.png`, 각 1200×630. 정사각형 크롭에도 제품명·심볼이 남도록 중앙 배치했다.
 - 로컬 서버 실행 후 `PREVIEW_URL=http://127.0.0.1:4190 npm run social:desktop`으로 재생성한다. Render는 커밋된 PNG를 사용한다.
+
+### OS별 설치 안내 — STATIC-INSTALL177
+
+- 메인 다운로드 팝업과 4제품 다운로드 페이지에서 한국어·영어·일본어 안내를 공유한다. OS별 “설치 방법” 링크와 키보드로 펼칠 수 있는 안내 카드를 제공한다.
+- Mac은 DMG 열기 → Applications 복사 → 첫 실행 확인을 기본으로 한다. 개발자 확인에 막힌 경우에만 해당 앱의 시스템 설정 “확인 없이 열기”를 안내한다. 손상·유해 경고는 실행을 중단하고 공식 최신 파일을 다시 받도록 별도로 안내한다.
+- Windows는 공개 파일 형식에 따라 ZIP 전체 압축 해제, MSI/설치용 EXE 실행, HWP portable 앱 실행을 구분한다. SLIDE의 MSI+CAB ZIP은 모든 CAB와 MSI를 같은 폴더에 유지하도록 안내한다.
+- Linux는 AppImage 실행 권한과 실행을 설명한다. 터미널 예시는 검증된 형태의 공개 파일 이름이 있을 때만 표시한다.
+- 설치 안내가 있어도 준비 중인 OS는 다운로드가 활성화되지 않는다. 현재 feed의 철회 상태를 페이지·개발 서버·팝업에서 유지한다. 카탈로그나 공개 다운로드 설정을 바꾸지 않는다.
+- 메인 OG는 `social-*-v7.png`, 제품 OG는 `*-desktop-*-v4.png`이며 모두 1200×630이다. 제목·설명·대체 텍스트·canonical·hreflang·구조화 데이터에 같은 언어의 다운로드 안내를 연결한다.
+- `npm run test:install`은 안내/파일 형식/보류/SEO/이미지 회귀를, `PREVIEW_URL=http://127.0.0.1:4190 npm run test:install:browser`는 Chrome·WebKit의 실제 안내·팝업·지연 feed 동작을 확인한다. 상세 범위와 공식 근거는 [검수 기록](docs/install-guides-177.md)을 참고한다.
 
 ### 로컬 검증 — 2026-10-26
 

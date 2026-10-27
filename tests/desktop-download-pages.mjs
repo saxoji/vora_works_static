@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { readFile, mkdir } from 'node:fs/promises';
 import { products } from '../public/downloads/shared/content.js';
+import { currentManifest } from '../public/downloads/shared/releases.js';
 await mkdir('output/desktop-downloads',{recursive:true});
 const base = process.env.PREVIEW_URL || 'http://127.0.0.1:4190';
 const expectedVersions = Object.fromEntries(await Promise.all(Object.keys(products).map(async product => {
@@ -56,7 +57,7 @@ try {
   const staticPage = await staticContext.newPage();
   for(const product of Object.keys(products)) for(const lang of ['ko','en','ja']) {
     const catalog = JSON.parse(await readFile(`releases/${product}/catalog.json`));
-    const manifest = catalog.releases.find(r=>r.manifest.version===catalog.stableVersion)?.manifest;
+    const manifest = currentManifest(catalog, product);
     const available = new Set(manifest?.artifacts.map(a=>a.platform)||[]);
     await staticPage.goto(`${base}/downloads/${product}/${lang}/`);
     assert.equal(await staticPage.locator('h1').count(),1);

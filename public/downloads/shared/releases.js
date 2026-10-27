@@ -33,3 +33,16 @@ export function preferredArtifact(artifacts, platform) {
   }
   return undefined;
 }
+
+// The same withdrawal rules apply to publishing, development and local page QA.
+export function currentManifest(catalog, product) {
+  if (!products[product] || catalog?.schemaVersion !== 1 || !Array.isArray(catalog.releases)) throw new Error('Invalid desktop release catalog');
+  const withdrawn = catalog.withdrawnPlatforms ?? [];
+  if (!Array.isArray(withdrawn) || withdrawn.length > 3 || new Set(withdrawn).size !== withdrawn.length
+    || withdrawn.some(platform => !['macos','windows','linux'].includes(platform))) throw new Error('Invalid withdrawn platforms');
+  const stable = catalog.releases.find(release => release.manifest.version === catalog.stableVersion);
+  if (!stable && catalog.releases.length) throw new Error('Missing stable release');
+  const artifacts = stable?.manifest.artifacts.filter(artifact => !withdrawn.includes(artifact.platform)) ?? [];
+  return artifacts.length ? {...stable.manifest, artifacts}
+    : {schemaVersion:1,product,version:stable?.manifest.version ?? products[product].version,status:'pending',artifacts:[]};
+}

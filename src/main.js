@@ -1,6 +1,7 @@
 import { createView } from './view.js';
 import { getPageMeta, localeCodes } from './seo.js';
 import config from '/config.js';
+import { validArtifacts, preferredArtifact } from '/downloads/shared/releases.js';
 
 import { LANGUAGE_KEY, THEME_KEY, languages, resolveLanguage, resolveTheme, readPreference, savePreference } from './preferences.js';
 
@@ -80,7 +81,8 @@ app.addEventListener('change', event => {
   window.scrollTo({ top: scrollY, behavior: 'instant' });
 });
 
-app.addEventListener('click', event => {
+let dialogRequest = 0;
+app.addEventListener('click', async event => {
   const scrollProduct = event.target.closest('[data-scroll-product]');
   if (scrollProduct) {
     event.preventDefault();
@@ -89,9 +91,30 @@ app.addEventListener('click', event => {
   const download = event.target.closest('[data-download]');
   if (download) {
     document.querySelector('#dialog-content').innerHTML = view.downloadDialog(download.dataset.download, download.dataset.os);
+    document.querySelector('#dialog-content').scrollTop = 0;
     document.querySelector('#download-dialog').showModal();
+    const request = ++dialogRequest, currentView = view, product = download.dataset.download;
+    try {
+      const response = await fetch(config.products[product].releaseManifestURL || `/releases/${product}/stable.json`, {cache:'no-store'});
+      if (!response.ok) return;
+      const data = await response.json(), artifacts = validArtifacts(data, config.siteUrl, product);
+      const pending = data?.schemaVersion === 1 && data.product === product && data.status === 'pending'
+        && typeof data.version === 'string' && data.version === data.version.trim() && /^\d+\.\d+\.\d+$/.test(data.version)
+        && Array.isArray(data.artifacts) && data.artifacts.length === 0;
+      const available = data?.status !== 'pending' && artifacts.length > 0;
+      if (!pending && !available) return;
+      if (request !== dialogRequest || view !== currentView || !document.querySelector('#download-dialog').open) return;
+      const release = Object.fromEntries(['macos','windows','linux'].map(os=>[os,preferredArtifact(artifacts,os)]));
+      const content = document.querySelector('#dialog-content'), scrollTop = content.scrollTop;
+      const openGuides = new Set([...content.querySelectorAll('details[open]')].map(guide=>guide.id));
+      const focusedGuide = content.contains(document.activeElement) ? document.activeElement.closest('details')?.id : null;
+      content.innerHTML = view.downloadDialog(product, download.dataset.os, release);
+      content.querySelectorAll('details').forEach(guide=>{ guide.open = openGuides.has(guide.id); });
+      if (focusedGuide) content.querySelector(`#${focusedGuide} summary`)?.focus({preventScroll:true});
+      content.scrollTop = scrollTop;
+    } catch { /* The guide and links to the product download page remain usable offline. */ }
   }
-  if (event.target.closest('[data-action="close-dialog"]')) document.querySelector('#download-dialog').close();
+  if (event.target.closest('[data-action="close-dialog"]')) { dialogRequest++; document.querySelector('#download-dialog').close(); }
   if (event.target.matches('dialog')) {
     const rect = event.target.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) event.target.close();

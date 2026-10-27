@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
+    "build:preview": "node scripts/build-preview.mjs",
     "preview": "node scripts/serve.mjs dist",
     "social": "node scripts/social-cards.mjs",
     "social:desktop": "node scripts/desktop-social-cards.mjs",
     "test:config": "node --test tests/public-config.test.mjs",
     "test:releases": "node --test tests/*releases.test.mjs",
-    "test:downloads": "node tests/desktop-download-pages.mjs"
+    "test:downloads": "node tests/desktop-download-pages.mjs",
+    "test:install": "node --test tests/install-guides.test.mjs",
+    "test:install:browser": "node tests/install-guides-browser.mjs"
   },
   "engines": {
     "node": ">=22"
