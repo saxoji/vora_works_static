@@ -69,7 +69,7 @@ services:
       - key: PUBLIC_HWP_MACOS_DOWNLOAD_URL
         value: https://works.vora.im/downloads/hwp/?os=macos
       - key: PUBLIC_HWP_WINDOWS_DOWNLOAD_URL
-        value: ""
+        value: https://works.vora.im/downloads/hwp/?os=windows
       - key: PUBLIC_HWP_LINUX_DOWNLOAD_URL
         value: https://works.vora.im/downloads/hwp/?os=linux
       - key: PUBLIC_HWP_RELEASE_MANIFEST_URL

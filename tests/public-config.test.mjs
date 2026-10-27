@@ -10,7 +10,7 @@ import { createView } from '../src/view.js';
 const root = new URL('../', import.meta.url);
 const linksFor = product => Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, `https://works.vora.im/downloads/${product}/?os=${os}`]));
 const cellLinks = linksFor('cell');
-const desktopLinks = { cell: cellLinks, hwp: {...linksFor('hwp'), windows: ''} };
+const desktopLinks = { cell: cellLinks, hwp: linksFor('hwp') };
 const keyFor = (os, product = 'cell') => `PUBLIC_${product.toUpperCase()}_${os.toUpperCase()}_DOWNLOAD_URL`;
 
 // Copy only the public generator/defaults. Never read local deployment secrets,

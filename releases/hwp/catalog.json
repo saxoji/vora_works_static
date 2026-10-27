@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.2",
+  "stableVersion": "1.0.3",
   "releases": [
     {
       "manifest": {
@@ -151,9 +151,69 @@
         "VORA-HWP-1.0.2-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/678564612",
         "VORA-HWP-1.0.2-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/678560047"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.3",
+        "publishedAt": "2026-10-27T05:36:55.568806Z",
+        "notes": {
+          "ko": "서식 3,187개를 포함하고, 설치된 글꼴 선택과 문서 다시 열기를 개선했습니다. 로컬 문서 편집과 PDF·DOCX 내보내기를 지원합니다.",
+          "en": "Includes 3,187 templates and improves installed-font selection and document reopening. Supports local editing and PDF/DOCX export.",
+          "ja": "3,187種類のテンプレートを収録し、インストール済みフォントの選択と文書の再表示を改善しました。ローカル編集とPDF・DOCX出力に対応しています。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.3/VORA-HWP-1.0.3-mac-arm64.dmg",
+            "size": 406553179,
+            "sha256": "1d446fadf36dd8fe87c814c9eaa72bc84741117358158915cbf5475db77131a6"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.3/VORA-HWP-1.0.3-mac-arm64.zip",
+            "size": 369009677,
+            "sha256": "c0e1ceffdb91ade49b774e7f53508debeb040af93a95e7723c653131ac4bf454"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.3/VORA-HWP-1.0.3-win-x64.exe",
+            "size": 340368361,
+            "sha256": "d2c9af887604869eb5b9546491bc490b182dcd6bba2769f1d5125869d6712972"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.3/VORA-HWP-1.0.3-win-x64.zip",
+            "size": 394159902,
+            "sha256": "e6f1b97dd91dccbafc0b5fbfd1fddb839899dc3749eca76e0e9c9e3ac1acb320"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.3/VORA-HWP-1.0.3-linux-x64.AppImage",
+            "size": 370518678,
+            "sha256": "ee0fabb9ff2e14993612df69130e9401c2f4a59910747162afd001859fb4ff75"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.3-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/680574614",
+        "VORA-HWP-1.0.3-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/680544439",
+        "VORA-HWP-1.0.3-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/680532233",
+        "VORA-HWP-1.0.3-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/680532645",
+        "VORA-HWP-1.0.3-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/680533166"
+      }
     }
   ],
-  "withdrawnPlatforms": [
-    "windows"
-  ]
+  "withdrawnPlatforms": []
 }
