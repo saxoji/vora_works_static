@@ -10,7 +10,7 @@ import { createView } from '../src/view.js';
 const root = new URL('../', import.meta.url);
 const linksFor = product => Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, `https://works.vora.im/downloads/${product}/?os=${os}`]));
 const cellLinks = linksFor('cell');
-const desktopLinks = { cell: cellLinks, hwp: linksFor('hwp') };
+const desktopLinks = { word: linksFor('word'), cell: cellLinks, hwp: linksFor('hwp') };
 const keyFor = (os, product = 'cell') => `PUBLIC_${product.toUpperCase()}_${os.toUpperCase()}_DOWNLOAD_URL`;
 
 // Copy only the public generator/defaults. Never read local deployment secrets,
@@ -36,7 +36,7 @@ async function generate({ local = '', env = {} } = {}) {
   }
 }
 
-test('verified CELL and HWP desktop defaults exclude pending platforms and private build credentials', async () => {
+test('verified WORD, CELL and HWP desktop defaults exclude pending platforms and private build credentials', async () => {
   const result = await generate();
   assert.equal(result.status, 0, result.stderr);
   for (const [product, links] of Object.entries(desktopLinks)) {
@@ -51,12 +51,11 @@ test('verified CELL and HWP desktop defaults exclude pending platforms and priva
       }
     }
   }
-  assert.deepEqual(result.config.products.word.downloads, { macos: '', windows: '', linux: '' });
   assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: '' });
   assert.doesNotMatch(result.source, /synthetic-token-must-stay-private|DESKTOP_RELEASE_GITHUB_TOKEN/);
 });
 
-test('CELL and HWP samples and Render blueprint keep the same configurable download destinations', async () => {
+test('WORD, CELL and HWP samples and Render blueprint keep the same configurable download destinations', async () => {
   const example = await readFile(new URL('.env.example', root), 'utf8');
   const blueprint = await readFile(new URL('render.yaml', root), 'utf8');
   for (const [product, links] of Object.entries(desktopLinks)) {

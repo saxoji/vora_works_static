@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.0",
+  "stableVersion": "1.0.1",
   "releases": [
     {
       "manifest": {
@@ -54,11 +54,69 @@
         "VORA-WORD-1.0.0-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/679487969",
         "VORA-WORD-1.0.0-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/679488076"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.1",
+        "publishedAt": "2026-10-27T07:28:37.149099+00:00",
+        "notes": {
+          "ko": "글꼴 선택과 오프라인 서식, 문서 편집·저장 및 자동 업데이트를 보강한 VORA WORD 독립 실행판입니다.",
+          "en": "Standalone VORA WORD with improved font selection, offline templates, document editing and saving, and automatic updates.",
+          "ja": "フォント選択、オフラインのテンプレート、文書の編集・保存、自動更新を改善したVORA WORD独立実行版です。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.1/VORA-WORD-1.0.1-mac-arm64.dmg",
+            "size": 144385127,
+            "sha256": "1873ddc9b2dd6d324193e20badb1bc99f9a13d0f0b679ae36619eb66ba7c2748"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.1/VORA-WORD-1.0.1-mac-arm64.zip",
+            "size": 144385283,
+            "sha256": "57f310194b0eee068d53cb3d4efba6ece9efdd96e72a32634256e4b895b0c055"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.1/VORA-WORD-1.0.1-linux-x64.AppImage",
+            "size": 141056504,
+            "sha256": "aea22d554e69896912ef58ffba79955158492d4c19d69eb45d36f1a913412ad9"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/word/1.0.1/VORA-WORD-1.0.1-win-x64.msi",
+            "size": 121022389,
+            "sha256": "6953ab8bb721b5fc765d7a29644c4646cd8fe7625d7d458402f9dbd648638cd9"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.1/VORA-WORD-1.0.1-win-x64.zip",
+            "size": 120795052,
+            "sha256": "870d4e1f48ecda2446342180ab0176be41ac5bd814c4d069e8106717f6662dd0"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.1-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680705061",
+        "VORA-WORD-1.0.1-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680705450",
+        "VORA-WORD-1.0.1-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680506024",
+        "VORA-WORD-1.0.1-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680805948",
+        "VORA-WORD-1.0.1-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680806101"
+      }
     }
   ],
-  "withdrawnPlatforms": [
-    "macos",
-    "windows",
-    "linux"
-  ]
+  "withdrawnPlatforms": []
 }
