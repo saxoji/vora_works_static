@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { readFile, mkdir } from 'node:fs/promises';
 import { products } from '../public/downloads/shared/content.js';
-import { currentManifest } from '../public/downloads/shared/releases.js';
+import { currentManifest, validArtifacts } from '../public/downloads/shared/releases.js';
 await mkdir('output/desktop-downloads',{recursive:true});
 const base = process.env.PREVIEW_URL || 'http://127.0.0.1:4190';
 const expectedVersions = Object.fromEntries(await Promise.all(Object.keys(products).map(async product => {
@@ -58,10 +58,15 @@ try {
   for(const product of Object.keys(products)) for(const lang of ['ko','en','ja']) {
     const catalog = JSON.parse(await readFile(`releases/${product}/catalog.json`));
     const manifest = currentManifest(catalog, product);
-    const available = new Set(manifest?.artifacts.map(a=>a.platform)||[]);
+    const downloads = validArtifacts(manifest, 'https://works.vora.im', product);
+    const available = new Set(downloads.map(a=>a.platform));
     await staticPage.goto(`${base}/downloads/${product}/${lang}/`);
     assert.equal(await staticPage.locator('h1').count(),1);
     assert.equal(await staticPage.locator('a.download-button').count(),available.size);
+    for (const [i, platform] of ['macos','windows','linux'].entries()) {
+      const artifact = downloads.find(a => a.platform === platform);
+      if (artifact) assert.match(await staticPage.locator('.os-card').nth(i).locator('.artifact-detail').textContent(), new RegExp(artifact.version ?? manifest.version));
+    }
     assert.equal(await staticPage.locator('.verification').count(),available.size?1:0);
     assert.equal(await staticPage.locator('link[rel=canonical]').getAttribute('href'),`https://works.vora.im/downloads/${product}/${lang}/`);
     assert.equal(await staticPage.locator('link[hreflang]').count(),4);
@@ -78,5 +83,5 @@ try {
     const image=await response.body();assert.equal(image.readUInt32BE(16),1200);assert.equal(image.readUInt32BE(20),630);
   }
   assert.deepEqual(errors,[]);
-  console.log('PASS 96 language/theme/viewport combinations, system theme updates, saved preferences, links, downloads, SHA details, no-JS content, SEO and OG images');
+  console.log('PASS 96 language/theme/viewport combinations across four products, system theme updates, saved preferences, links, downloads, SHA details, no-JS content, SEO and OG images');
 } finally {await browser.close();}

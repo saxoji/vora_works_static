@@ -47,7 +47,8 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 `WORD`를 `SLIDE`, `CELL`, `HWP`로 바꾼 변수도 같은 방식으로 사용한다.
 값이 없으면 준비 중 안내를 표시한다. 설치 파일이 준비된 OS만 다운로드 링크를 설정한다. 공개 HTTPS URL만 허용한다.
 
-CELL의 현재 공개 버전은 세 OS의 1.0.1이며, 후속 1.0.2 후보의 검수와 공개는 별도로 확정한다.
+CELL은 검증 완료된 macOS·Linux 1.0.2를 제공하며 Windows는 기존 검증본 1.0.1을 유지한다.
+`downloadFallbacks`는 이전 버전의 다운로드 표시만 보존한다. 자동 업데이트용 `artifacts`에는 현재 버전의 검증 파일만 포함하며, Windows 파일을 1.0.2로 잘못 표기하지 않는다.
 주소를 변경하려면 `.env.local` 또는 Render Environment에서 해당 키를 덮어쓴다.
 특정 OS의 링크를 임시로 숨길 때는 그 키의 값을 빈 문자열로 설정한다.
 

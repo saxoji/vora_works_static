@@ -21,7 +21,24 @@ export function validArtifact(artifact, product, version, siteUrl) {
 }
 export function validArtifacts(manifest, siteUrl, product = 'hwp') {
   if(manifest?.schemaVersion !== 1 || manifest.product !== product || !Array.isArray(manifest.artifacts))return [];
-  return manifest.artifacts.filter(artifact=>validArtifact(artifact, product, manifest.version, siteUrl));
+  const current = manifest.artifacts.filter(artifact=>validArtifact(artifact, product, manifest.version, siteUrl));
+  // Older verified downloads are presentation-only. Native updaters continue
+  // to read only artifacts belonging to the single current manifest version.
+  const platforms = new Set(current.map(artifact => artifact.platform));
+  const urls = new Set(current.map(artifact => artifact.url));
+  for (const group of Array.isArray(manifest.downloadFallbacks) ? manifest.downloadFallbacks : []) {
+    if (!Array.isArray(group?.artifacts)) continue;
+    const addedPlatforms = new Set();
+    for (const artifact of group.artifacts) {
+      if (!platforms.has(artifact.platform) && !urls.has(artifact.url) && validArtifact(artifact, product, group.version, siteUrl)) {
+        current.push({...artifact, version:group.version});
+        urls.add(artifact.url);
+        addedPlatforms.add(artifact.platform);
+      }
+    }
+    for (const platform of addedPlatforms) platforms.add(platform);
+  }
+  return current;
 }
 
 // The updater still receives the original installer in the manifest; user downloads prefer ZIP on Windows.
@@ -43,6 +60,18 @@ export function currentManifest(catalog, product) {
   const stable = catalog.releases.find(release => release.manifest.version === catalog.stableVersion);
   if (!stable && catalog.releases.length) throw new Error('Missing stable release');
   const artifacts = stable?.manifest.artifacts.filter(artifact => !withdrawn.includes(artifact.platform)) ?? [];
-  return artifacts.length ? {...stable.manifest, artifacts}
+  const fallbacks = catalog.downloadFallbacks ?? {};
+  if (!fallbacks || typeof fallbacks !== 'object' || Array.isArray(fallbacks)) throw new Error('Invalid download fallbacks');
+  const downloadFallbacks = [];
+  for (const [platform, version] of Object.entries(fallbacks)) {
+    if (!['macos','windows','linux'].includes(platform) || !/^\d+\.\d+\.\d+$/.test(version)) throw new Error('Invalid download fallback');
+    const previous = catalog.releases.find(release => release.manifest.version === version);
+    if (!previous || !stable || version === stable.manifest.version) throw new Error('Missing previous download release');
+    if (withdrawn.includes(platform) || artifacts.some(artifact => artifact.platform === platform)) continue;
+    const retained = previous.manifest.artifacts.filter(artifact => artifact.platform === platform);
+    if (!retained.length) throw new Error('Missing previous platform download');
+    downloadFallbacks.push({version, artifacts:retained});
+  }
+  return artifacts.length ? {...stable.manifest, artifacts, ...(downloadFallbacks.length ? {downloadFallbacks} : {})}
     : {schemaVersion:1,product,version:stable?.manifest.version ?? products[product].version,status:'pending',artifacts:[]};
 }

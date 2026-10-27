@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { publishProductReleases, publishDesktopReleases } from '../scripts/desktop-releases.mjs';
-import { validArtifact, validArtifacts, preferredArtifact } from '../public/downloads/shared/releases.js';
+import { validArtifact, validArtifacts, preferredArtifact, currentManifest } from '../public/downloads/shared/releases.js';
 
 const siteUrl = 'https://works.vora.im';
 const data = Buffer.from('verified desktop installer fixture');
@@ -252,3 +252,25 @@ test('a GitHub source URL cannot claim an unsplit asset of 2 GiB or larger',asyn
   const release=fixture('slide');release.manifest.artifacts[0].size=3*1024**3;await catalog(root,'slide',release);
   await assert.rejects(publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async()=>{throw Error('unexpected fetch');}}),/require verified SLIDE source parts/);
 }));
+
+test('platform downloads retain their verified old version without advertising it to native updaters', async () => {
+  const source = JSON.parse(await readFile(new URL('../releases/cell/catalog.json', import.meta.url)));
+  const previous = source.releases.find(r => r.manifest.version === '1.0.1').manifest;
+  const current = currentManifest(source, 'cell');
+  assert.equal(current.version, '1.0.2');
+  assert.deepEqual(current.artifacts.map(a => a.platform), ['macos', 'linux']);
+  const downloads = validArtifacts(current, siteUrl, 'cell');
+  assert.deepEqual(downloads.filter(a => a.platform === 'windows').map(({version,...a}) => a), previous.artifacts.filter(a => a.platform === 'windows'));
+  assert(downloads.filter(a => a.platform === 'windows').every(a => a.version === '1.0.1'));
+  assert.equal(preferredArtifact(downloads, 'windows').format, 'zip');
+  assert.deepEqual(validArtifacts({...current, downloadFallbacks:[...current.downloadFallbacks, ...current.downloadFallbacks]}, siteUrl, 'cell'), downloads);
+  const native = JSON.parse(JSON.stringify(current));
+  assert.equal(native.artifacts.find(a => a.platform === 'windows'), undefined, 'existing Windows updater returns no update');
+  assert(native.artifacts.every(a => validArtifact(a, 'cell', native.version, siteUrl)));
+  const withdrawn = currentManifest({...source, withdrawnPlatforms:['windows']}, 'cell');
+  assert.equal(validArtifacts(withdrawn, siteUrl, 'cell').some(a => a.platform === 'windows'), false);
+  assert.throws(() => currentManifest({...source, downloadFallbacks:{windows:'9.9.9'}}, 'cell'));
+  assert.throws(() => currentManifest({...source, downloadFallbacks:{android:'1.0.1'}}, 'cell'));
+  const tampered = structuredClone(current); tampered.downloadFallbacks[0].artifacts[0].url = 'https://evil.example/installer';
+  assert.equal(validArtifacts(tampered, siteUrl, 'cell').length, downloads.length - 1);
+});

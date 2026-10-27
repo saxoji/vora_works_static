@@ -4,7 +4,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { installCopy } from '../src/install.js';
 import { copy } from '../src/content.js';
 import { products, languages } from '../public/downloads/shared/content.js';
-import { currentManifest } from '../public/downloads/shared/releases.js';
+import { currentManifest, validArtifacts } from '../public/downloads/shared/releases.js';
 
 const base=process.env.PREVIEW_URL||'http://127.0.0.1:4190';
 const folder=process.env.INSTALL_EVIDENCE_DIR||'output/playwright/download179';
@@ -36,7 +36,7 @@ try {
     assert.equal(await page.locator('#macos-install').getAttribute('open'),'');
     assert.ok((await page.locator('#macos-install').textContent()).includes(installCopy[lang].macBlocked));
     assert.ok((await page.locator('#macos-install').textContent()).includes(installCopy[lang].macDamaged));
-    const available=new Set(manifests[product].artifacts.map(a=>a.platform));
+    const available=new Set(validArtifacts(manifests[product], 'https://works.vora.im', product).map(a=>a.platform));
     assert.equal(await page.locator('.guide-pending').count(),3-available.size);
     assert.equal(await page.locator('a.download-button').count(),available.size);
     await safe(page,`${product}/${lang}/${theme}/${width}`);

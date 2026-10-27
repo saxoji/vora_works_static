@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.1",
+  "stableVersion": "1.0.2",
   "releases": [
     {
       "manifest": {
@@ -89,6 +89,44 @@
         "VORA-CELL-1.0.1-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679353425",
         "VORA-CELL-1.0.1-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/679355103"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.2",
+        "publishedAt": "2026-10-27T09:08:56.260802+00:00",
+        "notes": {
+          "ko": "macOS·Linux의 서식, 글꼴, 저장·재열기와 자동 업데이트를 보강했습니다. Windows는 검증된 1.0.1을 제공합니다.",
+          "en": "Improved templates, fonts, save/reopen and updates on macOS and Linux. Windows retains verified version 1.0.1.",
+          "ja": "macOS・Linuxのテンプレート、フォント、保存・再読み込み、自動更新を改善しました。Windowsは検証済みの1.0.1を提供します。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.2/VORA-CELL-1.0.2-mac-arm64.dmg",
+            "size": 1355645090,
+            "sha256": "b75dd4f150ddd7354ad87f7dbaa1bad92aa1111308eedca7844d49636caddb9e"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.2/VORA-CELL-1.0.2-linux-x64.AppImage",
+            "size": 1205836280,
+            "sha256": "e53e6fcc87678a96f9ab49d8916ce5730e46d20fa0b4eac70aed6447b96d5a92"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.2-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/680678067",
+        "VORA-CELL-1.0.2-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/680659663"
+      }
     }
-  ]
+  ],
+  "downloadFallbacks": {
+    "windows": "1.0.1"
+  }
 }

@@ -117,7 +117,7 @@ test('current catalog filtering preserves immutable files and never restores wit
     const expected=stable?.artifacts.filter(a=>!catalog.withdrawnPlatforms?.includes(a.platform))||[];
     assert.deepEqual(current.artifacts,expected);
     assert.equal(current.status,expected.length?undefined:'pending');
-    assert.equal(validArtifacts(current,siteUrl,product).length,expected.length);
+    assert.equal(validArtifacts(current,siteUrl,product).length,expected.length + (current.downloadFallbacks ?? []).reduce((n, group) => n + group.artifacts.length, 0));
   }
   assert.throws(()=>currentManifest({schemaVersion:1,releases:[],withdrawnPlatforms:['windows','windows']},'cell'));
   assert.throws(()=>currentManifest({schemaVersion:1,releases:[{manifest:manifest('cell')}],stableVersion:'2.0.0'},'cell'));
