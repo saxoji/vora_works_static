@@ -255,6 +255,13 @@ test('a GitHub source URL cannot claim an unsplit asset of 2 GiB or larger',asyn
 
 test('platform downloads retain their verified old version without advertising it to native updaters', async () => {
   const source = JSON.parse(await readFile(new URL('../releases/cell/catalog.json', import.meta.url)));
+  // Model an incomplete platform rollout explicitly. The live catalog may
+  // later receive its verified Windows installer without changing this policy.
+  source.stableVersion = '1.0.2';
+  source.withdrawnPlatforms = [];
+  source.downloadFallbacks = {windows:'1.0.1'};
+  const rolling = source.releases.find(r => r.manifest.version === '1.0.2');
+  rolling.manifest.artifacts = rolling.manifest.artifacts.filter(a => a.platform !== 'windows');
   const previous = source.releases.find(r => r.manifest.version === '1.0.1').manifest;
   const current = currentManifest(source, 'cell');
   assert.equal(current.version, '1.0.2');
