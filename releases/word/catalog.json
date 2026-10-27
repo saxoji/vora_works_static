@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.1",
+  "stableVersion": "1.0.2",
   "releases": [
     {
       "manifest": {
@@ -116,7 +116,46 @@
         "VORA-WORD-1.0.1-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680805948",
         "VORA-WORD-1.0.1-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/680806101"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.2",
+        "publishedAt": "2026-10-27T12:35:57.300203+00:00",
+        "notes": {
+          "ko": "로컬 문서 편집·저장과 PDF·HWPX 내보내기를 지원하는 VORA WORD 독립 실행판입니다.",
+          "en": "Standalone VORA WORD with local document editing, saving and PDF/HWPX export.",
+          "ja": "ローカル文書の編集・保存とPDF・HWPX出力に対応したVORA WORDです。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.2/VORA-WORD-1.0.2-mac-arm64.dmg",
+            "size": 495790073,
+            "sha256": "2dd3676955a7977477831bfb231144cb6142cbb35d82131de3c1429002200a19"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.2/VORA-WORD-1.0.2-mac-arm64.zip",
+            "size": 495790229,
+            "sha256": "995a729c36df62e31916c07f27cd916e425fade059d59deb5cc222a06e53770c"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.2-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681617922",
+        "VORA-WORD-1.0.2-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681619496"
+      }
     }
   ],
-  "withdrawnPlatforms": []
+  "withdrawnPlatforms": [],
+  "downloadFallbacks": {
+    "windows": "1.0.1",
+    "linux": "1.0.1"
+  }
 }
