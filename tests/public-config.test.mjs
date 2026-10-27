@@ -10,7 +10,7 @@ import { createView } from '../src/view.js';
 const root = new URL('../', import.meta.url);
 const linksFor = product => Object.fromEntries(['macos', 'windows', 'linux'].map(os => [os, `https://works.vora.im/downloads/${product}/?os=${os}`]));
 const cellLinks = linksFor('cell');
-const desktopLinks = { cell: cellLinks, hwp: linksFor('hwp') };
+const desktopLinks = { cell: cellLinks, hwp: {...linksFor('hwp'), windows: ''} };
 const keyFor = (os, product = 'cell') => `PUBLIC_${product.toUpperCase()}_${os.toUpperCase()}_DOWNLOAD_URL`;
 
 // Copy only the public generator/defaults. Never read local deployment secrets,
@@ -51,14 +51,7 @@ test('verified CELL and HWP desktop defaults exclude pending platforms and priva
       }
     }
   }
-  assert.deepEqual(result.config.products.word.downloads, {
-    macos: 'https://works.vora.im/downloads/word/?os=macos', windows: 'https://works.vora.im/downloads/word/?os=windows', linux: 'https://works.vora.im/downloads/word/?os=linux',
-  });
-  for (const lang of ['ko', 'en', 'ja']) {
-    const dialog = createView({lang, config:result.config}).downloadDialog('word', 'Linux');
-    assert.ok(dialog.includes(`href="https://works.vora.im/downloads/word/${lang}/?os=linux"`));
-    assert.ok(dialog.includes(`href="https://works.vora.im/downloads/word/${lang}/?os=macos"`));
-  }
+  assert.deepEqual(result.config.products.word.downloads, { macos: '', windows: '', linux: '' });
   assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: '' });
   assert.doesNotMatch(result.source, /synthetic-token-must-stay-private|DESKTOP_RELEASE_GITHUB_TOKEN/);
 });

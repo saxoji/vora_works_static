@@ -49,11 +49,11 @@ services:
       - key: PUBLIC_COMPANY_URL
         value: https://www.horizonai.ai
       - key: PUBLIC_WORD_MACOS_DOWNLOAD_URL
-        value: https://works.vora.im/downloads/word/?os=macos
+        value: ""
       - key: PUBLIC_WORD_WINDOWS_DOWNLOAD_URL
-        value: https://works.vora.im/downloads/word/?os=windows
+        value: ""
       - key: PUBLIC_WORD_LINUX_DOWNLOAD_URL
-        value: https://works.vora.im/downloads/word/?os=linux
+        value: ""
       - key: PUBLIC_SLIDE_MACOS_DOWNLOAD_URL
         value: ""
       - key: PUBLIC_SLIDE_WINDOWS_DOWNLOAD_URL
@@ -69,7 +69,7 @@ services:
       - key: PUBLIC_HWP_MACOS_DOWNLOAD_URL
         value: https://works.vora.im/downloads/hwp/?os=macos
       - key: PUBLIC_HWP_WINDOWS_DOWNLOAD_URL
-        value: https://works.vora.im/downloads/hwp/?os=windows
+        value: ""
       - key: PUBLIC_HWP_LINUX_DOWNLOAD_URL
         value: https://works.vora.im/downloads/hwp/?os=linux
       - key: PUBLIC_HWP_RELEASE_MANIFEST_URL

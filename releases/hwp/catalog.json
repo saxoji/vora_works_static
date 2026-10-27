@@ -152,5 +152,8 @@
         "VORA-HWP-1.0.2-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/678560047"
       }
     }
+  ],
+  "withdrawnPlatforms": [
+    "windows"
   ]
 }

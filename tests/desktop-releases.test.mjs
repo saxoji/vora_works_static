@@ -47,6 +47,39 @@ test('unreleased products have a pending 1.0.0 feed without download claims',asy
   }
 }));
 
+test('withdrawn platforms disappear from current downloads but immutable versioned files remain available', async()=>{
+  for (const withdrawnPlatforms of [['windows'], ['macos','windows','linux']]) await workspace(async({root,dist})=>{
+    const release=fixture('word');
+    const windows=fixture('word','windows','zip');
+    release.manifest.artifacts.push(...windows.manifest.artifacts);
+    Object.assign(release.assets,windows.assets);
+    await catalog(root,'word',release);
+    await writeFile(new URL('releases/word/catalog.json',root),JSON.stringify({schemaVersion:1,stableVersion:'1.0.0',withdrawnPlatforms,releases:[release]}));
+    await publishProductReleases({root,dist,product:'word',siteUrl,fetcher:async()=>new Response(data)});
+    const current=JSON.parse(await readFile(new URL('releases/word/stable.json',dist)));
+    assert.deepEqual(current.artifacts,release.manifest.artifacts.filter(a=>!withdrawnPlatforms.includes(a.platform)));
+    assert.equal(current.status,withdrawnPlatforms.length===3?'pending':undefined);
+    assert.deepEqual(JSON.parse(await readFile(new URL('releases/word/1.0.0/manifest.json',dist))),release.manifest);
+    for (const name of Object.keys(release.assets)) assert.deepEqual(await readFile(new URL(`releases/word/1.0.0/${name}`,dist)),data);
+    const {renderDesktopPage}=await import('../scripts/desktop-pages.mjs');
+    const config={siteUrl,companyUrl:siteUrl,voraUrl:siteUrl,voraSignupUrl:siteUrl,products:{word:{web:siteUrl}}};
+    for (const lang of ['ko','en','ja']) {
+      const html=renderDesktopPage(config,'word',lang,current);
+      assert.ok(!html.includes(windows.manifest.artifacts[0].url));
+      assert.equal((html.match(/class="button primary download-button"/g)||[]).length,withdrawnPlatforms.length===3?0:1);
+    }
+  });
+});
+
+test('invalid platform withdrawal configuration fails before fetching or publishing anything', async()=>{
+  for (const withdrawnPlatforms of ['windows',['unknown'],['windows','windows']]) await workspace(async({root,dist})=>{
+    const release=fixture('word');await catalog(root,'word',release);
+    await writeFile(new URL('releases/word/catalog.json',root),JSON.stringify({schemaVersion:1,stableVersion:'1.0.0',withdrawnPlatforms,releases:[release]}));
+    await assert.rejects(publishProductReleases({root,dist,product:'word',siteUrl,fetcher:async()=>{throw Error('unexpected fetch');}}),/Invalid withdrawn/);
+    await assert.rejects(stat(new URL('releases/word/stable.json',dist)));
+  });
+});
+
 test('product, version, host and architecture mismatches never become download links',()=>{
   const original=fixture('cell').manifest;
   assert.equal(validArtifacts(original,siteUrl,'cell').length,1);

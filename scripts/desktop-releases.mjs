@@ -14,6 +14,9 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
   try { catalog = JSON.parse(await readFile(new URL(`releases/${product}/catalog.json`, root))); }
   catch (error) { if (error.code === 'ENOENT') catalog = {schemaVersion:1,stableVersion:null,releases:[]}; else throw error; }
   if (catalog.schemaVersion !== 1 || !Array.isArray(catalog.releases)) throw new Error('Invalid desktop release catalog');
+  const withdrawn = catalog.withdrawnPlatforms ?? [];
+  if (!Array.isArray(withdrawn) || withdrawn.length > 3 || new Set(withdrawn).size !== withdrawn.length
+    || withdrawn.some(platform => !['macos', 'windows', 'linux'].includes(platform))) throw new Error('Invalid withdrawn platforms');
   const site = new URL(siteUrl);
   if (site.protocol !== 'https:') throw new Error('HTTPS PUBLIC_SITE_URL required');
   for (const release of catalog.releases) {
@@ -49,8 +52,13 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
   }
   const stable = catalog.releases.find(release => release.manifest.version === catalog.stableVersion);
   if (!stable && catalog.releases.length) throw new Error('Missing stable release');
+  // Keep immutable versioned files available to existing users while withdrawing
+  // incomplete platforms from current download pages and automatic update discovery.
+  const artifacts = stable?.manifest.artifacts.filter(artifact => !withdrawn.includes(artifact.platform)) ?? [];
+  const current = artifacts.length ? {...stable.manifest, artifacts}
+    : {schemaVersion:1,product,version:stable?.manifest.version ?? products[product].version,status:'pending',artifacts:[]};
   await mkdir(new URL(`releases/${product}/`, dist), {recursive:true});
-  await writeFile(new URL(`releases/${product}/stable.json`, dist), JSON.stringify(stable?.manifest || {schemaVersion:1,product,version:products[product].version,status:'pending',artifacts:[]}, null, 2) + '\n');
+  await writeFile(new URL(`releases/${product}/stable.json`, dist), JSON.stringify(current, null, 2) + '\n');
 }
 
 export async function publishDesktopReleases(options) {

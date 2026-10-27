@@ -1,5 +1,38 @@
 {
   "schemaVersion": 1,
-  "stableVersion": null,
-  "releases": []
+  "stableVersion": "1.0.0",
+  "releases": [
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "slide",
+        "version": "1.0.0",
+        "publishedAt": "2026-10-27T00:35:21.714599+00:00",
+        "notes": {
+          "en": "Standalone VORA SLIDE with local presentation editing, saving and export.",
+          "ja": "ローカルでプレゼンテーションの編集・保存・出力に対応したVORA SLIDEです。",
+          "ko": "로컬 프레젠테이션 편집·저장·내보내기를 지원하는 VORA SLIDE 독립 실행판입니다."
+        },
+        "artifacts": [
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/slide/1.0.0/VORA-SLIDE-1.0.0-linux-x64.AppImage",
+            "size": 1331972600,
+            "sha256": "b0c5b7f3dbcbd526b00378d6c0a9743a3e27db4d9b3ea8ae0ab8e337085f7aee",
+            "sourceCommit": "716bab0c53bb09b2166825ccf2804c718423cb30"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-SLIDE-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/679943088"
+      }
+    }
+  ],
+  "withdrawnPlatforms": [
+    "macos",
+    "windows",
+    "linux"
+  ]
 }

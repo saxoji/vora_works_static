@@ -55,5 +55,10 @@
         "VORA-WORD-1.0.0-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/679488076"
       }
     }
+  ],
+  "withdrawnPlatforms": [
+    "macos",
+    "windows",
+    "linux"
   ]
 }
