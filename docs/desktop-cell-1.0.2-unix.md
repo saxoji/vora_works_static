@@ -1,3 +1,5 @@
+> Windows 후속 공개 승인은 [Windows 1.0.2 기록](desktop-cell-1.0.2-windows.md)을 따릅니다. 아래 내용은 Mac/Linux 우선 공개 시점의 기록입니다.
+
 # CELL 1.0.2 macOS and Linux publication — 2026-10-27
 
 Publish the two approved CELL installers independently. Keep the verified Windows
