@@ -152,18 +152,33 @@
             "url": "https://works.vora.im/releases/word/1.0.2/VORA-WORD-1.0.2-linux-x64.AppImage",
             "size": 470272504,
             "sha256": "858c697a5ee77abf666b131ec13fa7b90d2483709df3ab7067ff647fc3741819"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/word/1.0.2/VORA-WORD-1.0.2-win-x64.msi",
+            "size": 409936981,
+            "sha256": "c095764492b3aa490890a95ba0171a42d4e82dfefa2ee2384028dc85ab8f94ee"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.2/VORA-WORD-1.0.2-win-x64.zip",
+            "size": 409141203,
+            "sha256": "38df91c433426487cfffe5b9eb35b817bc8d662016069ba6777743e07c3faf93"
           }
         ]
       },
       "assets": {
         "VORA-WORD-1.0.2-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681617922",
         "VORA-WORD-1.0.2-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681619496",
-        "VORA-WORD-1.0.2-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681678310"
+        "VORA-WORD-1.0.2-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681678310",
+        "VORA-WORD-1.0.2-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681904490",
+        "VORA-WORD-1.0.2-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681905156"
       }
     }
   ],
-  "withdrawnPlatforms": [],
-  "downloadFallbacks": {
-    "windows": "1.0.1"
-  }
+  "withdrawnPlatforms": []
 }
