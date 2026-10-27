@@ -153,6 +153,10 @@ PUBLIC_WORD_LINUX_DOWNLOAD_URL=
 
 파일명은 `VORA-{WORD|SLIDE|CELL|HWP}-{version}-{mac|win|linux}-{arm64|x64}.{format}`이다. 공개 URL은 `/releases/{product}/{version}/{filename}`이고 자동 업데이트 피드는 `/releases/{product}/stable.json`이다. macOS는 DMG/ZIP, Linux는 AppImage, Windows는 EXE/ZIP과 native 제품의 MSI를 지원한다. HWP는 기존 EXE/ZIP 계약을 유지한다. Windows 다운로드 버튼과 SEO downloadUrl은 검증된 ZIP이 있으면 ZIP을 우선하며, 자동 업데이트용 원본 EXE/MSI는 같은 피드에 보존한다.
 
+SLIDE 전체 서식을 포함한 DMG·AppImage 및 Windows ZIP만 최대 4 GiB를 허용한다. SLIDE Windows ZIP에는 `bundleKind: "windows-msi-cab-v1"`이 반드시 있어야 하며, 다른 제품·OS·형식에서 이 표식을 쓰면 거부한다. 해당 ZIP의 `bundle.json`·MSI 1개·외부 CAB 묶음은 제품 패키징과 설치/업데이트 검사에서 확인한다. 외부 CAB가 필요한 MSI를 단독 공개하지 않는다. 기존 자체 완결 MSI 및 다른 모든 제품·형식의 제한은 2 GiB로 유지한다. 이 제한 확대는 배포 가능 상태를 뜻하지 않는다. 새 설치본의 실제 서식·설치·업데이트 검사와 공개 URL 전체 크기·SHA 검증 후에만 다운로드를 활성화한다.
+
+불완전한 플랫폼은 카탈로그의 `withdrawnPlatforms`에 `macos`, `windows`, `linux` 중 해당 값을 넣어 현재 다운로드와 stable 업데이트 피드에서 제외한다. 이전 버전의 설치 파일과 manifest는 그대로 제공한다. 빈 플랫폼 목록만으로는 새 파일을 배포하지 않으며, 새 검증 릴리스가 준비되면 담당 제품의 READY 증거와 함께 보류를 해제한다.
+
 제품·버전·아키텍처·출처 저장소가 다르거나 크기·체크섬이 일치하지 않으면 빌드가 실패하여 기존 배포를 유지한다. 빈 카탈로그는 `status: pending`, `artifacts: []`인 1.0.0 피드를 생성하고 다운로드 링크나 설치 가능 OS를 메타데이터에 표시하지 않는다. 버전 정보(`stable.json` 및 버전별 `manifest.json`)는 재검증하며, `VORA-*` 설치 파일만 장기 캐시한다. 최초 출시 시 OS별 설치 파일을 순차 추가해도 최신 버전 정보가 오래 캐시되지 않는다. 이전 릴리스를 카탈로그에 유지해 버전별 URL이 사라지지 않게 하며, 새로운 릴리스 또는 롤백은 `stableVersion`으로 선택한다. 이미 공개한 버전의 설치 파일을 다른 파일로 교체하지 않는다.
 
 ### 다운로드 페이지 SEO·OG

@@ -5,10 +5,18 @@ export function validArtifact(artifact, product, version, siteUrl) {
     const platform = {macos:'mac',windows:'win',linux:'linux'}[artifact.platform];
     const formats = artifact.platform === 'macos' ? ['dmg','zip'] : artifact.platform === 'linux' ? ['AppImage'] : artifact.platform === 'windows' ? (product !== 'hwp' ? ['exe','msi','zip'] : ['exe','zip']) : [];
     if(!formats.includes(artifact.format) || artifact.arch !== (artifact.platform === 'macos' ? 'arm64' : 'x64')) return false;
+    const slideWindowsBundle = product === 'slide' && artifact.platform === 'windows' && artifact.format === 'zip';
+    // Only SLIDE's verified external-CAB wrapper has this contract. A bare MSI
+    // remains a self-contained legacy installer and keeps the smaller limit.
+    if (slideWindowsBundle ? artifact.bundleKind !== 'windows-msi-cab-v1' : Object.hasOwn(artifact, 'bundleKind')) return false;
+    const largeSlidePackage = product === 'slide' && (slideWindowsBundle
+      || (artifact.platform === 'macos' && artifact.format === 'dmg')
+      || (artifact.platform === 'linux' && artifact.format === 'AppImage'));
+    const maxSize = (largeSlidePackage ? 4 : 2) * 1024**3;
     const url = new URL(artifact.url), site = new URL(siteUrl);
     const name = `VORA-${products[product].name}-${version}-${platform}-${artifact.arch}.${artifact.format}`;
     return site.protocol === 'https:' && url.protocol === 'https:' && url.origin === site.origin && !url.username && !url.password && !url.search && !url.hash
-      && url.pathname === `/releases/${product}/${version}/${name}` && Number.isSafeInteger(artifact.size) && artifact.size > 0 && artifact.size <= 2*1024**3 && /^[a-f0-9]{64}$/.test(artifact.sha256);
+      && url.pathname === `/releases/${product}/${version}/${name}` && Number.isSafeInteger(artifact.size) && artifact.size > 0 && artifact.size <= maxSize && /^[a-f0-9]{64}$/.test(artifact.sha256);
   } catch {return false;}
 }
 export function validArtifacts(manifest, siteUrl, product = 'hwp') {

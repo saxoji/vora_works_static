@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { publishProductReleases, publishDesktopReleases } from '../scripts/desktop-releases.mjs';
-import { validArtifacts, preferredArtifact } from '../public/downloads/shared/releases.js';
+import { validArtifact, validArtifacts, preferredArtifact } from '../public/downloads/shared/releases.js';
 
 const siteUrl = 'https://works.vora.im';
 const data = Buffer.from('verified desktop installer fixture');
@@ -105,6 +105,7 @@ test('Windows user downloads and SEO prefer ZIP while the installer remains in t
   for(const product of ['word','slide','cell','hwp']) {
     const installer=fixture(product,'windows',product==='hwp'?'exe':'msi').manifest.artifacts[0];
     const zip=fixture(product,'windows','zip').manifest.artifacts[0];
+    if(product === 'slide') zip.bundleKind='windows-msi-cab-v1';
     const manifest={schemaVersion:1,product,version:'1.0.0',artifacts:[installer,zip]};
     const artifacts=validArtifacts(manifest,siteUrl,product);
     assert.equal(preferredArtifact(artifacts,'windows'),zip);
@@ -119,4 +120,57 @@ test('Windows user downloads and SEO prefer ZIP while the installer remains in t
     }
     assert.equal(manifest.artifacts[0],installer,'raw installer retained for automatic update');
   }
+});
+
+test('only SLIDE DMG, AppImage and marked Windows bundles allow up to 4 GiB',()=>{
+  for(const product of ['word','slide','cell','hwp']) {
+    for(const [platform,format] of [['macos','dmg'],['macos','zip'],['linux','AppImage'],['windows','zip'],['windows','exe'],['windows','msi']]) {
+      if(product === 'hwp' && format === 'msi') continue;
+      const artifact=fixture(product,platform,format).manifest.artifacts[0];
+      const slideZip=product === 'slide' && platform === 'windows' && format === 'zip';
+      if(slideZip) artifact.bundleKind='windows-msi-cab-v1';
+      const large=product === 'slide' && (format === 'dmg' || format === 'AppImage' || slideZip);
+      const limit=(large?4:2)*1024**3;
+      assert.equal(validArtifact({...artifact,size:limit},product,'1.0.0',siteUrl),true,`${product}/${platform}/${format} at limit`);
+      for(const size of [limit+1,0,-1,1.5,NaN,Infinity,Number.MAX_SAFE_INTEGER+1]) {
+        assert.equal(validArtifact({...artifact,size},product,'1.0.0',siteUrl),false,`${product}/${platform}/${format} rejects ${size}`);
+      }
+    }
+  }
+});
+
+test('SLIDE bundle marker is required only for its Windows ZIP and cannot relabel another installer',()=>{
+  const slide=fixture('slide','windows','zip').manifest.artifacts[0];
+  for(const bundleKind of [undefined,null,'','windows-msi-cab-v2']) {
+    assert.equal(validArtifact({...slide,bundleKind},'slide','1.0.0',siteUrl),false);
+  }
+  assert.equal(validArtifact(slide,'slide','1.0.0',siteUrl),false);
+  for(const product of ['word','slide','cell','hwp']) {
+    for(const [platform,format] of [['macos','dmg'],['linux','AppImage'],['windows','msi'],['windows','zip']]) {
+      if(product === 'slide' && format === 'zip') continue;
+      const artifact=fixture(product,platform,format).manifest.artifacts[0];
+      assert.equal(validArtifact({...artifact,bundleKind:'windows-msi-cab-v1'},product,'1.0.0',siteUrl),false);
+    }
+  }
+});
+
+test('verified SLIDE wrapper keeps its marker and bytes in both manifests while bare ZIP is rejected before download',async()=>{
+  for(const marked of [false,true]) await workspace(async({root,dist})=>{
+    const release=fixture('slide','windows','zip');
+    if(marked) release.manifest.artifacts[0].bundleKind='windows-msi-cab-v1';
+    await catalog(root,'slide',release);
+    let requests=0;
+    const publish=()=>publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async()=>{requests++;return new Response(data);}});
+    if(!marked) {
+      await assert.rejects(publish(),/Invalid release artifact/);
+      assert.equal(requests,0);
+      await assert.rejects(stat(new URL('releases/slide/stable.json',dist)));
+      return;
+    }
+    await publish();
+    for(const name of ['stable.json','1.0.0/manifest.json']) {
+      assert.deepEqual(JSON.parse(await readFile(new URL(`releases/slide/${name}`,dist))),release.manifest);
+    }
+    assert.deepEqual(await readFile(new URL(`releases/slide/1.0.0/${Object.keys(release.assets)[0]}`,dist)),data);
+  });
 });
