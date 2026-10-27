@@ -59,13 +59,7 @@ test('verified CELL and HWP desktop defaults exclude pending platforms and priva
     assert.ok(dialog.includes(`href="https://works.vora.im/downloads/word/${lang}/?os=linux"`));
     assert.ok(dialog.includes(`href="https://works.vora.im/downloads/word/${lang}/?os=macos"`));
   }
-  assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: 'https://works.vora.im/downloads/slide/?os=linux' });
-  for (const lang of ['ko', 'en', 'ja']) {
-    const dialog = createView({lang, config:result.config}).downloadDialog('slide', 'Linux');
-    assert.ok(dialog.includes(`href="https://works.vora.im/downloads/slide/${lang}/?os=linux"`));
-    assert.ok(!dialog.includes('?os=macos'));
-    assert.ok(!dialog.includes('?os=windows'));
-  }
+  assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: '' });
   assert.doesNotMatch(result.source, /synthetic-token-must-stay-private|DESKTOP_RELEASE_GITHUB_TOKEN/);
 });
 

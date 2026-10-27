@@ -59,7 +59,7 @@ services:
       - key: PUBLIC_SLIDE_WINDOWS_DOWNLOAD_URL
         value: ""
       - key: PUBLIC_SLIDE_LINUX_DOWNLOAD_URL
-        value: https://works.vora.im/downloads/slide/?os=linux
+        value: ""
       - key: PUBLIC_CELL_MACOS_DOWNLOAD_URL
         value: https://works.vora.im/downloads/cell/?os=macos
       - key: PUBLIC_CELL_WINDOWS_DOWNLOAD_URL
