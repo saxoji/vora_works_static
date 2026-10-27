@@ -1,5 +1,7 @@
 # STATIC-INSTALL177 — 다운로드·설치 안내와 SEO
 
+후속 정책: STATIC-DOWNLOAD179에서 메인 카드·다운로드 팝업의 설치 안내를 제거했다. 현재 설치방법은 4개 제품의 다운로드 상세 페이지에서만 제공한다. 아래는 최초 적용·검증 기록이다.
+
 작업 기준: `0bea93910f953f2f19c8b83b2416646353abc0ae`, 격리 worktree `fix/static-install177`. 사이트 이름은 VORA AI DOCS, 제품·앱 이름은 기존 VORA DOCS / VORA WORD·SLIDE·CELL·HWP를 유지한다.
 
 ## 적용 범위

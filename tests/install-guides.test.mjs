@@ -7,6 +7,7 @@ import { currentManifest, preferredArtifact, validArtifacts } from '../public/do
 import { renderDesktopPage, desktopRoutes } from '../scripts/desktop-pages.mjs';
 import { renderDocument, routes } from '../scripts/document.mjs';
 import { createView } from '../src/view.js';
+import { copy } from '../src/content.js';
 import { socialImagePath } from '../src/seo.js';
 
 const siteUrl = 'https://works.vora.im';
@@ -87,17 +88,20 @@ test('Linux instructions execute only a fixed validated-style filename, never ar
   }
 });
 
-test('pending instructions never invent installer links and popup live withdrawal respects configuration', () => {
+test('main downloads retain localized actions and withdrawal rules without installation guides', () => {
   for(const lang of languages) for(const product of Object.keys(products)) {
     const view=createView({lang,config});
     const pending=view.downloadDialog(product,'Windows',{});
-    assert.equal((pending.match(/class="installation-guide compact"/g)||[]).length,3);
-    assert.match(pending,/id="dialog-windows-install"[^>]* open/);
-    assert.equal((pending.match(/class="guide-pending"/g)||[]).length,3);
+    assert.doesNotMatch(pending,/installation-guide|guide-pending|dialog-windows-install/);
+    assert.ok(pending.includes(`<h2 id="dialog-title">${copy[lang].download}</h2>`));
+    assert.ok(pending.includes(copy[lang].dialogBody));
+    assert.equal((pending.match(/<small>/g)||[]).length,3);
+    assert.ok(pending.includes(config.products[product].web));
     assert.ok(!pending.includes(`/downloads/${product}/${lang}/?os=`));
     const live=Object.fromEntries(manifest(product).artifacts.map(a=>[a.platform,a]));
     const ready=view.downloadDialog(product,'macOS',live);
-    assert.equal((ready.match(/class="guide-pending"/g)||[]).length,0);
+    assert.doesNotMatch(ready,/installation-guide|guide-pending|install-guide-trigger/);
+    assert.equal((ready.match(/target="_blank"/g)||[]).length,4);
     assert.ok(ready.includes(`/downloads/${product}/${lang}/?os=windows`));
     const disabled=structuredClone(config); disabled.products[product].downloads.windows='';
     assert.ok(!createView({lang,config:disabled}).downloadDialog(product,'Windows',live).includes(`/downloads/${product}/${lang}/?os=windows`));
@@ -149,7 +153,9 @@ test('four main pages describe installation help and link all localized product 
     assert.equal(page.hasPart.length,4);
     assert.ok(page.hasPart.every(item=>item.url.endsWith(`/${route.lang}/`) && item.name.includes(installCopy[route.lang].title)));
     assert.match(html,/\/downloads\/shared\/install.css/);
-    assert.equal((html.match(/class="install-guide-trigger"/g)||[]).length,4);
+    assert.doesNotMatch(html,/install-guide-trigger|class="installation-guide/);
+    assert.equal((html.match(/class="os-button available-download"/g)||[]).length,12);
+    for(const product of Object.keys(products)) assert.ok(html.includes(`href="${siteUrl}/downloads/${product}/${route.lang}/"`));
   }
 });
 

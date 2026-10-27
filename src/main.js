@@ -106,13 +106,9 @@ app.addEventListener('click', async event => {
       if (request !== dialogRequest || view !== currentView || !document.querySelector('#download-dialog').open) return;
       const release = Object.fromEntries(['macos','windows','linux'].map(os=>[os,preferredArtifact(artifacts,os)]));
       const content = document.querySelector('#dialog-content'), scrollTop = content.scrollTop;
-      const openGuides = new Set([...content.querySelectorAll('details[open]')].map(guide=>guide.id));
-      const focusedGuide = content.contains(document.activeElement) ? document.activeElement.closest('details')?.id : null;
       content.innerHTML = view.downloadDialog(product, download.dataset.os, release);
-      content.querySelectorAll('details').forEach(guide=>{ guide.open = openGuides.has(guide.id); });
-      if (focusedGuide) content.querySelector(`#${focusedGuide} summary`)?.focus({preventScroll:true});
       content.scrollTop = scrollTop;
-    } catch { /* The guide and links to the product download page remain usable offline. */ }
+    } catch { /* Configured links to the product download page remain usable offline. */ }
   }
   if (event.target.closest('[data-action="close-dialog"]')) { dialogRequest++; document.querySelector('#download-dialog').close(); }
   if (event.target.matches('dialog')) {
