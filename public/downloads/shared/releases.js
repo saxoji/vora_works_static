@@ -30,7 +30,7 @@ export function validArtifacts(manifest, siteUrl, product = 'hwp') {
     if (!Array.isArray(group?.artifacts)) continue;
     const addedPlatforms = new Set();
     for (const artifact of group.artifacts) {
-      if (!platforms.has(artifact.platform) && !urls.has(artifact.url) && validArtifact(artifact, product, group.version, siteUrl)) {
+      if (validArtifact(artifact, product, group.version, siteUrl) && !platforms.has(artifact.platform) && !urls.has(artifact.url)) {
         current.push({...artifact, version:group.version});
         urls.add(artifact.url);
         addedPlatforms.add(artifact.platform);

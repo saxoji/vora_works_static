@@ -264,6 +264,7 @@ test('platform downloads retain their verified old version without advertising i
   assert(downloads.filter(a => a.platform === 'windows').every(a => a.version === '1.0.1'));
   assert.equal(preferredArtifact(downloads, 'windows').format, 'zip');
   assert.deepEqual(validArtifacts({...current, downloadFallbacks:[...current.downloadFallbacks, ...current.downloadFallbacks]}, siteUrl, 'cell'), downloads);
+  assert.deepEqual(validArtifacts({...current, downloadFallbacks:[null, {version:'1.0.1', artifacts:[null, false, {}, ...current.downloadFallbacks[0].artifacts]}]}, siteUrl, 'cell'), downloads);
   const native = JSON.parse(JSON.stringify(current));
   assert.equal(native.artifacts.find(a => a.platform === 'windows'), undefined, 'existing Windows updater returns no update');
   assert(native.artifacts.every(a => validArtifact(a, 'cell', native.version, siteUrl)));
