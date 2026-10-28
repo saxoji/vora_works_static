@@ -52,3 +52,12 @@ Linux 우선 공개 소스 `ce2c724b7ac386d280ec6d26fa09ec87b59b7c4c`를 main에
 최종 1.0.3에는 macOS arm64 DMG, Windows x64 ZIP/MSI, Linux x64 AppImage를 모두 포함하며 fallback을 제거한다. Windows 다운로드 화면은 ZIP을, 네이티브 자동 업데이트는 MSI를 계속 사용한다. 기존 버전 파일은 그대로 보존한다. 플랫폼별로 달랐던 이전 공개 상태와 위 Linux 우선 공개 기록은 당시 이력이다.
 
 업데이트 실행 코드는 수정하지 않았으며 기존 통과 근거를 재사용한다. 이번 확인은 새 설치 파일의 실제 설치·실행·문서 동작과 새 버전 feed 연결이며, 동일 업데이트 전체 시나리오를 반복하지 않았다.
+
+## 최종 운영 반영
+
+최종 소스 `449db8af59d1c6b3d752ad88a932d65b795db9fb`의 Render 배포 `dep-dbgndvugekts738dlng0`가 2026-10-28 04:21:52 UTC(13:21:52 KST)에 LIVE가 됐다. 운영 빌드가 모든 설치 파일의 전체 크기·SHA-256을 확인한 뒤 게시했다.
+
+- 공개 stable feed의 1.0.3 및 Mac DMG·Linux AppImage·Windows MSI/ZIP 4개 항목이 승인 catalog와 일치하며 fallback은 없다.
+- 공개 4개 파일 모두 HTTP 206, 정확한 전체 크기 및 각 형식의 바이너리 표식(DMG footer/ELF/MSI/ZIP)을 확인했다. 최초 ranged probe는 읽기 timeout이 있어 정확한 요청 길이로 재확인했고 4개 모두 성공했다. 전체 SHA는 운영 publisher에서 확인했으며 로컬에서 대용량 다운로드를 반복하지 않았다.
+- 실제 Chrome의 한·영·일 다운로드 페이지 모두 3개 OS 버튼과 SEO softwareVersion이 1.0.3이며 Windows는 ZIP을 가리킨다. 최종 화면을 확인했고 페이지·콘솔 오류는 0개다.
+- 기존 버전의 파일은 보존했고 서버 전용 인증값을 공개 config/feed에 넣지 않았다. 이 문서의 후속 커밋은 검증 기록만이며 앱과 사이트의 재빌드를 유발하지 않는다.
