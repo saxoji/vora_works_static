@@ -67,6 +67,16 @@
             "size": 3173345862,
             "sourceCommit": "c7f87d4751bd7f816e81e53c5009adee38470622",
             "url": "https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-mac-arm64.dmg"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-win-x64.zip",
+            "size": 2775775973,
+            "sha256": "7551e9c9a2f4e154f67d991ad68ad99b7dd38f9bce0729d6ca297c1cdb542705",
+            "sourceCommit": "c7f87d4751bd7f816e81e53c5009adee38470622",
+            "bundleKind": "windows-msi-cab-v1"
           }
         ]
       },
@@ -127,11 +137,17 @@
               "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/684082267"
             }
           ]
+        },
+        "VORA-SLIDE-1.0.2-win-x64.zip": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12800934018/zip",
+            "member": "VORA-SLIDE-1.0.2-win-x64.zip",
+            "size": 2775777240,
+            "sha256": "27abef3369aad3c5a9bea9feb5aecc69246d849b2cb3501a6fec7684bd94a5da"
+          }
         }
       }
     }
   ],
-  "withdrawnPlatforms": [
-    "windows"
-  ]
+  "withdrawnPlatforms": []
 }
