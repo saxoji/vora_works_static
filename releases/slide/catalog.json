@@ -58,6 +58,15 @@
             "size": 3019414499,
             "sourceCommit": "c7f87d4751bd7f816e81e53c5009adee38470622",
             "url": "https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-mac-arm64.zip"
+          },
+          {
+            "arch": "arm64",
+            "format": "dmg",
+            "platform": "macos",
+            "sha256": "0cc07453806d07d9081b489aab7fee5c6b7da2d443bf17563051fb46a625ff40",
+            "size": 3173345862,
+            "sourceCommit": "c7f87d4751bd7f816e81e53c5009adee38470622",
+            "url": "https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-mac-arm64.dmg"
           }
         ]
       },
@@ -97,6 +106,25 @@
               "sha256": "7d0ce755297cd665f3dcd54c0f50f1d0b0e44d8f10eead89e5a9f3dc6f4ff191",
               "size": 871930851,
               "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/683972959"
+            }
+          ]
+        },
+        "VORA-SLIDE-1.0.2-mac-arm64.dmg": {
+          "parts": [
+            {
+              "sha256": "99a4e7cf748a03e1cda84f26929b75437d327ac7f219978a356061d23d6baec8",
+              "size": 1073741824,
+              "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/684069096"
+            },
+            {
+              "sha256": "b79cbf7e2734a366bfd79f3d8aab0efb2a54a9cf411fd4aff23b4f45630d9d52",
+              "size": 1073741824,
+              "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/684075451"
+            },
+            {
+              "sha256": "2cb22e012ad64654e5e2fb164ddf457a0e77aac7a052c0286b59238a9389c170",
+              "size": 1025862214,
+              "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/684082267"
             }
           ]
         }
