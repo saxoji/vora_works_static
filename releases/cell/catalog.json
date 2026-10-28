@@ -156,22 +156,45 @@
         },
         "artifacts": [
           {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.3/VORA-CELL-1.0.3-mac-arm64.dmg",
+            "size": 1356768678,
+            "sha256": "7b806b32fa6c56cb23d439be5c00b27dcfcf699c2200f963b209adcddb39321f"
+          },
+          {
             "platform": "linux",
             "arch": "x64",
             "format": "AppImage",
             "url": "https://works.vora.im/releases/cell/1.0.3/VORA-CELL-1.0.3-linux-x64.AppImage",
             "size": 1207056888,
             "sha256": "25b6273ed4c29fdfc7e9ffc9d566069118370fd33b7403a1755d2957fec6e9d1"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.3/VORA-CELL-1.0.3-win-x64.msi",
+            "size": 1072049018,
+            "sha256": "f7771c0ca14d3c9ea60e86c1bc56b0321af5484bd0e46fb58d6a63b4178adc30"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.3/VORA-CELL-1.0.3-win-x64.zip",
+            "size": 1072049170,
+            "sha256": "a0f40f631adb4948fc17ba97245907ec0e0a9ad7bda2c03801dc12c1a652dd9b"
           }
         ]
       },
       "assets": {
-        "VORA-CELL-1.0.3-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683679758"
+        "VORA-CELL-1.0.3-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683679758",
+        "VORA-CELL-1.0.3-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683720425",
+        "VORA-CELL-1.0.3-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683785689",
+        "VORA-CELL-1.0.3-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683786644"
       }
     }
-  ],
-  "downloadFallbacks": {
-    "macos": "1.0.2",
-    "windows": "1.0.2"
-  }
+  ]
 }
