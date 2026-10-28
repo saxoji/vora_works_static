@@ -23,6 +23,8 @@ from botocore.config import Config
 from botocore.exceptions import ClientError
 import certifi
 
+from actions_archive import ActionsNoRedirect, open_actions_member
+
 PRODUCTS = ("cell", "hwp", "slide", "word")
 CHUNK = 64 * 1024 * 1024
 READ_SIZE = 1024 * 1024
@@ -55,7 +57,8 @@ def sources(value, artifact, product):
         raise ValueError("Invalid artifact source")
     if isinstance(value, dict) and "actionsArtifact" in value:
         archive = value["actionsArtifact"]
-        if set(value) != {"actionsArtifact"} or not isinstance(archive, dict):
+        if (set(value) != {"actionsArtifact"} or not isinstance(archive, dict)
+                or set(archive) != {"url", "member", "size", "sha256"}):
             raise ValueError("Invalid Actions archive provenance")
         url = archive.get("url", "")
         digest = archive.get("sha256", "")
@@ -67,14 +70,14 @@ def sources(value, artifact, product):
                 or artifact.get("format") != "zip" or artifact.get("bundleKind") != "windows-msi-cab-v1"
                 or parsed.scheme != "https" or parsed.netloc != "api.github.com" or parsed.query or parsed.fragment
                 or not re.fullmatch(r"/repos/saxoji/vora_works_slide/actions/artifacts/[0-9]+/zip", parsed.path)
-                or not isinstance(member, str) or not member or "\\" in member or "\x00" in member
+                or not isinstance(member, str) or not member or "\\" in member or re.search(r"[\x00-\x1f\x7f]", member)
                 or any(segment in ("", ".", "..") for segment in member.split("/"))
                 or ":" in member or not member.lower().endswith(".zip")
                 or type(archive.get("size")) is not int or not 0 < archive["size"] <= 16 * 1024**3
                 or not re.fullmatch(r"[a-f0-9]{64}", digest)):
             raise ValueError("Untrusted Actions archive provenance")
-        # The archive is provenance only. A verified extracted installer is supplied privately
-        # through --local-map; never mistake the outer archive bytes/hash for the installer.
+        # Keep archive provenance separate from the pinned installer bytes/hash.
+        # catalogs() carries it to the exact-member streaming path below.
         return []
     parts = [{"url": value, "size": artifact["size"], "sha256": artifact["sha256"]}] if isinstance(value, str) else value.get("parts", [])
     if (not isinstance(parts, list) or not 1 <= len(parts) <= 4 or any(not isinstance(part, dict) for part in parts)
@@ -82,6 +85,8 @@ def sources(value, artifact, product):
         raise ValueError("Invalid source part sizes")
     seen = set()
     for part in parts:
+        if set(part) != {"url", "size", "sha256"}:
+            raise ValueError("Invalid source part fields")
         parsed = urlparse(part.get("url", ""))
         if (parsed.scheme != "https" or parsed.netloc != "api.github.com" or parsed.query or parsed.fragment
                 or not re.fullmatch(rf"/repos/saxoji/vora_works_{product}/releases/assets/[0-9]+", parsed.path)
@@ -116,9 +121,13 @@ def catalogs(root, products):
                         or not re.fullmatch(r"[a-f0-9]{64}", artifact["sha256"])):
                     raise ValueError("Invalid public artifact")
                 used.add(name)
-                files.append(dict(product=product, version=version, name=name, path=expected,
-                                  size=artifact["size"], sha256=artifact["sha256"],
-                                  parts=sources(release["assets"][name], artifact, product)))
+                source = release["assets"][name]
+                prepared = dict(product=product, version=version, name=name, path=expected,
+                                size=artifact["size"], sha256=artifact["sha256"],
+                                parts=sources(source, artifact, product))
+                if isinstance(source, dict) and "actionsArtifact" in source:
+                    prepared["actionsArtifact"] = dict(source["actionsArtifact"])
+                files.append(prepared)
         result.append(dict(product=product, sha256=hashlib.sha256(raw).hexdigest(), files=files))
     return result
 
@@ -142,6 +151,9 @@ def open_part(part, token, opener):
     if part.get("local"):
         with Path(part["local"]).open("rb") as stream:
             yield stream
+    elif part.get("actionsArtifact"):
+        with open_actions_member(part["actionsArtifact"], part["size"], token, https_client(ActionsNoRedirect())) as stream:
+            yield stream
     else:
         headers = {"Accept": "application/octet-stream", "X-GitHub-Api-Version": "2022-11-28",
                    "Authorization": f"Bearer {token}"}
@@ -164,6 +176,8 @@ def upload_artifact(client, bucket, prefix, artifact, token, opener, local=None,
         if Path(local).stat().st_size != artifact["size"]:
             raise ValueError("Local verified artifact size differs")
         parts = [dict(local=local, size=artifact["size"], sha256=artifact["sha256"])]
+    elif not parts and artifact.get("actionsArtifact"):
+        parts = [dict(actionsArtifact=artifact["actionsArtifact"], size=artifact["size"], sha256=artifact["sha256"])]
     if not parts:
         raise ValueError("Actions archive source requires a verified local installer")
     created = client.create_multipart_upload(

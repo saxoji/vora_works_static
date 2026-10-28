@@ -1,5 +1,5 @@
 """실제 설치 파일/네트워크 없이 S3 이관의 무결성·불변성·게시 순서를 검증한다."""
-from contextlib import redirect_stdout
+from contextlib import nullcontext, redirect_stdout
 import hashlib
 import copy
 import importlib.util
@@ -7,12 +7,15 @@ import io
 import json
 from pathlib import Path
 import tempfile
+import sys
 import unittest
+import zipfile
 from unittest.mock import Mock, patch
 from urllib.request import Request
 
 from botocore.exceptions import ClientError
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 spec = importlib.util.spec_from_file_location("desktop_s3", Path(__file__).resolve().parents[1] / "scripts/upload-desktop-s3.py")
 upload = importlib.util.module_from_spec(spec); spec.loader.exec_module(upload)
 
@@ -51,6 +54,116 @@ def artifact(body=b"trusted installer"):
     digest = hashlib.sha256(body).hexdigest()
     return dict(product="cell", version="1.0.3", name="VORA-CELL-1.0.3-win-x64.msi", path="/releases/cell/1.0.3/VORA-CELL-1.0.3-win-x64.msi",
                 size=len(body), sha256=digest, parts=[dict(url="https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/1", size=len(body), sha256=digest)])
+
+
+def actions_artifact(body=b"trusted installer"):
+    value = artifact(body)
+    value.update(product="slide", name="VORA-SLIDE-1.0.2-win-x64.zip", version="1.0.2",
+                 path="/releases/slide/1.0.2/VORA-SLIDE-1.0.2-win-x64.zip", parts=[],
+                 actionsArtifact=dict(url="https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/123/zip",
+                                      member="bundle/original.zip", size=456, sha256="a" * 64))
+    return value
+
+
+class ActionsUploadTests(unittest.TestCase):
+    def setUp(self):
+        self.quiet = redirect_stdout(io.StringIO()); self.quiet.__enter__(); self.addCleanup(self.quiet.__exit__, None, None, None)
+
+    def test_actions_catalog_keeps_outer_provenance_separate_from_inner_installer(self):
+        value = actions_artifact()
+        manifest_artifact = dict(platform="windows", arch="x64", format="zip", bundleKind="windows-msi-cab-v1",
+                                 url="https://works.vora.im" + value["path"], size=value["size"], sha256=value["sha256"])
+        catalog = dict(schemaVersion=1, releases=[dict(manifest=dict(product="slide", version="1.0.2", artifacts=[manifest_artifact]),
+                                                       assets={value["name"]: {"actionsArtifact": value["actionsArtifact"]}})])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "releases/slide/catalog.json"; path.parent.mkdir(parents=True)
+            path.write_text(json.dumps(catalog))
+            self.assertEqual(upload.catalogs(Path(directory), ["slide"])[0]["files"], [value])
+        for member in ("bundle/\noriginal.zip", "bundle/\x7foriginal.zip"):
+            source = {"actionsArtifact": dict(value["actionsArtifact"], member=member)}
+            with self.assertRaises(ValueError): upload.sources(source, manifest_artifact, "slide")
+        with self.assertRaises(ValueError):
+            upload.sources({"actionsArtifact": dict(value["actionsArtifact"], extra=True)}, manifest_artifact, "slide")
+        with self.assertRaisesRegex(ValueError, "part fields"):
+            upload.sources({"parts": [dict(artifact()["parts"][0], actionsArtifact=value["actionsArtifact"])]}, artifact(), "cell")
+
+    def test_actions_member_stream_finishes_multipart_only_for_verified_inner_bytes(self):
+        value = actions_artifact(); client = S3(); opener = Mock(); range_opener = Mock()
+        with patch.object(upload, "open_actions_member", return_value=nullcontext(Response(b"trusted installer"))) as member, \
+                patch.object(upload, "https_client", return_value=range_opener) as factory:
+            head = upload.upload_artifact(client, "bucket", "vora-works", value, "private-token", opener, chunk_size=5)
+            member.assert_called_once_with(value["actionsArtifact"], value["size"], "private-token", range_opener)
+            self.assertIsInstance(factory.call_args.args[0], upload.ActionsNoRedirect)
+            self.assertIsNone(factory.call_args.args[0].redirect_request(None, None, 302, "Found", {}, "https://example.invalid/"))
+            self.assertEqual(head["ContentLength"], value["size"])
+            self.assertTrue(client.completed); self.assertFalse(client.aborted)
+            upload.upload_artifact(client, "bucket", "vora-works", value, "private-token", opener)
+            self.assertEqual(member.call_count, 1)
+            self.assertEqual(client.created, 1)
+        opener.open.assert_not_called()
+
+    def test_actions_crc_size_hash_and_s3_failures_abort_without_publishing(self):
+        class BadCRC(io.BytesIO):
+            def read(self, size=-1):
+                block = super().read(size)
+                if not block: raise zipfile.BadZipFile("Bad CRC-32")
+                return block
+        for fault in ("crc", "short", "large", "hash", "s3"):
+            value = actions_artifact(); client = S3()
+            stream = BadCRC(b"trusted installer") if fault == "crc" else Response(
+                b"trusted" if fault == "short" else b"trusted installer too large" if fault == "large" else b"trusted installer")
+            if fault == "hash": value["sha256"] = "0" * 64
+            if fault == "s3": client.upload_part = Mock(side_effect=RuntimeError("S3 upload failed"))
+            with self.subTest(fault=fault), patch.object(upload, "open_actions_member", return_value=nullcontext(stream)), self.assertRaises(Exception):
+                upload.upload_artifact(client, "bucket", "vora-works", value, "token", Mock(), chunk_size=5)
+            self.assertTrue(client.aborted); self.assertFalse(client.completed)
+            self.assertNotIn("vora-works" + value["path"], client.objects)
+
+    def test_actions_local_override_and_matching_existing_objects_do_not_open_archive(self):
+        value = actions_artifact(); client = S3()
+        with tempfile.TemporaryDirectory() as directory, patch.object(upload, "open_actions_member") as member:
+            path = Path(directory) / "installer.zip"; path.write_bytes(b"trusted installer")
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", Mock(), local=path)
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", Mock())
+            member.assert_not_called()
+
+    def test_actions_stream_setup_failure_aborts_owned_upload(self):
+        client = S3()
+        with patch.object(upload, "open_actions_member", side_effect=ValueError("Rejected archive")), self.assertRaises(ValueError):
+            upload.upload_artifact(client, "bucket", "vora-works", actions_artifact(), "token", Mock())
+        self.assertTrue(client.aborted); self.assertFalse(client.completed)
+
+    def test_real_actions_zip_member_reaches_multipart_without_spooling(self):
+        body = b"verified Windows installer bytes" * 100
+        value = actions_artifact(body); archive = io.BytesIO()
+        with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as container:
+            container.writestr(value["actionsArtifact"]["member"], body)
+        raw = archive.getvalue(); pin = value["actionsArtifact"]
+        pin.update(size=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        signed = "https://actions-results.blob.core.windows.net/release?sig=fixture"
+        requests = []
+
+        def respond(request, timeout):
+            url = request.full_url; requests.append(request)
+            status = 200; headers = {}
+            if url == pin["url"].removesuffix("/zip"):
+                payload = json.dumps(dict(id=123, size_in_bytes=pin["size"], digest="sha256:" + pin["sha256"], expired=False)).encode()
+            elif url == pin["url"]:
+                status = 302; headers = {"Location": signed}; payload = b""
+            else:
+                self.assertEqual(url, signed); self.assertIsNone(request.get_header("Authorization"))
+                start, end = map(int, request.get_header("Range").removeprefix("bytes=").split("-"))
+                status = 206; headers = {"Content-Range": f"bytes {start}-{end}/{len(raw)}", "ETag": '"fixed-archive"'}
+                payload = raw[start:end + 1]
+            response = Response(payload, headers); response.status = status; response.geturl = lambda: url
+            return response
+
+        client = S3(); network = Mock(); network.open.side_effect = respond
+        with patch.object(upload, "https_client", return_value=network):
+            upload.upload_artifact(client, "bucket", "vora-works", value, "fixture-token", Mock(), chunk_size=1024)
+        self.assertTrue(client.completed); self.assertFalse(client.aborted)
+        self.assertEqual(b"".join(client.pending[number] for number in sorted(client.pending)), body)
+        self.assertGreater(len(requests), 2)
 
 
 class UploadTests(unittest.TestCase):
