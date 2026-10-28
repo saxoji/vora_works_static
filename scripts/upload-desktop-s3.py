@@ -55,6 +55,25 @@ def https_client(redirect):
 def sources(value, artifact, product):
     if not isinstance(value, (str, dict)):
         raise ValueError("Invalid artifact source")
+    if isinstance(value, dict) and "publishedArtifact" in value:
+        published = value["publishedArtifact"]
+        expected = "https://cdn.vora.im/vora-works" + urlparse(artifact.get("url", "")).path
+        if (set(value) != {"publishedArtifact"} or not isinstance(published, dict)
+                or set(published) != {"url", "size", "sha256", "sourceCommit", "notarizationId"}
+                or product != "slide" or artifact.get("platform") != "macos" or artifact.get("arch") != "arm64"
+                or artifact.get("format") not in {"zip", "dmg"}
+                or published.get("url") != expected
+                or type(published.get("size")) is not int or published["size"] != artifact.get("size")
+                or published.get("sha256") != artifact.get("sha256")
+                or not isinstance(published.get("sourceCommit"), str)
+                or not re.fullmatch(r"[a-f0-9]{40}", published["sourceCommit"])
+                or published["sourceCommit"] != artifact.get("sourceCommit")
+                or not isinstance(published.get("notarizationId"), str)
+                or not re.fullmatch(r"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}", published["notarizationId"])):
+            raise ValueError("Invalid published notarized Mac source")
+        # A matching immutable S3 object or a verified local-map file is required.
+        # Never use unsigned build archives as the signed/notarized download bytes.
+        return []
     if isinstance(value, dict) and "actionsArtifact" in value:
         archive = value["actionsArtifact"]
         if (set(value) != {"actionsArtifact"} or not isinstance(archive, dict)

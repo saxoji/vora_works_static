@@ -50,6 +50,24 @@ LINK274부터 SLIDE `linux/x64/AppImage`도 같은 Actions exact-member 출처�
 AppImage 원본 스트림의 바이트 보존, 잘못된 플랫폼/형식/경로 거부 및 기존
 Windows 출처 제한을 확인했다. 업로드·marker·사이트의 게시 순서는 동일하다.
 
+## 최종 서명·공증된 SLIDE Mac 원본
+
+SLIDE `macos/arm64`의 ZIP·DMG는 로컬에서 최종 서명·공증된 원본을 S3에
+직접 게시할 수 있다. 이때 `assets[filename].publishedArtifact`는 정확한
+CDN URL, `size`, `sha256`, `sourceCommit`, `notarizationId`만 기록한다.
+CDN URL은 같은 manifest의 `/releases/slide/{version}/{filename}`과 일치하며,
+크기·해시·source commit도 manifest와 같아야 한다. 다른 제품·플랫폼·형식은
+허용하지 않는다. unsigned Actions 결과를 최종 서명 파일로 표시하지 않는다.
+
+이 형식은 Apple의 공증 성공을 스키마 검사로 대신하는 기능이 아니다. 담당자가
+실제 Accepted 결과와 서명·실행 근거를 확인한 뒤 정확한 최종 바이트를 게시한다.
+업로더는 같은 크기·해시의 불변 S3 객체를 재사용하거나 검증된 local-map 원본을
+요구한다. 둘 다 없으면 업로드 시작 전에 실패하며 다른 원격 파일로 대체하지 않는다.
+
+새 연결 검사 2개(JS·Python)에서 ZIP/DMG metadata-only 출력, source/해시/경로
+불일치 거절, 원본 부재 시 차단, 검증된 로컬 원본 게시 및 기존 S3 객체 재사용을
+확인했다. 공증·실제 앱 실행 결과는 제품 배포 receipt로 별도 확인한다.
+
 ## Actions 범위 스트리밍 보강 검증
 
 2026-10-28 후속 변경은 위 local-only 요구를 exact-member 스트리밍으로 확장했다.

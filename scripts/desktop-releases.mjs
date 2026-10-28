@@ -9,6 +9,20 @@ import { products } from '../public/downloads/shared/content.js';
 import { validArtifact, currentManifest } from '../public/downloads/shared/releases.js';
 
 function verifiedSources(source, artifact, product) {
+  if (source && typeof source === 'object' && Object.hasOwn(source, 'publishedArtifact')) {
+    const published = source.publishedArtifact;
+    const expected = new URL(artifact.url);
+    if (product !== 'slide' || artifact.platform !== 'macos' || artifact.arch !== 'arm64'
+      || !['zip', 'dmg'].includes(artifact.format) || Object.keys(source).length !== 1
+      || !published || typeof published !== 'object' || Array.isArray(published)
+      || Object.keys(published).sort().join(',') !== 'notarizationId,sha256,size,sourceCommit,url'
+      || published.url !== `https://cdn.vora.im/vora-works${expected.pathname}`
+      || published.size !== artifact.size || published.sha256 !== artifact.sha256
+      || !/^[a-f0-9]{40}$/.test(published.sourceCommit) || published.sourceCommit !== artifact.sourceCommit
+      || !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(published.notarizationId))
+      throw new Error('Invalid published notarized Mac source');
+    return null;
+  }
   if (source && typeof source === 'object' && Object.hasOwn(source, 'actionsArtifact')) {
     const archive = source.actionsArtifact;
     const windows = artifact.platform === 'windows' && artifact.format === 'zip'
@@ -85,7 +99,7 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
       // The public site retains manifests and URLs; product storage builds keep
       // the immutable bytes. Validate both modes against the same contract.
       if (!downloadArtifacts) continue;
-      if (!parts) throw new Error('Actions archive members require the verified local-map S3 publisher');
+      if (!parts) throw new Error('Archive members and published originals require the verified local-map S3 publisher');
       const headers = { Accept: 'application/octet-stream', 'X-GitHub-Api-Version': '2022-11-28' };
       if (process.env.DESKTOP_RELEASE_GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.DESKTOP_RELEASE_GITHUB_TOKEN}`;
       const hash = createHash('sha256'); let size = 0;

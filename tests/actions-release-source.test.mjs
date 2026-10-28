@@ -59,6 +59,32 @@ test('Linux AppImage exact-member provenance retains bytes and rejects mismatche
   });
 });
 
+test('published notarized Mac originals require exact final bytes and source identity', async () => {
+  const mac = (source, manifest, format = 'dmg') => {
+    const artifact = manifest.artifacts[0];
+    Object.assign(artifact, { platform: 'macos', arch: 'arm64', format, sourceCommit: 'c'.repeat(40),
+      url: `${siteUrl}/releases/slide/1.0.2/VORA-SLIDE-1.0.2-mac-arm64.${format}` });
+    delete artifact.bundleKind;
+    delete source.actionsArtifact;
+    source.publishedArtifact = { url: `https://cdn.vora.im/vora-works${new URL(artifact.url).pathname}`,
+      size: artifact.size, sha256: artifact.sha256, sourceCommit: artifact.sourceCommit,
+      notarizationId: '12345678-abcd-1234-abcd-123456789abc' };
+  };
+  for (const format of ['zip', 'dmg']) await scenario((s, m) => mac(s, m, format), async ({ dist, manifest, publish }) => {
+    await publish({ downloadArtifacts: false });
+    assert.deepEqual(JSON.parse(await readFile(new URL('releases/slide/stable.json', dist))), manifest);
+    await assert.rejects(publish({}), /verified local-map S3 publisher/);
+  });
+  for (const patch of [
+    s => { s.publishedArtifact.url += '?changed'; }, s => { s.publishedArtifact.size++; },
+    s => { s.publishedArtifact.sha256 = 'd'.repeat(64); }, s => { s.publishedArtifact.sourceCommit = 'd'.repeat(40); },
+    s => { s.publishedArtifact.notarizationId = 'unverified'; }, s => { s.publishedArtifact.extra = true; },
+    (_s, m) => { m.artifacts[0].arch = 'x64'; },
+  ]) await scenario((s, m) => { mac(s, m); patch(s, m); }, async ({ publish }) => {
+    await assert.rejects(publish({ downloadArtifacts: false }), /Invalid/);
+  });
+});
+
 test('invalid Actions provenance and unsafe archive members are rejected', async () => {
   const patches = [
     s => { s.extra = true; }, s => { s.actionsArtifact.extra = true; },

@@ -69,6 +69,38 @@ class ActionsUploadTests(unittest.TestCase):
     def setUp(self):
         self.quiet = redirect_stdout(io.StringIO()); self.quiet.__enter__(); self.addCleanup(self.quiet.__exit__, None, None, None)
 
+    def test_notarized_mac_published_source_requires_exact_final_original(self):
+        value = artifact()
+        value.update(product="slide", platform="macos", arch="arm64", format="dmg", sourceCommit="c" * 40,
+                     url="https://works.vora.im/releases/slide/1.0.3/VORA-SLIDE-1.0.3-mac-arm64.dmg")
+        published = dict(url=value["url"].replace("https://works.vora.im", "https://cdn.vora.im/vora-works"),
+                         size=value["size"], sha256=value["sha256"], sourceCommit=value["sourceCommit"],
+                         notarizationId="12345678-abcd-1234-abcd-123456789abc")
+        source = {"publishedArtifact": published}
+        self.assertEqual(upload.sources(source, value, "slide"), [])
+        for key, field in (("url", published["url"] + "?changed"), ("size", value["size"] + 1),
+                           ("sha256", "d" * 64), ("sourceCommit", "d" * 40), ("notarizationId", "invalid")):
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                upload.sources({"publishedArtifact": dict(published, **{key: field})}, value, "slide")
+        for key, field in (("platform", "windows"), ("arch", "x64"), ("format", "AppImage")):
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                upload.sources(source, dict(value, **{key: field}), "slide")
+        with self.assertRaises(ValueError): upload.sources(source, value, "word")
+
+        # The publisher cannot substitute an unsigned archive or remote URL.
+        value.update(parts=[], name="VORA-SLIDE-1.0.3-mac-arm64.dmg", version="1.0.3",
+                     path="/releases/slide/1.0.3/VORA-SLIDE-1.0.3-mac-arm64.dmg")
+        client = S3(); opener = Mock()
+        with self.assertRaisesRegex(ValueError, "verified local installer"):
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", opener)
+        self.assertEqual(client.created, 0)
+        with tempfile.TemporaryDirectory() as directory:
+            local = Path(directory) / "signed.dmg"; local.write_bytes(b"trusted installer")
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", opener, local=local)
+        upload.upload_artifact(client, "bucket", "vora-works", value, "token", opener)
+        self.assertEqual(client.created, 1)
+        opener.open.assert_not_called()
+
     def test_linux_actions_source_accepts_only_exact_appimage_contract(self):
         value = dict(platform="linux", arch="x64", format="AppImage")
         source = {"actionsArtifact": dict(actions_artifact()["actionsArtifact"], member="dist/VORA-SLIDE-1.0.3-linux-x64.AppImage")}
