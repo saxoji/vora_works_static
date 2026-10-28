@@ -71,3 +71,14 @@ CELL MSI: HEAD returned HTTP 200 with 52,355,072 bytes and no redirect; a
 `bytes=0-31` request returned HTTP 206 with the correct total and exactly 32
 bytes. The temporary route was removed after this single contract check. No
 complete installer was downloaded or rehashed for the website verification.
+
+For SLIDE Windows MSI/CAB ZIP files produced inside an Actions artifact, the
+catalog may use `assets[filename].actionsArtifact` with exactly `url`, `member`,
+`size`, and `sha256`. The URL identifies the pinned GitHub Actions artifact;
+size and SHA belong to the outer archive. The existing manifest continues to
+describe the inner installer ZIP. The archive member must be a safe relative
+ZIP path. This source is restricted to SLIDE's `windows-msi-cab-v1` bundle.
+The S3 publisher requires the verified inner file through a local map; the
+website never downloads or treats the outer archive as the installer. Direct
+`bundle` publishing rejects this source explicitly. No fabricated release URL
+or second upload to GitHub private release parts is required.

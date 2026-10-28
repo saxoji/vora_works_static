@@ -9,6 +9,28 @@ import { products } from '../public/downloads/shared/content.js';
 import { validArtifact, currentManifest } from '../public/downloads/shared/releases.js';
 
 function verifiedSources(source, artifact, product) {
+  if (source && typeof source === 'object' && Object.hasOwn(source, 'actionsArtifact')) {
+    const archive = source.actionsArtifact;
+    if (product !== 'slide' || artifact.platform !== 'windows' || artifact.format !== 'zip'
+      || artifact.bundleKind !== 'windows-msi-cab-v1' || Object.keys(source).length !== 1
+      || !archive || typeof archive !== 'object' || Array.isArray(archive)
+      || Object.keys(archive).sort().join(',') !== 'member,sha256,size,url'
+      || typeof archive.url !== 'string' || typeof archive.member !== 'string'
+      || !Number.isSafeInteger(archive.size) || archive.size <= 0 || archive.size > 16 * 1024**3
+      || !/^[a-f0-9]{64}$/.test(archive.sha256)
+      || archive.member.length > 512 || !/\.zip$/i.test(archive.member)
+      || /[\u0000-\u001f\u007f\\:]/.test(archive.member)
+      || archive.member.split('/').some(part => !part || part === '.' || part === '..'))
+      throw new Error('Invalid Actions archive source');
+    const url = new URL(archive.url);
+    if (url.protocol !== 'https:' || url.hostname !== 'api.github.com'
+      || !/^\/repos\/saxoji\/vora_works_slide\/actions\/artifacts\/[1-9][0-9]*\/zip$/.test(url.pathname)
+      || url.username || url.password || url.search || url.hash || url.port)
+      throw new Error('Untrusted Actions archive source');
+    // This is provenance for a verified inner file, not a direct installer URL.
+    // The S3 uploader requires a local-map file matching the manifest's hash.
+    return null;
+  }
   let parts;
   if (typeof source === 'string') {
     if (artifact.size >= 2 * 1024**3) throw new Error('Large GitHub release assets require verified SLIDE source parts');
@@ -60,6 +82,7 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
       // The public site retains manifests and URLs; product storage builds keep
       // the immutable bytes. Validate both modes against the same contract.
       if (!downloadArtifacts) continue;
+      if (!parts) throw new Error('Actions archive members require the verified local-map S3 publisher');
       const headers = { Accept: 'application/octet-stream', 'X-GitHub-Api-Version': '2022-11-28' };
       if (process.env.DESKTOP_RELEASE_GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.DESKTOP_RELEASE_GITHUB_TOKEN}`;
       const hash = createHash('sha256'); let size = 0;
