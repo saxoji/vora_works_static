@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.3",
+  "stableVersion": "1.0.6",
   "releases": [
     {
       "manifest": {
@@ -194,6 +194,59 @@
         "VORA-CELL-1.0.3-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683720425",
         "VORA-CELL-1.0.3-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683785689",
         "VORA-CELL-1.0.3-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683786644"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.6",
+        "publishedAt": "2026-10-28T11:53:49.356934+00:00",
+        "notes": {
+          "ko": "한글 인쇄 오류를 수정하고 인쇄 미리보기에 실제 표 서식을 표시합니다. 유휴 CPU 사용을 줄이고 기본 글꼴을 한·일·영 본문용 중심의 38종으로 정리했습니다. 피벗 생성 전 선택 범위와 배치 위치를 확인하고 AI/JSON/MCP에서도 같은 검증을 사용합니다.",
+          "en": "Fixed Korean printing and made print previews show actual cell formatting. Reduced idle CPU usage and curated 38 essential document font families. Review selected sources and placement before creating PivotTables, with shared AI/JSON/MCP validation.",
+          "ja": "韓国語の印刷不具合を修正し、印刷プレビューに実際のセル書式を表示します。待機中のCPU使用率を改善し、標準フォントを本文向けの38種類に整理しました。ピボットテーブル作成前に選択範囲と配置を確認でき、AI/JSON/MCPにも共通の検証を適用します。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.6/VORA-CELL-1.0.6-mac-arm64.dmg",
+            "size": 282499406,
+            "sha256": "296589ec333d473e3c0e7e46f4e2adb2682973fc580292148cad3b9d0bd2da46"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.6/VORA-CELL-1.0.6-linux-x64.AppImage",
+            "size": 258107896,
+            "sha256": "80da09ef694ca7c1adebbdd560726e85144d74bd8d594da7122e76a32f1033a1"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.6/VORA-CELL-1.0.6-win-x64.msi",
+            "size": 224239283,
+            "sha256": "dc55bcbd7a401dd1c113bd903021e8ee4d6d147d8b31bf6449c91aadffb91ee0"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.6/VORA-CELL-1.0.6-win-x64.zip",
+            "size": 224239435,
+            "sha256": "74a870eec3eb6d4599c02d58fa5dc31fde741626331f5be11910eec4a4ed8f00"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.6-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684741554",
+        "VORA-CELL-1.0.6-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684750708",
+        "VORA-CELL-1.0.6-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684833350",
+        "VORA-CELL-1.0.6-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684833876"
       }
     }
   ]
