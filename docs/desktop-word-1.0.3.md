@@ -1,6 +1,6 @@
 # VORA WORKS — VORA WORD 1.0.3 설치판 연결
 
-상태: 전 OS1.0.3 원본 게시 완료, Windows STATIC 연결 반영·합동 배포 대기 · 2026-10-28 · WORD-RELEASE177/181
+상태: 전 OS1.0.3 원본 게시·STATIC LIVE 완료 · 2026-10-28 · WORD-RELEASE177/181
 
 ## 공통 기준
 
@@ -40,7 +40,8 @@ Mac ZIP은 같은 검증 DMG를 담는다. 공개 파일과 검증 기록은 WOR
 - Mac DMG·ZIP, Linux AppImage와 기존 Windows MSI·ZIP의 실제 공개 응답 전체를 읽어 5개 파일의 크기와 SHA-256이 카탈로그 및 검증 원본과 일치함을 확인했다. `/private/tmp/word-static177-partial-live.json`에 결과를 기록했다.
 - 최초 확인에서 기본/영어 HTML은 CDN의 `s-maxage=300` 캐시로 이전 버전을 표시했다. 동일 배포를 유지하고 한정된 재확인으로 전파 완료를 확인했다. 캐시 대기를 앱 빌드 실패로 처리하거나 설치 파일 바이트를 교체하지 않았다.
 - Windows 추가분은 소형 manifest·빌드 증거와 GitHub asset의 크기·해시 메타데이터를 대조했다. MSI/ZIP의 중복 다운로드 없이 기존 버전·Mac/Linux 항목이 그대로이고 Windows fallback만 제거됐음을 확인했다. 증거: `/private/tmp/word177-windows-catalog-check.json`. 기존 35개 검사·96개 화면과 기존 공개 파일 해시는 반복하지 않았다.
-- WORD 카탈로그와 이 기록만 최신 STATIC main 위에 반영했다. 최종 합동 STATIC 배포는 HWP 담당이 수행하며, 이 단계는 Windows 공개 URL의 LIVE 완료를 의미하지 않는다.
+- WORD 카탈로그와 이 기록만 최신 STATIC main 위에 반영했다. HWP 담당이 WORD 변경을 보존한 합동 소스 `2458e61f2451a3c290db7ea557d9336bfbd9a6a3`을 배포했다. Render `dep-dbgohbp42hec7395dp1g`는 2026-10-28 14:37:15 KST LIVE다.
+- 14:39 KST에 새 Windows MSI/ZIP 링크만 HEAD로 확인했다. 두 응답 모두200이며 Content-Length가410039381/409240009바이트로 일치했다. 작은 stable.json의 Windows1.0.3 URL·크기·SHA도 catalog와 일치했다. `/private/tmp/word177-windows-static-live.json`에 기록했다. 첫 Python 시도는 로컬 CA 확인 오류로 HTTP 요청 전 종료되어 시스템 curl의 정상 TLS 검증으로 확인했으며 인증서 검증을 끄지 않았다. 새 설치 파일의 전체 다운로드·재해시·앱 재검사는0회다.
 
 ## 변경 이력
 
@@ -49,3 +50,4 @@ Mac ZIP은 같은 검증 DMG를 담는다. 공개 파일과 검증 기록은 WOR
 | 2026-10-28 | 1 | 검증 완료 Mac·Linux 1.0.3 연결 준비와 Windows 1.0.2 보존 |
 | 2026-10-28 | 2 | Mac·Linux STATIC LIVE와 3언어/5파일 전체 해시 검증, CDN 전파 기록 |
 | 2026-10-28 | 3 | 검증 Windows1.0.3 원본 연결, 변경 없는 업데이트 증거 재사용·중복 검사 제거 |
+| 2026-10-28 | 4 | 합동 STATIC LIVE와 새 Windows 링크/업데이트 목록만 확인 |
