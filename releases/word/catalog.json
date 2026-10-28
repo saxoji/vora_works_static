@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.2",
+  "stableVersion": "1.0.3",
   "releases": [
     {
       "manifest": {
@@ -178,7 +178,54 @@
         "VORA-WORD-1.0.2-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681904490",
         "VORA-WORD-1.0.2-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/681905156"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.3",
+        "publishedAt": "2026-10-28T04:35:34.572704+00:00",
+        "notes": {
+          "ko": "로컬 문서 편집·저장과 PDF·HWPX 내보내기를 지원하는 VORA WORD 독립 실행판입니다.",
+          "en": "Standalone VORA WORD with local document editing, saving and PDF/HWPX export.",
+          "ja": "ローカル文書の編集・保存とPDF・HWPX出力に対応したVORA WORDです。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.3/VORA-WORD-1.0.3-mac-arm64.dmg",
+            "size": 496151258,
+            "sha256": "914bf0fb8afc3c45980bdd106f3ab54f1910500412383f1217328da7d89693bd"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.3/VORA-WORD-1.0.3-mac-arm64.zip",
+            "size": 496151414,
+            "sha256": "7c58b18db79c61a8d9c0ae72606bdf86c2a1675821efd47be7c16878dc536e92"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.3/VORA-WORD-1.0.3-linux-x64.AppImage",
+            "size": 470432248,
+            "sha256": "d78ed000de2fd112a47d18205f5948b032bb817228fbeed832991836a15a374c"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.3-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/683780913",
+        "VORA-WORD-1.0.3-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/683781972",
+        "VORA-WORD-1.0.3-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/683808971"
+      }
     }
   ],
-  "withdrawnPlatforms": []
+  "withdrawnPlatforms": [],
+  "downloadFallbacks": {
+    "windows": "1.0.2"
+  }
 }

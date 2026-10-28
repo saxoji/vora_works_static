@@ -53,6 +53,8 @@ try {
   await page.locator('.verification summary').click();
   assert.equal(await page.locator('.verification').getAttribute('open'),'');
   assert.match(await page.locator('.verification pre').textContent(),/SHA-256: [a-f0-9]{64}/);
+  await context.close();
+  assert.equal(browser.contexts().length,0);
   const staticContext = await browser.newContext({javaScriptEnabled:false});
   const staticPage = await staticContext.newPage();
   for(const product of Object.keys(products)) for(const lang of ['ko','en','ja']) {
@@ -82,6 +84,7 @@ try {
     assert.equal(response.status(),200);
     const image=await response.body();assert.equal(image.readUInt32BE(16),1200);assert.equal(image.readUInt32BE(20),630);
   }
+  await staticContext.close();
   assert.deepEqual(errors,[]);
   console.log('PASS 96 language/theme/viewport combinations across four products, system theme updates, saved preferences, links, downloads, SHA details, no-JS content, SEO and OG images');
 } finally {await browser.close();}
