@@ -82,3 +82,34 @@ The S3 publisher requires the verified inner file through a local map; the
 website never downloads or treats the outer archive as the installer. Direct
 `bundle` publishing rejects this source explicitly. No fabricated release URL
 or second upload to GitHub private release parts is required.
+
+## Required policy for every new OS release
+
+Every new WORD, HWP, CELL, and SLIDE installer and updater binary must be
+published to this S3/CDN storage. The owner of each product is responsible for
+its own new release; the first bulk migration does not make CELL responsible
+for all future uploads. GitHub original-artifact storage/staging is optional
+and never substitutes for public S3/CDN publication.
+
+Use the already verified, signed/notarized original bytes. Never overwrite a
+different object at the same versioned key. Verify size and SHA, confirm CDN
+availability, publish the exact catalog marker, and then publish the website
+and updater feeds. Retain existing `works.vora.im` URLs. Official website
+deployments must use metadata-only mode with zero installer downloads. A build
+or Git push alone is not a completed app release. This policy update itself
+does not require rebuilding or redeploying an unchanged application.
+
+## Completed migration and website deployment
+
+All 58 existing artifacts (37,094,576,757 bytes) were migrated with their
+original size/hash and CDN HEAD verification. The website deployed commit
+`7269dd3e01d563a036404a757c706f5ecae4f694` as
+`dep-dbgq5rpsrm7s73eh7m70`, LIVE at 2026-10-28 07:23:40.620342 UTC.
+Total deployment time was 13.155 seconds; site generation took about 0.7 seconds.
+
+One final check confirmed all four stable feeds match their catalogs and return
+HTTP 200 with no-cache headers: HWP 1.0.4, WORD 1.0.3, CELL 1.0.3, SLIDE 1.0.2.
+The newly connected SLIDE Mac DMG returns HTTP 200 at its original works URL,
+with 3,173,345,862 bytes and no redirect. This final check downloaded no installer
+bytes. Existing withdrawn-file redirects were retained. New SLIDE Windows
+packaging remains a separate follow-up and was not advertised prematurely.
