@@ -4,7 +4,9 @@ import { generateConfig } from './config.mjs';
 import { publishDesktopReleases } from './desktop-releases.mjs';
 import { buildDesktopPages, desktopRoutes } from './desktop-pages.mjs';
 import { renderDocument, routes } from './document.mjs';
+import { releaseStorageConfig, awaitReleaseStorage } from './release-storage.mjs';
 const config = await generateConfig();
+const storageOrigins = releaseStorageConfig();
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = new URL('../dist/', import.meta.url);
 await rm(dist, { recursive: true, force: true });
@@ -24,7 +26,8 @@ if (siteUrl) {
   await writeFile(new URL('sitemap.xml', dist), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  ${urls}\n</urlset>\n`);
 }
 
-await publishDesktopReleases({ root: new URL('../', import.meta.url), dist, siteUrl: config.siteUrl });
+if (storageOrigins) await awaitReleaseStorage({ root: new URL('../', import.meta.url), origins: storageOrigins });
+await publishDesktopReleases({ root: new URL('../', import.meta.url), dist, siteUrl: config.siteUrl, downloadArtifacts: !storageOrigins });
 
 await buildDesktopPages(config, dist);
 

@@ -34,7 +34,7 @@ function verifiedSources(source, artifact, product) {
   });
 }
 
-export async function publishProductReleases({ root, dist, siteUrl, product, fetcher = fetch }) {
+export async function publishProductReleases({ root, dist, siteUrl, product, fetcher = fetch, downloadArtifacts = true }) {
   if (!products[product]) throw new Error('Unknown desktop product');
   let catalog;
   try { catalog = JSON.parse(await readFile(new URL(`releases/${product}/catalog.json`, root))); }
@@ -57,6 +57,9 @@ export async function publishProductReleases({ root, dist, siteUrl, product, fet
       if (!validArtifact(artifact, product, manifest.version, siteUrl) || used.has(name)) throw new Error('Invalid release artifact');
       used.add(name);
       const parts = verifiedSources(release.assets[name], artifact, product);
+      // The public site retains manifests and URLs; product storage builds keep
+      // the immutable bytes. Validate both modes against the same contract.
+      if (!downloadArtifacts) continue;
       const headers = { Accept: 'application/octet-stream', 'X-GitHub-Api-Version': '2022-11-28' };
       if (process.env.DESKTOP_RELEASE_GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.DESKTOP_RELEASE_GITHUB_TOKEN}`;
       const hash = createHash('sha256'); let size = 0;
