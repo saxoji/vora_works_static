@@ -15,6 +15,7 @@ function verifiedSources(source, artifact, product) {
     parts = [{url: source, size: artifact.size, sha256: artifact.sha256}];
   } else {
     const supported = product === 'slide' && (artifact.format === 'dmg' || artifact.format === 'AppImage'
+      || (artifact.platform === 'macos' && artifact.format === 'zip')
       || (artifact.platform === 'windows' && artifact.format === 'zip' && artifact.bundleKind === 'windows-msi-cab-v1'));
     if (!supported || !source || Object.keys(source).length !== 1 || !Array.isArray(source.parts)
       || source.parts.length < 2 || source.parts.length > 4) throw new Error('Invalid release source parts');

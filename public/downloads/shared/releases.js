@@ -10,7 +10,7 @@ export function validArtifact(artifact, product, version, siteUrl) {
     // remains a self-contained legacy installer and keeps the smaller limit.
     if (slideWindowsBundle ? artifact.bundleKind !== 'windows-msi-cab-v1' : Object.hasOwn(artifact, 'bundleKind')) return false;
     const largeSlidePackage = product === 'slide' && (slideWindowsBundle
-      || (artifact.platform === 'macos' && artifact.format === 'dmg')
+      || (artifact.platform === 'macos' && ['dmg','zip'].includes(artifact.format))
       || (artifact.platform === 'linux' && artifact.format === 'AppImage'));
     const maxSize = (largeSlidePackage ? 4 : 2) * 1024**3;
     const url = new URL(artifact.url), site = new URL(siteUrl);

@@ -1,6 +1,6 @@
 # VORA SLIDE 1.0.2 설치형 배포
 
-2026-10-28 · Linux x64 공개 연결. Mac·Windows는 준비 중이며 공개 링크를 활성화하지 않는다.
+2026-10-28 · Linux x64 및 macOS Apple Silicon 공개 연결. Windows는 준비 중이며 공개 링크를 활성화하지 않는다.
 
 - 소스: `c7f87d4751bd7f816e81e53c5009adee38470622`
 - Linux AppImage: `2,931,018,232` bytes, SHA-256 `c5f58b2c9b4cdf5b1f24b51ab82405881324355f1bb5cc986487050eabaa119e`
@@ -13,3 +13,18 @@
 게시 전송 run `40637998859`에서 원본 바이트를 재패키징하지 않고 3개 private GitHub asset으로 전달했다. 원격 조각 전체를 합친 크기·해시가 원본과 일치했다. STATIC 빌드는 기존 검증된 배포 경로로 조각을 결합하며 private asset 주소와 토큰을 공개 페이지에 표시하지 않는다.
 
 이번 STATIC 변경 검증은 공개 설정 6개 검사 및 한국어·영어·일본어 다운로드/SEO/OG 링크 확인에 한정한다. 앱·UI·문서 검사를 다시 실행하지 않았다. 기존 다른 제품과 불변 1.0.0 파일을 보존한다. 운영 LIVE는 별도 배포 상태로 확인한다.
+
+
+## macOS ZIP 우선 배포
+
+- 소스: 동일 C7 / `1.0.2`. Apple Silicon용 signed/stapled 앱을 ZIP으로 배포한다.
+- 최종 ZIP: `3,019,414,499` bytes, SHA-256 `a4c20f609bc8cb70d13f182eeb647055bc068fed413d99df87cb40b73e414a3f`.
+- 파일: `https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-mac-arm64.zip`
+- 다운로드: `https://works.vora.im/downloads/slide/?os=macos`
+- Apple 공증 접수 `32c9a20e-ea57-489a-a6ba-b88d139eff70`의 `Accepted` 및 앱 staple 완료 후 생성한 최종 ZIP 바이트를 그대로 게시한다. 파일명에서 내부 `.signed` 표기만 제외하며 재압축·재서명·재공증하지 않는다.
+
+C7의 기존 200개 검사, 실제 설치·첫 실행·서식·파일 저장/재열기 및 화면 검수(run `40621634934`)를 재사용한다. 서명 후 원본 코드 비교와 서명·공증 검증은 별도 근거로 보존한다. 최초 다운로드를 2차 DMG 공증 대기와 분리했다. 앱의 자동업데이트는 기존 DMG 선택 정책을 유지하며 ZIP을 자동업데이트용으로 간주하지 않는다. private N1.0.3은 공개하지 않는다.
+
+STATIC 변경은 SLIDE macOS ZIP의 4GiB 한도 및 검증된 조각 결합 2경로만 확장했다. 관련 경계/조각 바이트 보존 검사 2개와 변경된 공개 설정 검사 1개를 실행했다. 기존 한국어·영어·일본어 ZIP 설치 안내를 재사용하고 새 실제 파일 링크·SEO/OG 연결을 생성 HTML로 확인했다. 앱·전체 웹/UI 검사를 반복하지 않는다. 실제 운영 LIVE와 링크 응답은 배포 후 별도로 확인한다.
+
+서명 ZIP 전달은 private release `426298729`의 검증된 조각 3개를 재사용한다. 원격 조각 결합 크기·해시가 최종 ZIP과 일치하며 STATIC용 추가 업로드는 없다.

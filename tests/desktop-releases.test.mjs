@@ -15,8 +15,8 @@ function fixture(product, platform='macos', format='dmg') {
   const name=`VORA-${product.toUpperCase()}-1.0.0-${{macos:'mac',windows:'win',linux:'linux'}[platform]}-${arch}.${format}`;
   return {manifest:{schemaVersion:1,product,version:'1.0.0',artifacts:[{platform,arch,format,url:`${siteUrl}/releases/${product}/1.0.0/${name}`,size:data.length,sha256:createHash('sha256').update(data).digest('hex')}]},assets:{[name]:`https://api.github.com/repos/saxoji/vora_works_${product}/releases/assets/123`}};
 }
-function multipartFixture(product='slide') {
-  const release=fixture(product);
+function multipartFixture(product='slide', format='dmg') {
+  const release=fixture(product,'macos',format);
   const name=Object.keys(release.assets)[0];
   const bodies=[data.subarray(0,10),data.subarray(10)];
   const parts=bodies.map((body,index)=>({url:`https://api.github.com/repos/saxoji/vora_works_${product}/releases/assets/${123+index}`,
@@ -131,14 +131,14 @@ test('Windows user downloads and SEO prefer ZIP while the installer remains in t
   }
 });
 
-test('only SLIDE DMG, AppImage and marked Windows bundles allow up to 4 GiB',()=>{
+test('only SLIDE Mac DMG or ZIP, AppImage and marked Windows bundles allow up to 4 GiB',()=>{
   for(const product of ['word','slide','cell','hwp']) {
     for(const [platform,format] of [['macos','dmg'],['macos','zip'],['linux','AppImage'],['windows','zip'],['windows','exe'],['windows','msi']]) {
       if(product === 'hwp' && format === 'msi') continue;
       const artifact=fixture(product,platform,format).manifest.artifacts[0];
       const slideZip=product === 'slide' && platform === 'windows' && format === 'zip';
       if(slideZip) artifact.bundleKind='windows-msi-cab-v1';
-      const large=product === 'slide' && (format === 'dmg' || format === 'AppImage' || slideZip);
+      const large=product === 'slide' && (format === 'dmg' || (platform === 'macos' && format === 'zip') || format === 'AppImage' || slideZip);
       const limit=(large?4:2)*1024**3;
       assert.equal(validArtifact({...artifact,size:limit},product,'1.0.0',siteUrl),true,`${product}/${platform}/${format} at limit`);
       for(const size of [limit+1,0,-1,1.5,NaN,Infinity,Number.MAX_SAFE_INTEGER+1]) {
@@ -282,3 +282,15 @@ test('platform downloads retain their verified old version without advertising i
   const tampered = structuredClone(current); tampered.downloadFallbacks[0].artifacts[0].url = 'https://evil.example/installer';
   assert.equal(validArtifacts(tampered, siteUrl, 'cell').length, downloads.length - 1);
 });
+
+
+test('SLIDE notarized Mac ZIP parts preserve final app archive bytes for immediate downloads', async()=>workspace(async({root,dist})=>{
+  const {release,name,bodies,parts}=multipartFixture('slide','zip');
+  await catalog(root,'slide',release);
+  await publishProductReleases({root,dist,product:'slide',siteUrl,fetcher:async url=>new Response(bodies[parts.findIndex(part=>part.url===url.href)])});
+  assert.deepEqual(await readFile(new URL(`releases/slide/1.0.0/${name}`,dist)),data);
+  const current=JSON.parse(await readFile(new URL('releases/slide/stable.json',dist)));
+  assert.equal(preferredArtifact(validArtifacts(current,siteUrl,'slide'),'macos').format,'zip');
+  assert.deepEqual(current,release.manifest);
+  assert.ok(!JSON.stringify(current).includes('api.github.com'));
+}));
