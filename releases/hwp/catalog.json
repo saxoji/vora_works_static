@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.4",
+  "stableVersion": "1.0.5",
   "releases": [
     {
       "manifest": {
@@ -274,6 +274,68 @@
         "VORA-HWP-1.0.4-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/681333764",
         "VORA-HWP-1.0.4-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/681334197",
         "VORA-HWP-1.0.4-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/681334895"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.5",
+        "publishedAt": "2026-10-28T16:23:14.332886Z",
+        "notes": {
+          "ko": "선택한 문구의 하이퍼링크 표시·열기 오류를 수정했습니다. 개체 속성, 그림 채우기·효과, 글상자·캡션, 그룹 회전·대칭·순서 변경을 보강했습니다. 구역·문단·탭 설정과 실행 취소 및 HWP/HWPX 저장·다시 열기를 개선했습니다.",
+          "en": "Fixes hyperlink display and opening on selected text. Improves object properties, image fills and effects, text boxes, captions, grouped-object transforms and stacking. Refines section, paragraph and tab settings, undo, and HWP/HWPX save and reopen.",
+          "ja": "選択テキストのハイパーリンク表示とリンクを開く動作の不具合を修正しました。オブジェクト属性、画像の塗りつぶし・効果、テキストボックス・キャプション、グループの回転・反転・重なり順を改善しました。セクション・段落・タブ設定、元に戻す操作、HWP/HWPXの保存と再表示を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.5/VORA-HWP-1.0.5-mac-arm64.dmg",
+            "size": 406496691,
+            "sha256": "8bfd780e3145a17ac501327337515a88f000147d085f090e4142d75ca3349fec"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.5/VORA-HWP-1.0.5-mac-arm64.zip",
+            "size": 370403665,
+            "sha256": "6b33069cfa5a2420832fda6b45b5beb70ea6017ac557d9de948f64f14cad82a5"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.5/VORA-HWP-1.0.5-win-x64.exe",
+            "size": 341359885,
+            "sha256": "3193539150894958af734ee007111a3ae7357a1b2775969ca8aab1bcee0410de"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.5/VORA-HWP-1.0.5-win-x64.zip",
+            "size": 395586003,
+            "sha256": "5243d0b39706a176b72ad3cee769be32ad81c29ec11fe2c17568e9f500b0c525"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.5/VORA-HWP-1.0.5-linux-x64.AppImage",
+            "size": 372068214,
+            "sha256": "8f58717ac9bd415d807ddebdb706261e03ca817727829ec6fd7a2f7595e13a61"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.5-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685527914",
+        "VORA-HWP-1.0.5-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685527916",
+        "VORA-HWP-1.0.5-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685519012",
+        "VORA-HWP-1.0.5-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685519665",
+        "VORA-HWP-1.0.5-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685520743"
       }
     }
   ],
