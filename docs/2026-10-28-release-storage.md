@@ -52,6 +52,8 @@ The existing S3 bucket `vora-tool-storage` in `ap-northeast-2` uses the new
 `vora-works/releases/` prefix behind `cdn.vora.im`. CELL owns the initial uploader
 and storage credentials; HWP owns website metadata and Render rewrites. WORD
 and SLIDE provide their already verified release catalogs and source assets.
+Private GitHub releases remain original-artifact archives and staging only;
+S3 and CDN are the public installer and update delivery storage for every OS.
 Do not rebuild, resign, renotarize, or reupload an unchanged app just to migrate
 storage. Upload only missing objects; verify stored size and checksum before
 writing immutable readiness markers. No secret belongs in a catalog, manifest,
@@ -63,3 +65,9 @@ destinations are ready. Rewrite `/releases/{product}/*` to
 `https://cdn.vora.im/vora-works/releases/{product}/*` with an HTTP 200 response,
 including Range support, and preserve the existing withdrawn-file redirects.
 Subsequent website updates must not download installation binaries.
+
+The temporary `works.vora.im` rewrite was verified against the first migrated
+CELL MSI: HEAD returned HTTP 200 with 52,355,072 bytes and no redirect; a
+`bytes=0-31` request returned HTTP 206 with the correct total and exactly 32
+bytes. The temporary route was removed after this single contract check. No
+complete installer was downloaded or rehashed for the website verification.
