@@ -17,6 +17,18 @@ services:
       - type: redirect
         source: /releases/cell/1.0.0/VORA-CELL-1.0.0-mac-*
         destination: /downloads/cell/?os=macos
+      - type: rewrite
+        source: /releases/hwp/*
+        destination: https://cdn.vora.im/vora-works/releases/hwp/*
+      - type: rewrite
+        source: /releases/word/*
+        destination: https://cdn.vora.im/vora-works/releases/word/*
+      - type: rewrite
+        source: /releases/cell/*
+        destination: https://cdn.vora.im/vora-works/releases/cell/*
+      - type: rewrite
+        source: /releases/slide/*
+        destination: https://cdn.vora.im/vora-works/releases/slide/*
     headers:
       - path: /releases/*/stable.json
         name: Cache-Control
@@ -32,6 +44,10 @@ services:
         value: "22"
       - key: SKIP_INSTALL_DEPS
         value: "true"
+      - key: DESKTOP_RELEASE_ARTIFACTS
+        value: metadata-only
+      - key: DESKTOP_RELEASE_ORIGINS_JSON
+        value: '{"hwp":"https://cdn.vora.im/vora-works","word":"https://cdn.vora.im/vora-works","cell":"https://cdn.vora.im/vora-works","slide":"https://cdn.vora.im/vora-works"}'
       - key: PUBLIC_SITE_URL
         value: https://works.vora.im
       - key: PUBLIC_WORD_WEB_URL
