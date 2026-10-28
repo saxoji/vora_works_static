@@ -69,6 +69,19 @@ class ActionsUploadTests(unittest.TestCase):
     def setUp(self):
         self.quiet = redirect_stdout(io.StringIO()); self.quiet.__enter__(); self.addCleanup(self.quiet.__exit__, None, None, None)
 
+    def test_linux_actions_source_accepts_only_exact_appimage_contract(self):
+        value = dict(platform="linux", arch="x64", format="AppImage")
+        source = {"actionsArtifact": dict(actions_artifact()["actionsArtifact"], member="dist/VORA-SLIDE-1.0.3-linux-x64.AppImage")}
+        self.assertEqual(upload.sources(source, value, "slide"), [])
+        for key, field in (("platform", "macos"), ("platform", "windows"), ("arch", "arm64"),
+                           ("format", "zip"), ("bundleKind", "windows-msi-cab-v1")):
+            with self.subTest(key=key, field=field), self.assertRaises(ValueError):
+                upload.sources(source, dict(value, **{key: field}), "slide")
+        for member in ("installer.zip", "../installer.AppImage", "x" * 513 + ".AppImage"):
+            with self.subTest(member=member), self.assertRaises(ValueError):
+                upload.sources({"actionsArtifact": dict(source["actionsArtifact"], member=member)}, value, "slide")
+        with self.assertRaises(ValueError): upload.sources(source, value, "cell")
+
     def test_actions_catalog_keeps_outer_provenance_separate_from_inner_installer(self):
         value = actions_artifact()
         manifest_artifact = dict(platform="windows", arch="x64", format="zip", bundleKind="windows-msi-cab-v1",

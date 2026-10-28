@@ -38,6 +38,18 @@ SLIDE Windows의 `zip`/`windows-msi-cab-v1` 패키지는 검증된 Actions 결�
 
 Actions 내부 설치 파일 경로를 추가하면서 새 검사 2개와 직접 영향이 있는 기존 검사 2개를 통과했다. 다른 제품·다른 형식·경로 이탈·잘못된 outer 증거 거부, local 부재 시 업로드 시작 차단, inner SHA 불일치 시 완료 차단, 최초 게시 후 원본 없이 S3 재사용을 포함한다. 기존 전체 앱 검수나 서명·공증은 반복하지 않았다.
 
+## SLIDE Linux AppImage의 동일 원본 스트리밍
+
+LINK274부터 SLIDE `linux/x64/AppImage`도 같은 Actions exact-member 출처를
+사용할 수 있다. Windows의 `windows-msi-cab-v1` 조합은 유지하고, 다른 제품·OS·
+아키텍처나 Linux의 bundleKind는 허용하지 않는다. 내부 member 확장자도 해당
+플랫폼 형식과 일치해야 한다. 원본 Actions ZIP의 크기·digest와 내부 AppImage의
+크기·SHA·CRC를 구분해 검증한다. 앱을 다시 압축하거나 재빌드하지 않는다.
+
+새 Linux 출처와 직접 영향 범위 검사 8개가 통과했다(JS 4, Python 4).
+AppImage 원본 스트림의 바이트 보존, 잘못된 플랫폼/형식/경로 거부 및 기존
+Windows 출처 제한을 확인했다. 업로드·marker·사이트의 게시 순서는 동일하다.
+
 ## Actions 범위 스트리밍 보강 검증
 
 2026-10-28 후속 변경은 위 local-only 요구를 exact-member 스트리밍으로 확장했다.

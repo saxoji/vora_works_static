@@ -11,14 +11,17 @@ import { validArtifact, currentManifest } from '../public/downloads/shared/relea
 function verifiedSources(source, artifact, product) {
   if (source && typeof source === 'object' && Object.hasOwn(source, 'actionsArtifact')) {
     const archive = source.actionsArtifact;
-    if (product !== 'slide' || artifact.platform !== 'windows' || artifact.format !== 'zip'
-      || artifact.bundleKind !== 'windows-msi-cab-v1' || Object.keys(source).length !== 1
+    const windows = artifact.platform === 'windows' && artifact.format === 'zip'
+      && artifact.bundleKind === 'windows-msi-cab-v1';
+    const linux = artifact.platform === 'linux' && artifact.format === 'AppImage'
+      && artifact.bundleKind === undefined;
+    if (product !== 'slide' || artifact.arch !== 'x64' || !(windows || linux) || Object.keys(source).length !== 1
       || !archive || typeof archive !== 'object' || Array.isArray(archive)
       || Object.keys(archive).sort().join(',') !== 'member,sha256,size,url'
       || typeof archive.url !== 'string' || typeof archive.member !== 'string'
       || !Number.isSafeInteger(archive.size) || archive.size <= 0 || archive.size > 16 * 1024**3
       || !/^[a-f0-9]{64}$/.test(archive.sha256)
-      || archive.member.length > 512 || !/\.zip$/i.test(archive.member)
+      || archive.member.length > 512 || !(windows ? /\.zip$/i : /\.appimage$/i).test(archive.member)
       || /[\u0000-\u001f\u007f\\:]/.test(archive.member)
       || archive.member.split('/').some(part => !part || part === '.' || part === '..'))
       throw new Error('Invalid Actions archive source');
@@ -28,7 +31,7 @@ function verifiedSources(source, artifact, product) {
       || url.username || url.password || url.search || url.hash || url.port)
       throw new Error('Untrusted Actions archive source');
     // This is provenance for a verified inner file, not a direct installer URL.
-    // The S3 uploader requires a local-map file matching the manifest's hash.
+    // The S3 uploader verifies a local file or the exact streamed archive member.
     return null;
   }
   let parts;

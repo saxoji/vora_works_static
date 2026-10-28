@@ -99,6 +99,20 @@ def consume(pin, size, opener):
 
 
 class ActionsMemberTests(unittest.TestCase):
+    def test_exact_linux_appimage_member_stream_preserves_bytes(self):
+        name = 'dist/VORA-SLIDE-1.0.3-linux-x64.AppImage'
+        payload = b'\x7fELF' + b'Linux AppImage original bytes' * 100
+        archive = io.BytesIO()
+        with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as container:
+            container.writestr(name, payload)
+        data = archive.getvalue()
+        pin = dict(pins(data), member=name)
+        self.assertEqual(consume(pin, len(payload), Opener(data)), payload)
+        for member in ('../unsafe.AppImage', 'installer.dmg', 'installer.AppImage.zip/../x'):
+            opener = Opener(data)
+            with self.assertRaises(ValueError): consume(dict(pin, member=member), len(payload), opener)
+            self.assertEqual(opener.requests, [])
+
     def test_catalog_sixteen_gib_boundary_without_allocating_large_data(self):
         data = archive_bytes(b'A')
         self.assertEqual(a._archive_pin(pins(data), 16 * 1024**3, TOKEN, Opener(data)), 123)

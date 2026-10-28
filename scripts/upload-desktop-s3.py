@@ -66,13 +66,17 @@ def sources(value, artifact, product):
             raise ValueError("Invalid Actions archive provenance")
         parsed = urlparse(url)
         member = archive.get("member", "")
-        if (product != "slide" or artifact.get("platform") != "windows" or artifact.get("arch") != "x64"
-                or artifact.get("format") != "zip" or artifact.get("bundleKind") != "windows-msi-cab-v1"
+        windows = (artifact.get("platform") == "windows" and artifact.get("format") == "zip"
+                   and artifact.get("bundleKind") == "windows-msi-cab-v1")
+        linux = (artifact.get("platform") == "linux" and artifact.get("format") == "AppImage"
+                 and "bundleKind" not in artifact)
+        suffix = ".zip" if windows else ".appimage"
+        if (product != "slide" or artifact.get("arch") != "x64" or not (windows or linux)
                 or parsed.scheme != "https" or parsed.netloc != "api.github.com" or parsed.query or parsed.fragment
                 or not re.fullmatch(r"/repos/saxoji/vora_works_slide/actions/artifacts/[0-9]+/zip", parsed.path)
-                or not isinstance(member, str) or not member or "\\" in member or re.search(r"[\x00-\x1f\x7f]", member)
+                or not isinstance(member, str) or not member or len(member) > 512 or "\\" in member or re.search(r"[\x00-\x1f\x7f]", member)
                 or any(segment in ("", ".", "..") for segment in member.split("/"))
-                or ":" in member or not member.lower().endswith(".zip")
+                or ":" in member or not member.lower().endswith(suffix)
                 or type(archive.get("size")) is not int or not 0 < archive["size"] <= 16 * 1024**3
                 or not re.fullmatch(r"[a-f0-9]{64}", digest)):
             raise ValueError("Untrusted Actions archive provenance")

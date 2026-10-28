@@ -42,7 +42,7 @@ def _archive_pin(archive, expected_size, token, opener):
             or not isinstance(archive['sha256'], str)
             or re.fullmatch('[a-f0-9]{64}', archive['sha256']) is None
             or not isinstance(archive['member'], str) or len(archive['member']) > 512
-            or not archive['member'].lower().endswith('.zip')
+            or not archive['member'].lower().endswith(('.zip', '.appimage'))
             or re.search(r'[\x00-\x1f\x7f\\:]', archive['member'])
             or any(p in ('', '.', '..') for p in archive['member'].split('/'))
             or type(expected_size) is not int or not 0 < expected_size <= 16 * 1024**3

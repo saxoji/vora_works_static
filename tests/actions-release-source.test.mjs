@@ -19,7 +19,8 @@ async function scenario(patch, run) {
   try {
     patch?.(source, manifest);
     await mkdir(new URL('releases/slide/', root), { recursive: true });
-    await writeFile(new URL('releases/slide/catalog.json', root), JSON.stringify({ schemaVersion: 1, stableVersion: '1.0.2', releases: [{ manifest, assets: { [name]: source } }] }));
+    const artifactName = new URL(manifest.artifacts[0].url).pathname.split('/').at(-1);
+    await writeFile(new URL('releases/slide/catalog.json', root), JSON.stringify({ schemaVersion: 1, stableVersion: '1.0.2', releases: [{ manifest, assets: { [artifactName]: source } }] }));
     await run({ root, dist, manifest, publish: options => publishProductReleases({ root, dist, product: 'slide', siteUrl,
       fetcher: () => { throw Error('must not fetch an archive as an installer'); }, ...options }) });
   } finally { await rm(root, { recursive: true, force: true }); }
@@ -35,6 +36,28 @@ test('metadata-only accepts pinned Actions provenance while preserving the inner
 test('bundle mode never downloads the outer Actions ZIP as an installer', () => scenario(null, async ({ publish }) => {
   await assert.rejects(publish({}), /verified local-map S3 publisher/);
 }));
+
+test('Linux AppImage exact-member provenance retains bytes and rejects mismatched platform or member', async () => {
+  const linux = (source, manifest) => {
+    Object.assign(manifest.artifacts[0], { platform: 'linux', format: 'AppImage',
+      url: `${siteUrl}/releases/slide/1.0.2/VORA-SLIDE-1.0.2-linux-x64.AppImage` });
+    delete manifest.artifacts[0].bundleKind;
+    source.actionsArtifact.member = 'verified/linux/VORA-SLIDE-1.0.2-linux-x64.AppImage';
+  };
+  await scenario(linux, async ({ dist, manifest, publish }) => {
+    await publish({ downloadArtifacts: false });
+    assert.deepEqual(JSON.parse(await readFile(new URL('releases/slide/stable.json', dist))), manifest);
+    await assert.rejects(publish({}), /verified local-map S3 publisher/);
+  });
+  for (const patch of [
+    source => { source.actionsArtifact.member = 'installer.zip'; },
+    source => { source.actionsArtifact.member = '../installer.AppImage'; },
+    (_source, manifest) => { manifest.artifacts[0].bundleKind = 'windows-msi-cab-v1'; },
+    (_source, manifest) => { manifest.artifacts[0].arch = 'arm64'; },
+  ]) await scenario((source, manifest) => { linux(source, manifest); patch(source, manifest); }, async ({ publish }) => {
+    await assert.rejects(publish({ downloadArtifacts: false }), /Invalid|Untrusted/);
+  });
+});
 
 test('invalid Actions provenance and unsafe archive members are rejected', async () => {
   const patches = [
