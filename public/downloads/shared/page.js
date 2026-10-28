@@ -30,7 +30,10 @@ document.addEventListener('change', event => {
   }
   if (event.target.id === 'language' && languages.includes(event.target.value)) {
     savePreference(LANGUAGE_KEY, event.target.value);
-    location.assign(`/downloads/${product}/${event.target.value}/`);
+    const destination = new URL(location.href);
+    destination.pathname = `/downloads/${product}/${event.target.value}/`;
+    if (destination.searchParams.has('lang')) destination.searchParams.set('lang', event.target.value);
+    location.assign(`${destination.pathname}${destination.search}${destination.hash}`);
   }
 });
 render();
