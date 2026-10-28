@@ -17,9 +17,11 @@ python3 scripts/upload-desktop-s3.py --env-file "$VORA_RELEASE_ENV_FILE"
 
 `--local-map /안전한/로컬-map.json`은 검증된 파일명→절대 경로의 JSON이다. 준비된 로컬 원본이 있으면 다시 다운로드하지 않고 이 파일을 읽어 업로드한다. 없으면 catalog의 고정 GitHub release asset/parts를 사용한다. 이 map도 개인 경로가 포함되므로 커밋하지 않는다.
 
+SLIDE Windows의 `zip`/`windows-msi-cab-v1` 패키지는 검증된 Actions 결과의 내부 설치용 ZIP을 이 map으로 직접 공급할 수 있다. catalog의 출처는 `assets[filename].actionsArtifact = {url, member, size, sha256}`로 기록한다. `url`은 해당 SLIDE 저장소의 고정 `actions/artifacts/ID/zip` API이며 `member`는 실제 안전한 상대 ZIP 경로다. 이 객체의 크기·SHA는 **바깥 Actions 아카이브**의 증거이고, manifest의 크기·SHA는 **안쪽 설치 파일**의 기준이다. 파일명을 공개용으로 바꾸더라도 바이트는 바꾸지 않는다. Python 도구가 Actions ZIP을 직접 내려받거나 추출하지는 않으며, 원본 담당자가 바깥 아카이브와 정확한 member를 확인해 한 번 추출한 파일을 제공해야 한다. 준비된 local-map이 없으면 업로드 전에 중단한다. 최초 게시 이후에는 검증된 S3 객체를 재사용하므로 Actions 보관 기간에 의존하지 않는다.
+
 ## 보존과 실패 처리
 
-- 현재 catalog 원본 바이트 SHA-256과 제품·버전·원본 크기/해시를 기준으로 처리한다. GitHub source는 해당 제품의 고정 release asset API만 허용하고 CDN redirect에 GitHub 인증 헤더를 전달하지 않는다.
+- 현재 catalog 원본 바이트 SHA-256과 제품·버전·원본 크기/해시를 기준으로 처리한다. 직접 다운로드하는 GitHub source는 해당 제품의 고정 release asset API만 허용하고 CDN redirect에 GitHub 인증 헤더를 전달하지 않는다. 위 SLIDE Actions 출처는 검증된 로컬 원본을 제공하는 별도 경로다.
 - 설치 파일은 64MiB part와 최대 2개 업로드 작업으로 스트리밍한다. 전체 37GB를 빌드/로컬 디스크에 적재하지 않는다. 원본 part와 최종 파일의 SHA-256·크기를 모두 확인한 뒤 S3 multipart를 완료한다. S3 전송 part도 SHA-256 checksum을 사용한다.
 - 기존 객체의 크기/저장된 SHA가 같으면 다시 전송하지 않는다. 다르면 덮어쓰지 않고 중단한다. 새 키 완료 및 marker 쓰기에 `If-None-Match: *`를 사용해 동시 덮어쓰기를 막는다. 실패한 자신의 multipart만 중단하며 이전 공개 원본은 삭제하지 않는다.
 - S3 완료 후 CDN HEAD의 200·Content-Length·ETag·원본 인코딩을 확인한다. 설치 파일/과거 버전을 전부 다시 다운로드해 검사하지 않는다. 기존 앱이 사용하는 `works.vora.im/releases/*` 주소는 사이트의 200 rewrite로 유지하며 301/302 전환을 사용하지 않는다.
@@ -29,3 +31,5 @@ python3 scripts/upload-desktop-s3.py --env-file "$VORA_RELEASE_ENV_FILE"
 ## 이번 확인
 
 2026-10-28 기준 원본 catalog 4개, 파일 58개, 37,094,576,757바이트다. 단위 검사 9개에서 스트리밍·부분 해시·불변 객체·기존 객체 재사용·local 원본 재사용·인증 헤더 격리·CDN 응답·marker 게시 순서를 확인했다. SDK가 S3 조건부 완료와 SHA-256 multipart 기능을 지원함도 확인했다. 실제 이관 및 사이트 LIVE 완료는 운영 배포 기록에 별도로 남긴다.
+
+Actions 내부 설치 파일 경로를 추가하면서 새 검사 2개와 직접 영향이 있는 기존 검사 2개를 통과했다. 다른 제품·다른 형식·경로 이탈·잘못된 outer 증거 거부, local 부재 시 업로드 시작 차단, inner SHA 불일치 시 완료 차단, 최초 게시 후 원본 없이 S3 재사용을 포함한다. 기존 전체 앱 검수나 서명·공증은 반복하지 않았다.

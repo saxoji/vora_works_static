@@ -1,6 +1,7 @@
 """실제 설치 파일/네트워크 없이 S3 이관의 무결성·불변성·게시 순서를 검증한다."""
 from contextlib import redirect_stdout
 import hashlib
+import copy
 import importlib.util
 import io
 import json
@@ -89,6 +90,42 @@ class UploadTests(unittest.TestCase):
             path = Path(directory) / "installer"; path.write_bytes(b"trusted installer")
             opener = Mock(); upload.upload_artifact(S3(), "bucket", "vora-works", artifact(), "token", opener, local=path)
             opener.open.assert_not_called()
+    def test_actions_archive_pins_are_provenance_not_installer_bytes(self):
+        value = artifact(); value.update(platform="windows", arch="x64", format="zip", bundleKind="windows-msi-cab-v1")
+        source = {"actionsArtifact": {"url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/123/zip",
+                                     "member": "dist/original-installer.zip", "size": 456, "sha256": "a" * 64}}
+        self.assertEqual(upload.sources(source, value, "slide"), [])
+        invalid = [("member", "../installer.zip"), ("member", "/installer.zip"), ("member", "C:/installer.zip"),
+                   ("member", "dir\\installer.zip"), ("member", "installer.msi"), ("member", None),
+                   ("url", "https://api.github.com/repos/saxoji/vora_works_word/actions/artifacts/123/zip"),
+                   ("url", source["actionsArtifact"]["url"] + "?token=private"), ("url", None),
+                   ("sha256", "wrong"), ("sha256", None), ("size", True), ("size", 0), ("size", 17 * 1024**3)]
+        for key, field in invalid:
+            changed = copy.deepcopy(source); changed["actionsArtifact"][key] = field
+            with self.subTest(key=key, field=field), self.assertRaises(ValueError):
+                upload.sources(changed, value, "slide")
+        for key, field in [("platform", "macos"), ("arch", "arm64"), ("format", "msi"), ("bundleKind", "other")]:
+            changed = dict(value, **{key: field})
+            with self.subTest(key=key), self.assertRaises(ValueError): upload.sources(source, changed, "slide")
+        with self.assertRaises(ValueError): upload.sources(source, value, "cell")
+        with self.assertRaises(ValueError): upload.sources(dict(source, parts=[]), value, "slide")
+    def test_actions_source_requires_local_file_before_creating_upload_and_validates_inner_hash(self):
+        value = artifact(); value["parts"] = []; client = S3(); opener = Mock()
+        with self.assertRaisesRegex(ValueError, "verified local installer"):
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", opener)
+        self.assertEqual(client.created, 0)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "installer.zip"; path.write_bytes(b"trusted installer")
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", opener, local=path)
+            self.assertTrue(client.completed)
+            # Future metadata-only releases reuse the immutable S3 file after the Actions source expires.
+            upload.upload_artifact(client, "bucket", "vora-works", value, "token", opener)
+            self.assertEqual(client.created, 1)
+            corrupt = S3(); path.write_bytes(b"corrupt installer")
+            with self.assertRaisesRegex(ValueError, "checksum"):
+                upload.upload_artifact(corrupt, "bucket", "vora-works", value, "token", opener, local=path)
+            self.assertTrue(corrupt.aborted); self.assertFalse(corrupt.completed)
+        opener.open.assert_not_called()
     def test_source_redirect_never_forwards_github_authorization(self):
         request = Request("https://api.github.com/repos/test", headers={"Authorization": "Bearer private"})
         redirected = upload.SourceRedirect().redirect_request(request, None, 302, "Found", {}, "https://release-assets.githubusercontent.com/asset?signature=value")

@@ -53,6 +53,29 @@ def https_client(redirect):
 def sources(value, artifact, product):
     if not isinstance(value, (str, dict)):
         raise ValueError("Invalid artifact source")
+    if isinstance(value, dict) and "actionsArtifact" in value:
+        archive = value["actionsArtifact"]
+        if set(value) != {"actionsArtifact"} or not isinstance(archive, dict):
+            raise ValueError("Invalid Actions archive provenance")
+        url = archive.get("url", "")
+        digest = archive.get("sha256", "")
+        if not isinstance(url, str) or not isinstance(digest, str):
+            raise ValueError("Invalid Actions archive provenance")
+        parsed = urlparse(url)
+        member = archive.get("member", "")
+        if (product != "slide" or artifact.get("platform") != "windows" or artifact.get("arch") != "x64"
+                or artifact.get("format") != "zip" or artifact.get("bundleKind") != "windows-msi-cab-v1"
+                or parsed.scheme != "https" or parsed.netloc != "api.github.com" or parsed.query or parsed.fragment
+                or not re.fullmatch(r"/repos/saxoji/vora_works_slide/actions/artifacts/[0-9]+/zip", parsed.path)
+                or not isinstance(member, str) or not member or "\\" in member or "\x00" in member
+                or any(segment in ("", ".", "..") for segment in member.split("/"))
+                or ":" in member or not member.lower().endswith(".zip")
+                or type(archive.get("size")) is not int or not 0 < archive["size"] <= 16 * 1024**3
+                or not re.fullmatch(r"[a-f0-9]{64}", digest)):
+            raise ValueError("Untrusted Actions archive provenance")
+        # The archive is provenance only. A verified extracted installer is supplied privately
+        # through --local-map; never mistake the outer archive bytes/hash for the installer.
+        return []
     parts = [{"url": value, "size": artifact["size"], "sha256": artifact["sha256"]}] if isinstance(value, str) else value.get("parts", [])
     if (not isinstance(parts, list) or not 1 <= len(parts) <= 4 or any(not isinstance(part, dict) for part in parts)
             or sum(part.get("size", 0) for part in parts) != artifact["size"]):
@@ -141,6 +164,8 @@ def upload_artifact(client, bucket, prefix, artifact, token, opener, local=None,
         if Path(local).stat().st_size != artifact["size"]:
             raise ValueError("Local verified artifact size differs")
         parts = [dict(local=local, size=artifact["size"], sha256=artifact["sha256"])]
+    if not parts:
+        raise ValueError("Actions archive source requires a verified local installer")
     created = client.create_multipart_upload(
         Bucket=bucket, Key=key, ContentType="application/octet-stream",
         ContentDisposition=f'attachment; filename="{artifact["name"]}"',
