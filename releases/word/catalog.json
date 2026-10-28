@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.3",
+  "stableVersion": "1.0.4",
   "releases": [
     {
       "manifest": {
@@ -240,8 +240,37 @@
         "VORA-WORD-1.0.3-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/683937187",
         "VORA-WORD-1.0.3-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/683937844"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.4",
+        "publishedAt": "2026-10-28T13:04:44.266501+00:00",
+        "notes": {
+          "ko": "메뉴와 리본의 파일 내용 삽입 및 선택 대상 처리를 개선했습니다.",
+          "en": "Improved file-content insertion and selection handling in menus and the ribbon.",
+          "ja": "メニューとリボンのファイル内容の挿入と選択対象の処理を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.4/VORA-WORD-1.0.4-linux-x64.AppImage",
+            "size": 470612472,
+            "sha256": "74573c7562c268562444c969a95336b9c715b46216a804c9743663261d8c75ca"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.4-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/685023134"
+      }
     }
   ],
   "withdrawnPlatforms": [],
-  "downloadFallbacks": {}
+  "downloadFallbacks": {
+    "macos": "1.0.3",
+    "windows": "1.0.3"
+  }
 }
