@@ -1,6 +1,6 @@
 # VORA WORD1.0.4 설치판 연결
 
-상태: 세 OS1.0.4 원본 게시 완료·다운로드 사이트 최종 전환 · 2026-10-28 · WORD-RELEASE194
+상태: macOS·Windows·Linux1.0.4 공개 및 운영 검증 완료 · 2026-10-28 · WORD-RELEASE194
 
 ## 공통 게시 기준
 
@@ -36,3 +36,4 @@ OS별 게시 파일·크기·SHA-256은 `releases/word/catalog.json`의1.0.4 항
 - `VORA-WORD-1.0.4-win-x64.zip`: 409,426,080바이트, SHA-256 `6d217d21daded3cde4e0089f1f80a251798cc9e1eccec04b48c28f7bff01ae3b`.
 - WORD1.0.4에 Windows 두 파일을 추가하고 마지막1.0.3 fallback을 제거했다. 이전 릴리스와 다른 제품 카탈로그는 변경하지 않았다. 새 파일의 S3/CDN 검증과 최종 marker 게시 후 metadata-only 빌드로 공개한다.
 - Windows MSI/ZIP의 S3 원본과 CDN 검증 완료. 최종 catalog marker는 `1373e3b11aff97a75bdb852854eb6c7626e792e6649b7ce169489243eed44be3`이며 다섯 새 파일을 포함한다. 변경 없는 화면 검증24개 조합은 기존 근거를 재사용한다.
+- 최종 STATIC `df8bd2eba4a93adfc60ecb1c643c8d986acb57dd` / `dep-dbh06aek1f9s739a1t7g`:2026-10-28 14:14:15 UTC LIVE. 실제3언어 다운로드 페이지·홈 OS 링크·stable feed의5개 파일 일치·각 파일 HEAD200/정확한 크기/무리디렉션 확인 PASS. 운영 확인의 설치 파일 본문 다운로드0. 이후 기록만의 커밋은 웹 배포를 다시 시작하지 않는다.
