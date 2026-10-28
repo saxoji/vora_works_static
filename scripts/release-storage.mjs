@@ -22,9 +22,9 @@ export function releaseStorageConfig(env = process.env) {
   const origins = JSON.parse(env.DESKTOP_RELEASE_ORIGINS_JSON ?? '{}');
   for (const product of Object.keys(products)) {
     const url = new URL(origins[product]);
-    if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash)
-      throw new Error('Invalid desktop storage origin');
-    origins[product] = url.origin;
+    if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash)
+      throw new Error('Invalid desktop storage base URL');
+    origins[product] = url.href.replace(/\/+$/, '');
   }
   return origins;
 }

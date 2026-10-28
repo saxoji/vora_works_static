@@ -12,7 +12,8 @@ is downloading the entire archive into every website build.
   publisher for dedicated release publishing.
 - The public website uses `DESKTOP_RELEASE_ARTIFACTS=metadata-only` and
   `DESKTOP_RELEASE_ORIGINS_JSON`, an object containing an HTTPS storage origin
-  for each of `word`, `slide`, `cell`, and `hwp`.
+  for each of `word`, `slide`, `cell`, and `hwp`. A base path is supported; the
+  selected shared storage base is `https://cdn.vora.im/vora-works`.
 - Metadata-only builds validate the same artifact and private source contracts
   and generate all version manifests and stable feeds. They never fetch an
   installer. The tested website output is 5.7 MB.
@@ -47,6 +48,18 @@ The two tests affected by the immutable marker-path refinement were rerun only
 for that change. The actual site build with all four real catalogs and local
 marker responses passed; no installer was fetched.
 
+The existing S3 bucket `vora-tool-storage` in `ap-northeast-2` uses the new
+`vora-works/releases/` prefix behind `cdn.vora.im`. CELL owns the initial uploader
+and storage credentials; HWP owns website metadata and Render rewrites. WORD
+and SLIDE provide their already verified release catalogs and source assets.
+Do not rebuild, resign, renotarize, or reupload an unchanged app just to migrate
+storage. Upload only missing objects; verify stored size and checksum before
+writing immutable readiness markers. No secret belongs in a catalog, manifest,
+marker, log, or Git commit.
+
 Infrastructure connection and the first S3/CDN publication are coordinated
 separately. Do not enable metadata-only on Render until storage and the rewrite
-destinations are ready.
+destinations are ready. Rewrite `/releases/{product}/*` to
+`https://cdn.vora.im/vora-works/releases/{product}/*` with an HTTP 200 response,
+including Range support, and preserve the existing withdrawn-file redirects.
+Subsequent website updates must not download installation binaries.

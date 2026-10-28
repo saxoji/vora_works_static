@@ -74,6 +74,19 @@ test('unavailable or mismatched storage prevents catalog publication', () => wor
   await assert.rejects(awaitReleaseStorage({ root, origins, timeoutMs: 0, fetcher: async () => new Response('{}') }), /Desktop storage is not ready/);
 }));
 
+test('CDN base prefix is retained for immutable release markers', () => workspace(async ({ root }) => {
+  const bases = releaseStorageConfig({ DESKTOP_RELEASE_ARTIFACTS: 'metadata-only',
+    DESKTOP_RELEASE_ORIGINS_JSON: JSON.stringify(Object.fromEntries(products.map(product => [product, 'https://cdn.vora.im/vora-works/']))) });
+  const calls = [];
+  await awaitReleaseStorage({ root, origins: bases, fetcher: async url => {
+    calls.push(url);
+    assert.match(url, /^https:\/\/cdn\.vora\.im\/vora-works\/releases\/(word|slide|cell|hwp)\/catalogs\/[a-f0-9]{64}\.json$/);
+    const product = products.find(product => url.includes(`/releases/${product}/`));
+    return new Response(JSON.stringify(await catalogIdentity(root, product)));
+  } });
+  assert.equal(calls.length, 4);
+}));
+
 test('storage mode is explicit and every product requires a valid HTTPS origin', () => {
   assert.equal(releaseStorageConfig({}), null);
   assert.throws(() => releaseStorageConfig({ DESKTOP_RELEASE_ARTIFACTS: 'typo' }));
