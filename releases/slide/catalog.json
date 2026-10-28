@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.0",
+  "stableVersion": "1.0.2",
   "releases": [
     {
       "manifest": {
@@ -28,11 +28,55 @@
       "assets": {
         "VORA-SLIDE-1.0.0-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/679943088"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "slide",
+        "version": "1.0.2",
+        "publishedAt": "2026-10-28T05:31:14.933408+00:00",
+        "notes": {
+          "ko": "오프라인 서식·글꼴과 서식 미리보기, 로컬 프레젠테이션 편집·저장을 보강한 VORA SLIDE입니다.",
+          "en": "VORA SLIDE with offline templates and fonts, improved template previews, and local presentation editing and saving.",
+          "ja": "オフラインのテンプレートとフォント、テンプレートのプレビュー、ローカルでのプレゼンテーション編集・保存を改善したVORA SLIDEです。"
+        },
+        "artifacts": [
+          {
+            "arch": "x64",
+            "format": "AppImage",
+            "platform": "linux",
+            "sha256": "c5f58b2c9b4cdf5b1f24b51ab82405881324355f1bb5cc986487050eabaa119e",
+            "size": 2931018232,
+            "sourceCommit": "c7f87d4751bd7f816e81e53c5009adee38470622",
+            "url": "https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-linux-x64.AppImage"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-SLIDE-1.0.2-linux-x64.AppImage": {
+          "parts": [
+            {
+              "sha256": "def7a6b522ff064cdd77c2ae3afba41893e003983b2aee5113f8ebb468732c93",
+              "size": 1073741824,
+              "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/683942142"
+            },
+            {
+              "sha256": "8396dca1192d67eccdcc9e0fd74279784a3719ee5ba1144e7176ffe914428572",
+              "size": 1073741824,
+              "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/683943570"
+            },
+            {
+              "sha256": "489a2acc33ba86d79b51c48eb41428f9a5ddd81f9be8789113d78b60dcacf44d",
+              "size": 783534584,
+              "url": "https://api.github.com/repos/saxoji/vora_works_slide/releases/assets/683945466"
+            }
+          ]
+        }
+      }
     }
   ],
   "withdrawnPlatforms": [
     "macos",
-    "windows",
-    "linux"
+    "windows"
   ]
 }

@@ -51,7 +51,7 @@ test('verified WORD, CELL and HWP desktop defaults exclude pending platforms and
       }
     }
   }
-  assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: '' });
+  assert.deepEqual(result.config.products.slide.downloads, { macos: '', windows: '', linux: 'https://works.vora.im/downloads/slide/?os=linux' });
   assert.doesNotMatch(result.source, /synthetic-token-must-stay-private|DESKTOP_RELEASE_GITHUB_TOKEN/);
 });
 

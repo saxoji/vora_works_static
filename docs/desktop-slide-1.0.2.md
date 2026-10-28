@@ -1,0 +1,15 @@
+# VORA SLIDE 1.0.2 설치형 배포
+
+2026-10-28 · Linux x64 공개 연결. Mac·Windows는 준비 중이며 공개 링크를 활성화하지 않는다.
+
+- 소스: `c7f87d4751bd7f816e81e53c5009adee38470622`
+- Linux AppImage: `2,931,018,232` bytes, SHA-256 `c5f58b2c9b4cdf5b1f24b51ab82405881324355f1bb5cc986487050eabaa119e`
+- 파일: `https://works.vora.im/releases/slide/1.0.2/VORA-SLIDE-1.0.2-linux-x64.AppImage`
+- 다운로드: `https://works.vora.im/downloads/slide/?os=linux`
+- 업데이트 피드: `https://works.vora.im/releases/slide/stable.json`
+
+원본 빌드의 163개 검증과 실제 설치된 동일 AppImage의 입력·저장·재열기·서식·글꼴 검증은 run `40630703125`의 보존 근거를 재사용한다. 원본 run `40624816056`의 실패를 성공으로 변경하지 않았다. 업데이트·실패 복원 코드는 기존 검증 소스와 동일하므로 run `40581004084`의 실제 성공·복원 결과만 재사용했으며 과거 앱 화면 품질은 재사용하지 않았다. private 1.0.3은 공개하지 않는다.
+
+게시 전송 run `40637998859`에서 원본 바이트를 재패키징하지 않고 3개 private GitHub asset으로 전달했다. 원격 조각 전체를 합친 크기·해시가 원본과 일치했다. STATIC 빌드는 기존 검증된 배포 경로로 조각을 결합하며 private asset 주소와 토큰을 공개 페이지에 표시하지 않는다.
+
+이번 STATIC 변경 검증은 공개 설정 6개 검사 및 한국어·영어·일본어 다운로드/SEO/OG 링크 확인에 한정한다. 앱·UI·문서 검사를 다시 실행하지 않았다. 기존 다른 제품과 불변 1.0.0 파일을 보존한다. 운영 LIVE는 별도 배포 상태로 확인한다.
