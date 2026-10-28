@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.2",
+  "stableVersion": "1.0.4",
   "releases": [
     {
       "manifest": {
@@ -144,6 +144,76 @@
             "member": "VORA-SLIDE-1.0.2-win-x64.zip",
             "size": 2775777240,
             "sha256": "27abef3369aad3c5a9bea9feb5aecc69246d849b2cb3501a6fec7684bd94a5da"
+          }
+        }
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "slide",
+        "version": "1.0.4",
+        "publishedAt": "2026-10-28T23:28:12.312583+00:00",
+        "notes": {
+          "ko": "편집 중 Ctrl/Cmd+클릭 링크 이동과 동작 버튼, 메뉴·명령 검색, 동영상 재생 및 Windows 발표 녹화를 보강했습니다. 오프라인 서식·글꼴과 문서 편집·저장 기능을 유지합니다.",
+          "en": "Improves Ctrl/Cmd-click links while editing, action buttons, menus and command search, video playback, and presentation recording on Windows. Offline templates, fonts, and document editing and saving are preserved.",
+          "ja": "編集中のCtrl/Cmd＋クリックによるリンク移動、動作ボタン、メニュー・コマンド検索、動画再生、Windowsでのプレゼンテーション録画を改善しました。オフラインのテンプレート・フォントと文書の編集・保存機能は維持しています。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/slide/1.0.4/VORA-SLIDE-1.0.4-mac-arm64.dmg",
+            "size": 3167781598,
+            "sha256": "9a9d513daddfd42744c950ddab48e4161f0f6205c27a9635e0dc10e3518156b0",
+            "sourceCommit": "93f660b516a272fc6bfe881040fc832ebb3ac479"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/slide/1.0.4/VORA-SLIDE-1.0.4-linux-x64.AppImage",
+            "size": 2931079672,
+            "sha256": "a9c89f96dace8e9b84ce437d2792091c5d1c48a7494387f0de85df3cd4158e1d",
+            "sourceCommit": "93f660b516a272fc6bfe881040fc832ebb3ac479"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/slide/1.0.4/VORA-SLIDE-1.0.4-win-x64.zip",
+            "size": 2775953421,
+            "sha256": "4b4dab9d094bdc04f2c638d5c45c7338eff4359afa0d8fd947ba0b4017ab11a3",
+            "sourceCommit": "93f660b516a272fc6bfe881040fc832ebb3ac479",
+            "bundleKind": "windows-msi-cab-v1"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-SLIDE-1.0.4-mac-arm64.dmg": {
+          "publishedArtifact": {
+            "url": "https://cdn.vora.im/vora-works/releases/slide/1.0.4/VORA-SLIDE-1.0.4-mac-arm64.dmg",
+            "size": 3167781598,
+            "sha256": "9a9d513daddfd42744c950ddab48e4161f0f6205c27a9635e0dc10e3518156b0",
+            "sourceCommit": "93f660b516a272fc6bfe881040fc832ebb3ac479",
+            "notarizationId": "ab1ac770-b2ce-4cec-a664-c8d9fda946ae"
+          }
+        },
+        "VORA-SLIDE-1.0.4-linux-x64.AppImage": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12850021111/zip",
+            "member": "VORA-SLIDE-1.0.4-linux-x64.AppImage",
+            "size": 2931080893,
+            "sha256": "90e23e6b86fbc9c5cf63d38ccf5da4b2d6e6475c2c9d72b54d76b8d361d546d0"
+          }
+        },
+        "VORA-SLIDE-1.0.4-win-x64.zip": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12853780250/zip",
+            "member": "VORA-SLIDE-1.0.4-win-x64.zip",
+            "size": 2775954688,
+            "sha256": "7f58435e3f154977d555b746f1b7b70eff5d9dfc68034a1f401ae77f91104ce4"
           }
         }
       }
