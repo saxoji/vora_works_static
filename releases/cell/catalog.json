@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.2",
+  "stableVersion": "1.0.3",
   "releases": [
     {
       "manifest": {
@@ -142,6 +142,36 @@
         "VORA-CELL-1.0.2-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/680981035",
         "VORA-CELL-1.0.2-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/680982620"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.3",
+        "publishedAt": "2026-10-28T03:30:07.475263+00:00",
+        "notes": {
+          "ko": "기존 셀의 값을 편집할 때 변경하지 않은 XLSX 내부 항목을 원본 그대로 보존하도록 개선했습니다.",
+          "en": "Improved preservation of unchanged XLSX package entries when editing existing cell values.",
+          "ja": "既存セルの値を編集する際、変更していないXLSX内の項目を元のまま保持するよう改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.3/VORA-CELL-1.0.3-linux-x64.AppImage",
+            "size": 1207056888,
+            "sha256": "25b6273ed4c29fdfc7e9ffc9d566069118370fd33b7403a1755d2957fec6e9d1"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.3-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/683679758"
+      }
     }
-  ]
+  ],
+  "downloadFallbacks": {
+    "macos": "1.0.2",
+    "windows": "1.0.2"
+  }
 }
