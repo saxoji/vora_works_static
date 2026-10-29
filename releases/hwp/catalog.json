@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.6",
+  "stableVersion": "1.0.7",
   "releases": [
     {
       "manifest": {
@@ -398,6 +398,68 @@
         "VORA-HWP-1.0.6-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/687990123",
         "VORA-HWP-1.0.6-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/687990696",
         "VORA-HWP-1.0.6-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/687991465"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.7",
+        "publishedAt": "2026-10-29T17:49:37.767727Z",
+        "notes": {
+          "ko": "앱 회원 인증 전에는 실행할 때마다 안내를 한 번 표시합니다. 안내를 닫아도 로컬 문서를 계속 편집할 수 있습니다.",
+          "en": "Shows the membership notice once per app launch until membership is verified. Closing it keeps local document editing available.",
+          "ja": "アプリの会員認証が完了するまでは、起動のたびに案内を一度表示します。閉じてもローカル文書の編集を続けられます。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.7/VORA-HWP-1.0.7-mac-arm64.dmg",
+            "size": 409600537,
+            "sha256": "1e883b06d6e6ba44dd1326468ae467fb869bdaab7a6fb0a3a4a6a57f283e571d"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.7/VORA-HWP-1.0.7-mac-arm64.zip",
+            "size": 370488409,
+            "sha256": "752109b3af397f9b942a2994f0364804ef376d1e172d3e659e0c1f7a465ab8a7"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.7/VORA-HWP-1.0.7-win-x64.exe",
+            "size": 341413961,
+            "sha256": "f95bdb7673f0171b7c600029f6a48c136ac04eef9b18e3ecc5980c07515a8f90"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.7/VORA-HWP-1.0.7-win-x64.zip",
+            "size": 395669158,
+            "sha256": "48a592a7402155a8f14bc43cad5b684261c04c8a75f5407f769869bd0f1633a6"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.7/VORA-HWP-1.0.7-linux-x64.AppImage",
+            "size": 372134327,
+            "sha256": "2ef579088fefc01dd68b5c7a22974173233c385b17646cca40f9d3adc0fbee19"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.7-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/689374076",
+        "VORA-HWP-1.0.7-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/689374071",
+        "VORA-HWP-1.0.7-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/689368223",
+        "VORA-HWP-1.0.7-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/689368963",
+        "VORA-HWP-1.0.7-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/689369929"
       }
     }
   ],
