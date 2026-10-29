@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.4",
+  "stableVersion": "1.0.5",
   "releases": [
     {
       "manifest": {
@@ -302,8 +302,45 @@
         "VORA-WORD-1.0.4-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/685204855",
         "VORA-WORD-1.0.4-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/685205514"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.5",
+        "publishedAt": "2026-10-29T09:04:39.498998+00:00",
+        "notes": {
+          "ko": "VORA WORD의 메뉴·타이틀바, 문서 열기와 서식 사용 안정성을 개선했습니다.",
+          "en": "Improved VORA WORD menus, title bars, document opening and template reliability.",
+          "ja": "VORA WORDのメニュー、タイトルバー、文書を開く操作、テンプレートの安定性を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.5/VORA-WORD-1.0.5-mac-arm64.dmg",
+            "size": 498271475,
+            "sha256": "23b8a8062d2145625a7a264ad5846fc8b79c719ce259c3c76ea6d62fb0d76768"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.5/VORA-WORD-1.0.5-linux-x64.AppImage",
+            "size": 472648184,
+            "sha256": "7fe4ee93cdcd50c2c10f134281403de4889d8b04a33a81d63da5077fd7d17095"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.5-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/687985699",
+        "VORA-WORD-1.0.5-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/687992189"
+      }
     }
   ],
   "withdrawnPlatforms": [],
-  "downloadFallbacks": {}
+  "downloadFallbacks": {
+    "windows": "1.0.4"
+  }
 }
