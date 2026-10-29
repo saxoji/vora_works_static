@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.5",
+  "stableVersion": "1.0.6",
   "releases": [
     {
       "manifest": {
@@ -336,6 +336,68 @@
         "VORA-HWP-1.0.5-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685519012",
         "VORA-HWP-1.0.5-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685519665",
         "VORA-HWP-1.0.5-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/685520743"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.6",
+        "publishedAt": "2026-10-29T09:34:25.605999Z",
+        "notes": {
+          "ko": "문서 호환성과 DOCX 내보내기 배치를 개선하고, 저장 시 조판 설정을 보존하며 화면 캡처를 제공합니다.",
+          "en": "Improves document compatibility and DOCX layout, retains layout settings when saving, and adds screen capture.",
+          "ja": "文書の互換性とDOCX出力のレイアウトを改善し、保存時の組版設定を保持して画面キャプチャに対応します。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.6/VORA-HWP-1.0.6-mac-arm64.dmg",
+            "size": 405930068,
+            "sha256": "f0f2a0f6195bfedecca304340faa0446dc26e1cf624bf31e6662144f89efdd45"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.6/VORA-HWP-1.0.6-mac-arm64.zip",
+            "size": 370464126,
+            "sha256": "cb3082a7a16147aa2205edce6fb9e99e59fdc6e4fbd017fffa6b50c4caf4fe55"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.6/VORA-HWP-1.0.6-win-x64.exe",
+            "size": 341397331,
+            "sha256": "ffd4ffe4ffd33e70e9367637ac32d932fb532072e82c9918ed620d672e4b8b26"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.6/VORA-HWP-1.0.6-win-x64.zip",
+            "size": 395648176,
+            "sha256": "fc32e3266714708a9db7339623e5bf5d82134e1b24ab05ac08a09f5c334dda1a"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.6/VORA-HWP-1.0.6-linux-x64.AppImage",
+            "size": 372113783,
+            "sha256": "47defeb4b10643bbd53dd11f4248439c3bd4ac64066ee8c2093eb3541539f1b3"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.6-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/688026525",
+        "VORA-HWP-1.0.6-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/688021302",
+        "VORA-HWP-1.0.6-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/687990123",
+        "VORA-HWP-1.0.6-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/687990696",
+        "VORA-HWP-1.0.6-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/687991465"
       }
     }
   ],
