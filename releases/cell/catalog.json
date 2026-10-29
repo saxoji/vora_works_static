@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.9",
+  "stableVersion": "1.0.14",
   "releases": [
     {
       "manifest": {
@@ -353,6 +353,59 @@
         "VORA-CELL-1.0.9-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688115847",
         "VORA-CELL-1.0.9-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688175408",
         "VORA-CELL-1.0.9-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688175783"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.14",
+        "publishedAt": "2026-10-29T17:43:12.482045+00:00",
+        "notes": {
+          "ko": "설치형 앱에서 무료 VORA 서비스 가입 및 기존 회원 확인을 지원합니다. 안내는 닫고 계속 사용할 수 있으며, 회원 확인 후에는 시작 안내가 표시되지 않습니다. AI 기능은 VORA에서 여는 웹 버전에서 제공됩니다.",
+          "en": "Desktop apps now offer free VORA sign-up and existing-member verification. Close the notice to continue editing; verified members no longer see it at startup. AI remains available in the web edition opened through VORA.",
+          "ja": "デスクトップアプリで無料VORAへの登録と既存会員の確認に対応しました。案内を閉じて編集を続けられ、会員確認後は起動時の案内が表示されなくなります。AIはVORAから開くWeb版で利用できます。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.14/VORA-CELL-1.0.14-mac-arm64.dmg",
+            "size": 282753011,
+            "sha256": "414dcd947185aa5e93856b6da0732d250fa5c8c67c2e8a1f62105820fed2023d"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.14/VORA-CELL-1.0.14-linux-x64.AppImage",
+            "size": 260467192,
+            "sha256": "d1326c6d35327a5440b9ac92b2b93172c1dabf806ba2b099bccb8f288fb62078"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.14/VORA-CELL-1.0.14-win-x64.msi",
+            "size": 224580438,
+            "sha256": "8c0ece53913eb30289e97ca81e7e4e90ae8f58ade1ccd98d419948ce61f0d694"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.14/VORA-CELL-1.0.14-win-x64.zip",
+            "size": 224580592,
+            "sha256": "b9361151422a3232c7df65e538c5e075bcd7d2064276f852e8ef62ce6cf6878a"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.14-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689342983",
+        "VORA-CELL-1.0.14-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689335385",
+        "VORA-CELL-1.0.14-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689375726",
+        "VORA-CELL-1.0.14-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689376663"
       }
     }
   ]
