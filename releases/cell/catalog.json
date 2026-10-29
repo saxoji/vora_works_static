@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.7",
+  "stableVersion": "1.0.9",
   "releases": [
     {
       "manifest": {
@@ -300,6 +300,59 @@
         "VORA-CELL-1.0.7-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687615579",
         "VORA-CELL-1.0.7-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687598333",
         "VORA-CELL-1.0.7-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687598915"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.9",
+        "publishedAt": "2026-10-29T10:30:03.566722+00:00",
+        "notes": {
+          "ko": "도형·아이콘 직접 선택과 이동·크기 변경 실행 취소를 개선했습니다. macOS 메뉴 표시와 번역을 보강하고, 인쇄 화면 등에서 글꼴 적용을 기다리는 동안 반복되던 불필요한 화면 갱신을 줄였습니다.",
+          "en": "Improved direct selection of shapes and icons, undo for moving and resizing, and macOS menu labels and translations. Prevented continuous redraws while font activation is deferred in Print and other panels.",
+          "ja": "図形・アイコンの直接選択、移動・サイズ変更の取り消し、およびmacOSメニューの表示と翻訳を改善しました。印刷画面などでフォントの適用を待つ間に繰り返されていた不要な再描画を抑えました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.9/VORA-CELL-1.0.9-mac-arm64.dmg",
+            "size": 283964075,
+            "sha256": "8ce45e4415437c1d3a60dca3f8e4240554f8be7c15b9e8881d48327016ff2443"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.9/VORA-CELL-1.0.9-linux-x64.AppImage",
+            "size": 260205048,
+            "sha256": "2dae8a24ffe7a804c99e50509e9634a02ccfa8375aa1ba7605a4bc311a112b2e"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.9/VORA-CELL-1.0.9-win-x64.msi",
+            "size": 224383784,
+            "sha256": "2124480267633a97e871a169c5e6d5f6ea24ffe29da2dd5a1202c9c0ec095b66"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.9/VORA-CELL-1.0.9-win-x64.zip",
+            "size": 224383936,
+            "sha256": "793324b9675eaa0938c7b69aecd86def86a951a558fcb99bcba0f88749bbf6d6"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.9-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688118200",
+        "VORA-CELL-1.0.9-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688115847",
+        "VORA-CELL-1.0.9-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688175408",
+        "VORA-CELL-1.0.9-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/688175783"
       }
     }
   ]
