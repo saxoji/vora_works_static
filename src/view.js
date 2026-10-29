@@ -28,6 +28,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
     arrow: svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
     diagonal: svg('<path d="M6 18 18 6M6 6h12v12"/>'),
     down: svg('<path d="M12 4v12m-5-5 5 5 5-5M5 20h14"/>'),
+    book: svg('<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14"/>'),
     globe: svg('<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>'),
     sun: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>'),
     system: svg('<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/>'),
@@ -63,7 +64,8 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
   }
 
   function productCard(p, i, type = 'standard') {
-    return `<article id="${p.id}-overview" class="product-card product-${p.id}" style="--product-color:${p.color}"><div class="product-card-top"><span class="small-code">0${i + 1} / ${p.category}</span>${brand(p.id)}</div><div class="product-card-copy"><h3>VORA ${p.name}</h3><h4>${t(`${p.id}Title`)}</h4><p>${t(`${p.id}Desc`)}</p>${p.id === 'hwp' ? `<p class="government-format-tag">${t('hwpGovernmentTag')}</p>` : ''}</div><div class="product-card-bottom"><div class="product-meta"><span>${p.format}</span><span class="free-dot">${t('free')}</span></div>${link(p.url, `${t('online')}${icons.diagonal}`, 'product-open')}${platformButtons(p, type === 'wide')}</div></article>`;
+    const guide = link(`https://guide.vora.im/${lang}/guides/${p.guide}/`, `<span>${icons.book}<span><span class="sr-only">VORA ${p.name} </span>${t('advancedGuide')}</span></span>${icons.diagonal}`, 'product-guide');
+    return `<article id="${p.id}-overview" class="product-card product-${p.id}" style="--product-color:${p.color}"><div class="product-card-top"><span class="small-code">0${i + 1} / ${p.category}</span>${brand(p.id)}</div><div class="product-card-copy"><h3>VORA ${p.name}</h3><h4>${t(`${p.id}Title`)}</h4><p>${t(`${p.id}Desc`)}</p>${p.id === 'hwp' ? `<p class="government-format-tag">${t('hwpGovernmentTag')}</p>` : ''}</div><div class="product-card-bottom"><div class="product-meta"><span>${p.format}</span><span class="free-dot">${t('free')}</span></div>${link(p.url, `${t('online')}${icons.diagonal}`, 'product-open')}${platformButtons(p, type === 'wide')}${guide}</div></article>`;
   }
 
   function collection(type = 'standard') {
@@ -72,7 +74,7 @@ export function createView({ lang, theme = 'dark', languagePreference = lang, th
 
   function editorial() {
     const description = escapeAttribute(t('description')).replace(escapeAttribute(t('descriptionHighlight')), `<strong class="hand-underline">${escapeAttribute(t('descriptionHighlight'))}</strong>`);
-    return `${header()}<main id="main"><section class="editorial-hero wrap"><div class="editorial-topline"><span class="eyebrow">TOOLS FOR YOUR NEXT CHAPTER</span><span class="availability"><i></i>${t('free')}</span></div><h1 class="editorial-title"><span>VORA <em>AI</em></span><span class="works-line">DOCS<span class="hero-symbol">${brand()}</span></span></h1><div class="editorial-intro"><h2>${t('hero1')}<br /><span>${t('hero2')}</span></h2><div><p>${description}</p><p class="enterprise-contact"><span>${t('enterpriseContact')}</span><a href="mailto:contact@horizonai.ai">contact@horizonai.ai</a></p></div></div><div class="mini-collection">${products.map(p => `<a href="#${p.id}-overview" data-scroll-product="${p.id}">${brand(p.id)}<span>VORA ${p.name}</span>${icons.diagonal}</a>`).join('')}</div></section>${collection()}${anywhere()}${connection()}${footer()}</main>`;
+    return `${header()}<main id="main"><section class="editorial-hero wrap"><div class="editorial-topline"><span class="eyebrow">TOOLS FOR YOUR NEXT CHAPTER</span><span class="availability"><i></i>${t('free')}</span></div><div class="editorial-heading"><h1 class="editorial-title"><span class="hero-symbol">${brand()}</span><span class="hero-wordmark">VORA <em>AI</em> DOCS</span></h1><p class="office-tag"><span>${t('officeTagLead')}</span> <strong>${t('officeTag')}</strong></p></div><div class="editorial-intro"><h2>${t('hero1')}<br /><span>${t('hero2')}</span></h2><div><p>${description}</p><p class="enterprise-contact"><span>${t('enterpriseContact')}</span><a href="mailto:contact@horizonai.ai">contact@horizonai.ai</a></p></div></div><div class="mini-collection">${products.map(p => `<a href="#${p.id}-overview" data-scroll-product="${p.id}">${brand(p.id)}<span>VORA ${p.name}</span>${icons.diagonal}</a>`).join('')}</div></section>${collection()}${anywhere()}${connection()}${footer()}</main>`;
   }
 
   function anywhere() {

@@ -1,8 +1,8 @@
 export const products = [
-  { id: 'word', name: 'WORD', category: 'DOCUMENT', color: '#79a0e4', format: 'DOCX · DOC · ODT' },
-  { id: 'slide', name: 'SLIDE', category: 'PRESENTATION', color: '#ef977e', format: 'PPTX' },
-  { id: 'cell', name: 'CELL', category: 'SPREADSHEET', color: '#80cab5', format: 'XLSX · CSV' },
-  { id: 'hwp', name: 'HWP', category: 'HANGUL DOCUMENT', color: '#e6c86d', format: 'HWP · HWPX' },
+  { id: 'word', name: 'WORD', category: 'DOCUMENT', color: '#79a0e4', format: 'DOCX · DOC · ODT', guide: 'word-generation' },
+  { id: 'slide', name: 'SLIDE', category: 'PRESENTATION', color: '#ef977e', format: 'PPTX', guide: 'ppt-generation' },
+  { id: 'cell', name: 'CELL', category: 'SPREADSHEET', color: '#80cab5', format: 'XLSX · CSV', guide: 'xls-generation' },
+  { id: 'hwp', name: 'HWP', category: 'HANGUL DOCUMENT', color: '#e6c86d', format: 'HWP · HWPX', guide: 'hwp-generation' },
 ];
 
 export const copy = {
@@ -20,6 +20,9 @@ export const copy = {
     "free": "개인 누구나 무료",
     "hero1": "생산성에",
     "hero2": "자유를 드립니다.",
+    "officeTagLead": "완전한",
+    "officeTag": "AI 오피스 소프트웨어",
+    "advancedGuide": "심화 가이드",
     "intro": "생각을 쓰고, 이야기를 펼치고, 가능성을 계산하세요.",
     "description": "개인 누구나 무료로, 자유롭게 사용하는 VORA AI DOCS. 온라인에서부터 다양한 OS를 위한 앱까지, 당신의 방식으로 일하세요.",
     "collection": "좋은 생각에는, 좋은 도구가 필요하니까.",
@@ -79,6 +82,9 @@ export const copy = {
     "free": "Free for personal use",
     "hero1": "Your work.",
     "hero2": "Your freedom.",
+    "officeTagLead": "A complete",
+    "officeTag": "AI office suite",
+    "advancedGuide": "Advanced guide",
     "intro": "Write your thoughts. Shape your story. Explore the possibilities.",
     "description": "VORA AI DOCS is free for everyone to use personally. From your browser to apps for your operating system, work your way.",
     "collection": "Good ideas deserve good tools.",
@@ -138,6 +144,9 @@ export const copy = {
     "free": "個人利用は無料",
     "hero1": "生産性に、",
     "hero2": "もっと自由を。",
+    "officeTagLead": "すべてが揃う",
+    "officeTag": "AIオフィスソフト",
+    "advancedGuide": "詳しい使い方",
     "intro": "思いを書き、物語を描き、可能性を見つけよう。",
     "description": "誰でも個人で無料・自由に使えるVORA AI DOCS。ブラウザから各OS向けのアプリまで、あなたらしいワークスタイルを。",
     "collection": "いいアイデアには、いい道具を。",
