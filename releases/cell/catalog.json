@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.6",
+  "stableVersion": "1.0.7",
   "releases": [
     {
       "manifest": {
@@ -247,6 +247,59 @@
         "VORA-CELL-1.0.6-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684750708",
         "VORA-CELL-1.0.6-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684833350",
         "VORA-CELL-1.0.6-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/684833876"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.7",
+        "publishedAt": "2026-10-29T06:38:29.942601+00:00",
+        "notes": {
+          "ko": "CSV UTF-8 한글, 중복 제거 후 수식, 지역별 날짜 표시, 필터 적용 차트와 인쇄 미리보기를 수정했습니다. 리본·단축키·붙여넣기 동작을 개선하고 전체 화면·영역 캡처를 추가했습니다.",
+          "en": "Fixed UTF-8 CSV exports, formulas after removing duplicates, regional dates, filtered charts and print previews. Improved ribbon shortcuts and paste options, and added full-screen and region capture.",
+          "ja": "UTF-8 CSV、重複削除後の数式、地域別の日付表示、フィルター後のグラフと印刷プレビューを修正しました。リボン・ショートカット・貼り付け操作を改善し、全画面・範囲指定のキャプチャを追加しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.7/VORA-CELL-1.0.7-mac-arm64.dmg",
+            "size": 284099321,
+            "sha256": "3426aabcc89ed0d127205d56d3bc8441058529a7c3b52c9f1ba02e9a8ad39ba2"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.7/VORA-CELL-1.0.7-linux-x64.AppImage",
+            "size": 260176376,
+            "sha256": "59bac2c84008c2f452a4d7508b54d135a0de459aab7fcd3474900a35f131953f"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.7/VORA-CELL-1.0.7-win-x64.msi",
+            "size": 224351016,
+            "sha256": "af7739068009a8ddf3ca08c4560b6f4085a45d346bcdab2cb3e883d3825a86eb"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.7/VORA-CELL-1.0.7-win-x64.zip",
+            "size": 224351168,
+            "sha256": "7776b2e2ab110e3148998b70ed29d8c15008f7aed006f268c188b5afe4a0d52c"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.7-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687574323",
+        "VORA-CELL-1.0.7-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687615579",
+        "VORA-CELL-1.0.7-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687598333",
+        "VORA-CELL-1.0.7-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/687598915"
       }
     }
   ]
