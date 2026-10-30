@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.19",
+  "stableVersion": "1.0.20",
   "releases": [
     {
       "manifest": {
@@ -565,6 +565,59 @@
         "VORA-CELL-1.0.19-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691493706",
         "VORA-CELL-1.0.19-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691523186",
         "VORA-CELL-1.0.19-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691523567"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.20",
+        "publishedAt": "2026-10-30T10:04:08.183408+00:00",
+        "notes": {
+          "ko": "글꼴 안내와 공개 폰트 검색·결과를 작은 패널 하나로 통합했습니다. 접기·다시 보기, 명시적 다운로드·적용, 검색 입력 보호를 개선했으며 필터로 숨긴 행의 지우기 보호를 유지합니다.",
+          "en": "A compact unified panel now combines font guidance, public font search and results, with collapse/reopen controls and explicit downloads. Search input stays separate from sheet editing. Filtered-row clear protection is retained.",
+          "ja": "フォント案内・公開フォント検索・結果をコンパクトなパネルに統合しました。折りたたみ・再表示・明示的なダウンロードに対応し、検索入力がシート編集に影響しないよう改善しました。フィルターで非表示の行の保護も維持しています。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.20/VORA-CELL-1.0.20-mac-arm64.dmg",
+            "size": 264496777,
+            "sha256": "231dcbcaf09c7471d689644158984d276df52c2977a068fa8e2a0f9276f0fdb2"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.20/VORA-CELL-1.0.20-linux-x64.AppImage",
+            "size": 260987384,
+            "sha256": "3fd4db92a19672d1464f4b2a3f63dda42dc3da3edb44d8139127354399812b81"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.20/VORA-CELL-1.0.20-win-x64.msi",
+            "size": 225071958,
+            "sha256": "6acd537926c899cd9df58578b4e2e1abd7ee416e981ef44437c159547513c0a9"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.20/VORA-CELL-1.0.20-win-x64.zip",
+            "size": 225072112,
+            "sha256": "ac08379fb31871cb6833941dbaf22dfeb13ced9de29c7d24c5692b15851453cb"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.20-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691670368",
+        "VORA-CELL-1.0.20-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691681126",
+        "VORA-CELL-1.0.20-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691684270",
+        "VORA-CELL-1.0.20-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691684979"
       }
     }
   ]
