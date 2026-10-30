@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.4",
+  "stableVersion": "1.0.10",
   "releases": [
     {
       "manifest": {
@@ -214,6 +214,76 @@
             "member": "VORA-SLIDE-1.0.4-win-x64.zip",
             "size": 2775954688,
             "sha256": "7f58435e3f154977d555b746f1b7b70eff5d9dfc68034a1f401ae77f91104ce4"
+          }
+        }
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "slide",
+        "version": "1.0.10",
+        "publishedAt": "2026-10-30T11:55:36.678727+00:00",
+        "notes": {
+          "ko": "글꼴 연결·추가·공개 폰트 검색을 작은 패널로 통합하고, 접기·닫기·검색 취소 및 다국어 표시를 개선했습니다.",
+          "en": "Unified font linking, adding fonts and public-font search in a compact panel; improved collapse, close, cancellation and multilingual display.",
+          "ja": "フォント接続・追加・公開フォント検索をコンパクトなパネルに統合し、折りたたみ・閉じる・検索キャンセルと多言語表示を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/slide/1.0.10/VORA-SLIDE-1.0.10-mac-arm64.dmg",
+            "size": 2374722146,
+            "sha256": "eb7ce0f4ee69d944234a6989934b005e973a160821a8b36626de7b56f73f483d",
+            "sourceCommit": "b2fd3ad777c5f1c9ebd34b053499f42db166d3cb"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/slide/1.0.10/VORA-SLIDE-1.0.10-win-x64.zip",
+            "size": 2203469012,
+            "sha256": "bf4eb44fbad72809e943b86304e06c1b517930436cc1a65c3d9c2954d35a6965",
+            "sourceCommit": "b2fd3ad777c5f1c9ebd34b053499f42db166d3cb",
+            "bundleKind": "windows-msi-cab-v1"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/slide/1.0.10/VORA-SLIDE-1.0.10-linux-x64.AppImage",
+            "size": 2293103096,
+            "sha256": "90574401a4312df5c090a75ccd31be371de13534d469a3eb1cb8e2694ad987a4",
+            "sourceCommit": "b2fd3ad777c5f1c9ebd34b053499f42db166d3cb"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-SLIDE-1.0.10-mac-arm64.dmg": {
+          "publishedArtifact": {
+            "url": "https://cdn.vora.im/vora-works/releases/slide/1.0.10/VORA-SLIDE-1.0.10-mac-arm64.dmg",
+            "size": 2374722146,
+            "sha256": "eb7ce0f4ee69d944234a6989934b005e973a160821a8b36626de7b56f73f483d",
+            "sourceCommit": "b2fd3ad777c5f1c9ebd34b053499f42db166d3cb",
+            "notarizationId": "70a9f78f-ed24-47f4-9253-a1adcc2f31ce"
+          }
+        },
+        "VORA-SLIDE-1.0.10-win-x64.zip": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12973839945/zip",
+            "member": "dist/desktop/VORA-SLIDE-1.0.10-win-x64.zip",
+            "size": 2203478015,
+            "sha256": "4886e67db47f403581bd780835d7b2e52d54b06d1e4e66d8e4a39f89ecb3d0bf"
+          }
+        },
+        "VORA-SLIDE-1.0.10-linux-x64.AppImage": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12974760091/zip",
+            "member": "dist/desktop/VORA-SLIDE-1.0.10-linux-x64.AppImage",
+            "size": 2293110500,
+            "sha256": "efc5920f19e614c9d87ac3b016f7721c1da555e825b6351333a624fe7f5c99ff"
           }
         }
       }
