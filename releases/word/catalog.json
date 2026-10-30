@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.6",
+  "stableVersion": "1.0.7",
   "releases": [
     {
       "manifest": {
@@ -407,6 +407,59 @@
         "VORA-WORD-1.0.6-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/689225149",
         "VORA-WORD-1.0.6-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/689310234",
         "VORA-WORD-1.0.6-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/689311016"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.7",
+        "publishedAt": "2026-10-30T03:41:46.134144+00:00",
+        "notes": {
+          "ko": "서비스 설정이 활성화된 경우에만 회원 안내를 표시합니다. 인증 결과는 앱에서 확인할 수 있으며, 무료 로컬 편집은 계속 사용할 수 있습니다.",
+          "en": "Membership notices appear only when enabled by the service. Check authentication results in the app. Free local editing remains available.",
+          "ja": "サービス設定が有効な場合にのみ会員案内を表示します。認証結果はアプリで確認でき、無料のローカル編集は引き続き利用できます。"
+        },
+        "artifacts": [
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.7/VORA-WORD-1.0.7-linux-x64.AppImage",
+            "size": 472943096,
+            "sha256": "0612905d85ecacaae16dbf072499822ad6d7bf7da7af2f284f675604afc524d9"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.7/VORA-WORD-1.0.7-mac-arm64.dmg",
+            "size": 488894670,
+            "sha256": "0ee17e3dd01c9dbcd3133031ce7e49564dc9227f640481bdfb3e7ff71ca14f0d"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/word/1.0.7/VORA-WORD-1.0.7-win-x64.msi",
+            "size": 410454426,
+            "sha256": "9c166c06899bfe390a25b3ef467abd012d3263b2f4d7fece59334647d83403fb"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.7/VORA-WORD-1.0.7-win-x64.zip",
+            "size": 409685662,
+            "sha256": "f5edd4a28f4aada2be7f2d70d96215b0dfab02a1898c423aec315fd06199dc9a"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.7-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690820214",
+        "VORA-WORD-1.0.7-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690695804",
+        "VORA-WORD-1.0.7-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690733071",
+        "VORA-WORD-1.0.7-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690733604"
       }
     }
   ],
