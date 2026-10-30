@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.12",
+  "stableVersion": "1.0.13",
   "releases": [
     {
       "manifest": {
@@ -584,6 +584,68 @@
         "VORA-HWP-1.0.12-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691670661",
         "VORA-HWP-1.0.12-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691671114",
         "VORA-HWP-1.0.12-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691671688"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.13",
+        "publishedAt": "2026-10-30T12:00:27.647367Z",
+        "notes": {
+          "ko": "문서를 수정하지 않은 보기·표·필드 탐색에서 불필요한 저장 알림이 나오지 않도록 수정하고, macOS 앱 메뉴의 정보 창과 공통 버튼 구성을 통일했습니다.",
+          "en": "Prevented unnecessary save prompts after view, table and field navigation without document edits, and unified the macOS application-menu About dialog and common action buttons.",
+          "ja": "文書を編集せずに表示設定や表・フィールドを操作した際の不要な保存確認を修正し、macOSアプリメニューの情報ダイアログと共通操作ボタンを統一しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.13/VORA-HWP-1.0.13-mac-arm64.dmg",
+            "size": 424788226,
+            "sha256": "47462afc6a7c28b1bbd5031781ca98b5c3e0a7faa84d37b96da99e2d2dabc6af"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.13/VORA-HWP-1.0.13-mac-arm64.zip",
+            "size": 413069329,
+            "sha256": "4e7da82544488407ac7457972f0bd094e610f9619172ab4f0798ed8c873712c0"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "exe",
+            "url": "https://works.vora.im/releases/hwp/1.0.13/VORA-HWP-1.0.13-win-x64.exe",
+            "size": 379079115,
+            "sha256": "cf50fb74346b582fad7c4c01f01f055e071c2b42d389e72eb745e3dd9228ec23"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.13/VORA-HWP-1.0.13-win-x64.zip",
+            "size": 437013062,
+            "sha256": "a411f128f6ddc2a056c6af453f6c98830940475e19693e957040325b96c0098e"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/hwp/1.0.13/VORA-HWP-1.0.13-linux-x64.AppImage",
+            "size": 409284865,
+            "sha256": "29c1d8f1df198f6ae76eaa5d91e4ba39723f4956e28b2e4caf3f98057a01939d"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.13-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691982715",
+        "VORA-HWP-1.0.13-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691982707",
+        "VORA-HWP-1.0.13-win-x64.exe": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691891122",
+        "VORA-HWP-1.0.13-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691891481",
+        "VORA-HWP-1.0.13-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691891974"
       }
     }
   ],
