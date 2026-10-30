@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.14",
+  "stableVersion": "1.0.15",
   "releases": [
     {
       "manifest": {
@@ -406,6 +406,59 @@
         "VORA-CELL-1.0.14-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689335385",
         "VORA-CELL-1.0.14-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689375726",
         "VORA-CELL-1.0.14-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/689376663"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.15",
+        "publishedAt": "2026-10-30T02:28:17.904657+00:00",
+        "notes": {
+          "ko": "가입 안내는 기본적으로 표시하지 않으며, 회원 인증 없이 바로 문서를 편집할 수 있습니다. 서비스 설정으로 안내가 활성화된 경우에도 무료 편집은 유지됩니다. 회원 확인 후 브라우저는 공식 VORA 안내 화면으로 이동하며, 최종 인증 상태는 앱에서 확인합니다.",
+          "en": "Membership promotion is hidden by default, so you can edit documents without membership verification. Free editing remains available when promotion is enabled by the service. Browser handoffs return to the official VORA guidance page; check the final verification status in the app.",
+          "ja": "会員案内は初期状態では表示されず、会員確認なしで文書を編集できます。サービス設定で案内が有効になった場合も無料編集は引き続き利用できます。ブラウザーは VORA 公式の案内画面に移動し、最終的な認証状態はアプリで確認できます。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.15/VORA-CELL-1.0.15-mac-arm64.dmg",
+            "size": 276825197,
+            "sha256": "fa5c502b8f25b618ba8b3539551ce805e1c35c993cc2f4ce99729fd74531dfbf"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.15/VORA-CELL-1.0.15-linux-x64.AppImage",
+            "size": 260504056,
+            "sha256": "31929f2a99e62535497e15c21fc0866a5a4ded72f79eb28432ea6f237b3d6359"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.15/VORA-CELL-1.0.15-win-x64.msi",
+            "size": 224576342,
+            "sha256": "bf9303384d7deee39b06691aa9e005e88c9a68ecaf2c6f523817b8e3323c517e"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.15/VORA-CELL-1.0.15-win-x64.zip",
+            "size": 224576496,
+            "sha256": "95169f9f04be3cce9e392f682dfd9b1e75c7918065743bb881e3ce3f486d9920"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.15-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690641387",
+        "VORA-CELL-1.0.15-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690638693",
+        "VORA-CELL-1.0.15-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690652947",
+        "VORA-CELL-1.0.15-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690653756"
       }
     }
   ]
