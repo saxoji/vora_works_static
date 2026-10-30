@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.10",
+  "stableVersion": "1.0.11",
   "releases": [
     {
       "manifest": {
@@ -284,6 +284,76 @@
             "member": "dist/desktop/VORA-SLIDE-1.0.10-linux-x64.AppImage",
             "size": 2293110500,
             "sha256": "efc5920f19e614c9d87ac3b016f7721c1da555e825b6351333a624fe7f5c99ff"
+          }
+        }
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "slide",
+        "version": "1.0.11",
+        "publishedAt": "2026-10-30T13:57:39.109980+00:00",
+        "notes": {
+          "ko": "설치형 앱의 파일 열기와 창 종료 동작, 앱 정보의 버전 표시를 개선했습니다.",
+          "en": "Improved file opening, window closing, and version display in the desktop app's About screen.",
+          "ja": "デスクトップアプリのファイルを開く操作、ウィンドウを閉じる動作、アプリ情報のバージョン表示を改善しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/slide/1.0.11/VORA-SLIDE-1.0.11-mac-arm64.dmg",
+            "size": 2374724201,
+            "sha256": "c404ed866928036a84ba4939c9a083ca89b7685630e8efc359b5f09a0e28c727",
+            "sourceCommit": "c895a0f5c456a14da40d06519c72a5cec3c8d293"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/slide/1.0.11/VORA-SLIDE-1.0.11-win-x64.zip",
+            "size": 2203439476,
+            "sha256": "3bfd0a70616d86c316c0b2d8c270764205e3690ef231522fdb5efdba86f5aa99",
+            "sourceCommit": "c895a0f5c456a14da40d06519c72a5cec3c8d293",
+            "bundleKind": "windows-msi-cab-v1"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/slide/1.0.11/VORA-SLIDE-1.0.11-linux-x64.AppImage",
+            "size": 2293160440,
+            "sha256": "54bece4ad91e1883b0a0aa5c0eab526e98e68c45f5e08bfd30ac1bc63e5d40bb",
+            "sourceCommit": "c895a0f5c456a14da40d06519c72a5cec3c8d293"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-SLIDE-1.0.11-mac-arm64.dmg": {
+          "publishedArtifact": {
+            "url": "https://cdn.vora.im/vora-works/releases/slide/1.0.11/VORA-SLIDE-1.0.11-mac-arm64.dmg",
+            "size": 2374724201,
+            "sha256": "c404ed866928036a84ba4939c9a083ca89b7685630e8efc359b5f09a0e28c727",
+            "sourceCommit": "c895a0f5c456a14da40d06519c72a5cec3c8d293",
+            "notarizationId": "fa8d5395-a4dd-4126-9fa0-1a345165f005"
+          }
+        },
+        "VORA-SLIDE-1.0.11-win-x64.zip": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12983416629/zip",
+            "member": "dist/desktop/VORA-SLIDE-1.0.11-win-x64.zip",
+            "size": 2203448575,
+            "sha256": "bd502b8a26895be115d0da62f9bea1d852c0858fd5287ca9ab53d0ff5a36efb5"
+          }
+        },
+        "VORA-SLIDE-1.0.11-linux-x64.AppImage": {
+          "actionsArtifact": {
+            "url": "https://api.github.com/repos/saxoji/vora_works_slide/actions/artifacts/12977052953/zip",
+            "member": "dist/desktop/VORA-SLIDE-1.0.11-linux-x64.AppImage",
+            "size": 2293167892,
+            "sha256": "6fcf84d0c80c3de4f8e1a6c11f4dca6ff5f72ed65b700a6b38f66766f957a141"
           }
         }
       }
