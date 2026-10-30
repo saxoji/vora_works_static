@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.7",
+  "stableVersion": "1.0.9",
   "releases": [
     {
       "manifest": {
@@ -460,6 +460,59 @@
         "VORA-WORD-1.0.7-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690695804",
         "VORA-WORD-1.0.7-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690733071",
         "VORA-WORD-1.0.7-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/690733604"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.9",
+        "publishedAt": "2026-10-30T10:46:11.291653+00:00",
+        "notes": {
+          "ko": "누락 글꼴 안내와 공개 폰트 검색을 간결한 단일 패널로 통합했습니다. 검색 결과 보기와 자동 가져오기 옵션 선택만으로 다운로드하지 않으며 사용자가 검색 또는 다운로드·적용을 눌러야 실행합니다. 기존 로컬·업로드 글꼴을 유지합니다.",
+          "en": "Missing-font guidance and public font search now share one compact panel. Viewing results or enabling automatic import does not download fonts; click Search or Download and apply to start. Existing connected and uploaded fonts are preserved.",
+          "ja": "不足フォントの案内と公開フォント検索をコンパクトな単一パネルに統合しました。結果の表示や自動取得の選択だけではダウンロードせず、検索またはダウンロード・適用をクリックすると実行します。既存の端末・アップロードフォントは維持します。"
+        },
+        "artifacts": [
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.9/VORA-WORD-1.0.9-linux-x64.AppImage",
+            "size": 456088056,
+            "sha256": "eb8cacfa72addb0d3fb4e81a2237f296501132391c7e77f513cf608c2eeeaa08"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.9/VORA-WORD-1.0.9-mac-arm64.dmg",
+            "size": 470565873,
+            "sha256": "a5eb8a278d1f280e489d21b86aba685820b0ab7e3473f57bf714898338046c6e"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/word/1.0.9/VORA-WORD-1.0.9-win-x64.msi",
+            "size": 397022567,
+            "sha256": "e46cf3c9628b1a4d452238493835cc5b538faeaaaaac5b525652bf74e3729f68"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.9/VORA-WORD-1.0.9-win-x64.zip",
+            "size": 396275991,
+            "sha256": "ffcb1f33272c4620165b281bbfbfceffd61858c3d486f1999270e1af2a123161"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.9-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691740861",
+        "VORA-WORD-1.0.9-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691753888",
+        "VORA-WORD-1.0.9-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691787238",
+        "VORA-WORD-1.0.9-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691788277"
       }
     }
   ],
