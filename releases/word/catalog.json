@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.9",
+  "stableVersion": "1.0.10",
   "releases": [
     {
       "manifest": {
@@ -513,6 +513,59 @@
         "VORA-WORD-1.0.9-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691753888",
         "VORA-WORD-1.0.9-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691787238",
         "VORA-WORD-1.0.9-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691788277"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "word",
+        "version": "1.0.10",
+        "publishedAt": "2026-10-30T12:06:10.520446+00:00",
+        "notes": {
+          "ko": "정보창의 버튼을 업데이트·회원 안내·닫기 순서로 맞추고 실제 제품 버전을 표시합니다. 기존 회원 안내 조건과 무료 문서 편집을 유지합니다.",
+          "en": "The About dialog uses the shared Update, Membership, Close action order and displays the actual product version. Existing membership conditions and free document editing are preserved.",
+          "ja": "情報画面のボタンを更新・会員案内・閉じるの順に統一し、実際の製品バージョンを表示します。既存の会員案内の条件と無料の文書編集は維持します。"
+        },
+        "artifacts": [
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/word/1.0.10/VORA-WORD-1.0.10-linux-x64.AppImage",
+            "size": 456120824,
+            "sha256": "4144899a3dffa26bc4a6c89bc70a749e4b3d1c6e9848f13d504ec6afb28a255d"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/word/1.0.10/VORA-WORD-1.0.10-mac-arm64.dmg",
+            "size": 470589127,
+            "sha256": "ed8278e58eb607fd116a73aefa8fb7e452c4f99fbbed7b37328bfd37c4e7f2b8"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/word/1.0.10/VORA-WORD-1.0.10-win-x64.msi",
+            "size": 396997993,
+            "sha256": "0f39961f2916f4de481c9088c4598bc1c3f4a57863914ca71e9aa8df9e650d20"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/word/1.0.10/VORA-WORD-1.0.10-win-x64.zip",
+            "size": 396250066,
+            "sha256": "d6b7959aeb18bc5659861abdb9b973964eea043d6407809e8ccb7e79cfa88b32"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-WORD-1.0.10-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691964158",
+        "VORA-WORD-1.0.10-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691967960",
+        "VORA-WORD-1.0.10-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/691998636",
+        "VORA-WORD-1.0.10-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_word/releases/assets/692000469"
       }
     }
   ],
