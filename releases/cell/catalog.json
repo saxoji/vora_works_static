@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.15",
+  "stableVersion": "1.0.16",
   "releases": [
     {
       "manifest": {
@@ -459,6 +459,59 @@
         "VORA-CELL-1.0.15-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690638693",
         "VORA-CELL-1.0.15-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690652947",
         "VORA-CELL-1.0.15-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690653756"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.16",
+        "publishedAt": "2026-10-30T03:33:37.468313+00:00",
+        "notes": {
+          "ko": "도움말과 자동화 리본의 MCP·에이전트 설정 안내를 제거했습니다. 제품 정보와 앱 메뉴는 VORA CELL로 표시하며, 기존 JSON/MCP 연동과 무료 문서 편집은 유지됩니다. 가입 안내는 기본적으로 표시하지 않습니다.",
+          "en": "Removed MCP and agent setup guidance from Help and the Automate ribbon. Product information and app menus use VORA CELL. Existing JSON/MCP integrations and free document editing are preserved. Membership promotion remains off by default.",
+          "ja": "ヘルプと自動化リボンから MCP・エージェント設定の案内を削除しました。製品情報とアプリメニューは VORA CELL と表示し、既存の JSON/MCP 連携と無料の文書編集は維持します。会員案内は初期状態では表示しません。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.16/VORA-CELL-1.0.16-mac-arm64.dmg",
+            "size": 263960828,
+            "sha256": "e93de7277c1940016728581a2fe9c5e55cca1cae7da700e8b2c91d39e776451e"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.16/VORA-CELL-1.0.16-linux-x64.AppImage",
+            "size": 260430328,
+            "sha256": "b10c99f7c340be42a9fc03c0b4337a755f293639cd80abcb9cb116218343cc12"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.16/VORA-CELL-1.0.16-win-x64.msi",
+            "size": 224551766,
+            "sha256": "cc98aee43fc92a103945e09f69df268f5371b9040e56394a5547a2220756efd3"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.16/VORA-CELL-1.0.16-win-x64.zip",
+            "size": 224551920,
+            "sha256": "4933511c34005a983bca435bcb32e3f6a47bdb8c72ff7062bd9fb4b691082ef0"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.16-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690765431",
+        "VORA-CELL-1.0.16-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690756799",
+        "VORA-CELL-1.0.16-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690797916",
+        "VORA-CELL-1.0.16-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/690798710"
       }
     }
   ]
