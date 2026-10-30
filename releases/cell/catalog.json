@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.20",
+  "stableVersion": "1.0.21",
   "releases": [
     {
       "manifest": {
@@ -618,6 +618,59 @@
         "VORA-CELL-1.0.20-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691681126",
         "VORA-CELL-1.0.20-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691684270",
         "VORA-CELL-1.0.20-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691684979"
+      }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "cell",
+        "version": "1.0.21",
+        "publishedAt": "2026-10-30T11:39:14.299906+00:00",
+        "notes": {
+          "ko": "지역 설정 때문에 편집하지 않은 문서에 저장 알림이 표시되던 문제를 수정했습니다. macOS에서 마지막 문서 창을 닫은 뒤 앱이 정상 종료되도록 보강하고, 제품 정보 창의 버튼 배치와 표기를 통일했습니다.",
+          "en": "Fixed save prompts for unchanged documents caused by regional display settings. Improved normal shutdown after closing the last document window on macOS, and aligned the About dialog actions and wording.",
+          "ja": "地域設定により未編集の文書に保存確認が表示される問題を修正しました。macOSで最後の文書ウィンドウを閉じた後の正常終了を改善し、製品情報ダイアログのボタン配置と表記を統一しました。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/cell/1.0.21/VORA-CELL-1.0.21-mac-arm64.dmg",
+            "size": 264514803,
+            "sha256": "4419352de951e123558fd98fb45dc830097a12ad2966cdee781ac37f4414a70a"
+          },
+          {
+            "platform": "linux",
+            "arch": "x64",
+            "format": "AppImage",
+            "url": "https://works.vora.im/releases/cell/1.0.21/VORA-CELL-1.0.21-linux-x64.AppImage",
+            "size": 261007864,
+            "sha256": "de705efd2c08c6155fd931afb288873165aa125efba309fc243a61a96c4ee5e6"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "msi",
+            "url": "https://works.vora.im/releases/cell/1.0.21/VORA-CELL-1.0.21-win-x64.msi",
+            "size": 225080150,
+            "sha256": "15d77c2afe311ddfd4fc261546ff550c9b250f9ab4848e5b18b5be6d151fcea5"
+          },
+          {
+            "platform": "windows",
+            "arch": "x64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/cell/1.0.21/VORA-CELL-1.0.21-win-x64.zip",
+            "size": 225080304,
+            "sha256": "39e5e8a0969436bb654454ce34ba407cb51f28e9db0213575f40a8eff555c353"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-CELL-1.0.21-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691911655",
+        "VORA-CELL-1.0.21-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691916660",
+        "VORA-CELL-1.0.21-win-x64.msi": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691930137",
+        "VORA-CELL-1.0.21-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_cell/releases/assets/691930882"
       }
     }
   ]
