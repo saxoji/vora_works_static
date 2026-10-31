@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "stableVersion": "1.0.13",
+  "stableVersion": "1.0.14",
   "releases": [
     {
       "manifest": {
@@ -647,7 +647,46 @@
         "VORA-HWP-1.0.13-win-x64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691891481",
         "VORA-HWP-1.0.13-linux-x64.AppImage": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/691891974"
       }
+    },
+    {
+      "manifest": {
+        "schemaVersion": 1,
+        "product": "hwp",
+        "version": "1.0.14",
+        "publishedAt": "2026-10-31T01:16:38.999802+00:00",
+        "notes": {
+          "ko": "macOS에서 마지막 창을 닫으면 앱이 완전히 종료되도록 수정했습니다. 미저장 문서의 닫기 취소와 자동 업데이트 설치 처리를 유지했습니다.",
+          "en": "On macOS, closing the last window now quits the app. Unsaved-document cancellation and automatic-update installation handling are preserved.",
+          "ja": "macOSで最後のウィンドウを閉じるとアプリが終了するよう修正しました。未保存文書のキャンセルと自動更新のインストール処理は維持しています。"
+        },
+        "artifacts": [
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "dmg",
+            "url": "https://works.vora.im/releases/hwp/1.0.14/VORA-HWP-1.0.14-mac-arm64.dmg",
+            "size": 425334034,
+            "sha256": "e95c7145e1e3a9d80940886567d40575dde8db4cc5bdc3f5b47f34eeaa242a87"
+          },
+          {
+            "platform": "macos",
+            "arch": "arm64",
+            "format": "zip",
+            "url": "https://works.vora.im/releases/hwp/1.0.14/VORA-HWP-1.0.14-mac-arm64.zip",
+            "size": 412448556,
+            "sha256": "9c5e5c44a8454469ffb4547edbea323a984466e4781ff94fd5b22ed82f36b37d"
+          }
+        ]
+      },
+      "assets": {
+        "VORA-HWP-1.0.14-mac-arm64.zip": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/693943013",
+        "VORA-HWP-1.0.14-mac-arm64.dmg": "https://api.github.com/repos/saxoji/vora_works_hwp/releases/assets/693961551"
+      }
     }
   ],
-  "withdrawnPlatforms": []
+  "withdrawnPlatforms": [],
+  "downloadFallbacks": {
+    "windows": "1.0.13",
+    "linux": "1.0.13"
+  }
 }
